@@ -103,7 +103,7 @@ h1, h2, h3, h4, h5, h6 {
     margin: 0 auto;
     max-width: 1440px;
     height: 780px;
-    background: url("/wildlife/assets/Intro.jpg") center
+    background: url("assets/Intro.jpg") center
     no-repeat;
     background-size: cover;
 }
@@ -312,7 +312,7 @@ h4 {
     margin: 0 auto;
     max-width: 1440px;
     height: 360px;
-    background: url("/wildlife/assets/Footer.jpg") center
+    background: url("assets/Footer.jpg") center
     no-repeat;
     background-size: cover;
 }
