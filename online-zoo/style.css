@@ -1051,7 +1051,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Map section */
 .map-page {
-  background-color: var(--map-color);
+  background: var(--map-color);
 }
 
 .map-page__main {
@@ -1180,16 +1180,14 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Zoos */
 .live-brodcast {
-  padding: 60px 0 100px;
-  position: relative;
   background: var(--map-color);
 }
 
 .side-bar-position {
   position: absolute;
-  top: 60px;
+  top: 154px;
   left: 26px;
-  bottom: 0;
+  bottom: -70px;
   visibility: hidden;
 }
 
@@ -1226,6 +1224,11 @@ h1, h2, h3, h4, h5, h6 {
 
 .zoos-main {
   position: absolute;
+}
+
+.live-brodcast__inner {
+  padding: 60px 0 100px;
+  position: relative;
 }
 
 .live__title {
