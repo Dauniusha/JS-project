@@ -103,12 +103,31 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 19px;
   cursor: pointer;
   transition: color 0.15s linear;
+  position: relative;
+}
+
+.nav__link::before {
+  position: absolute;
+  content: "";
+  bottom: -3px;
+  left: 50%;
+  width: 0;
+  height: 1px;
+  background: #4bd8b5;
+  transition: all 0.4s ease-in-out;
+}
+
+.nav__link:hover::before {
+  width: 100%;
+  left: 0;
 }
 
 .nav__link:hover,
 .submit-btn:hover .submit-btn-text {
   color: #4bd8b5;
 }
+
+
 
 .nav__link:active,
 .submit-btn:active {
@@ -184,6 +203,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .watch-online {
+  position: relative;
   margin: 37px 0;
   display: flex;
   justify-content: space-between;
@@ -195,16 +215,10 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 21px;
   text-transform: uppercase;
   text-decoration: none;
-  background: linear-gradient(106.89deg, #4BD8B5 -14.32%, #49D6DF 100.68%);
   border-radius: 3px;
   color: #fff;
   transition: transform 0.1s linear;
-}
-
-.watch-online:hover,
-.zoos-pets__btn:hover,
-.pay__btn:hover {
-  background: linear-gradient(106.89deg, #49D6DF -14.32%, #4BD8B5 100.68%);
+  transform-style: preserve-3d;
 }
 
 .watch-online:active,
@@ -264,7 +278,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .gallery-pets-info {
   position: absolute;
-  top: 116px;
+  top: 110px;
   left: -28px;
   width: 194px;
   transform: scale(0.5714);
@@ -272,7 +286,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .activ-img { 
-  margin: 0 75.5px;
+  margin: 0 75.5px 12px;
   transform: scale(1.75);
 }
 
@@ -432,7 +446,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* How it works add*/
 .section {
-  padding: 100px 0;
+  padding: 100px 0 115px;
   width: 100%;
 }
 
@@ -448,6 +462,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .add-inner__elem {
   width: 380px;
+  height: 198px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -602,6 +617,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .zoos-pets__btn {
+  position: relative;
   margin-top: 30px;
   padding: 18px 17px 16px 18px;
   width: 210px;
@@ -610,11 +626,11 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 21px;
   text-transform: uppercase;
   text-decoration: none;
-  background: linear-gradient(106.89deg, #4BD8B5 -14.32%, #49D6DF 100.68%);
   border-radius: 3px;
   color: #fff;
   text-align: center;
   transition: transform 0.1s linear;
+  transform-style: preserve-3d;
 }
 
 /* Pay block */
@@ -652,6 +668,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .pay__btn {
+  position: relative;
   margin-top: 60px;
   padding: 18px 87px 16px 88px;
   font-weight: 900;
@@ -659,10 +676,10 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 21px;
   text-transform: uppercase;
   text-decoration: none;
-  background: linear-gradient(106.89deg, #4BD8B5 -14.32%, #49D6DF 100.68%);
   border-radius: 3px;
   color: #fff;
   transition: transform 0.1s linear;
+  transform-style: preserve-3d;
 }
 
 /* Testimonials */
@@ -694,7 +711,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .testimonials__all-inner {
   margin: 0 17px;
-  padding: 47px 72px;
+  padding: 47px 72px 106px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -853,7 +870,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .footer__main {
   width: 100%;
-  padding: 100px 0 60px;
+  padding: 100px 0 57px;
   border-bottom: 0.5px solid #fefefe;
   display: flex;
   justify-content: space-between;
@@ -865,7 +882,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .footer-form {
-  margin-top: 67px;
+  margin-top: 62px;
   display: flex;
   flex-direction: column;
 }
@@ -876,10 +893,14 @@ h1, h2, h3, h4, h5, h6 {
   color: #fefefe;
 }
 
+.input-name {
+  margin-bottom: 10px;
+}
+
 .input-name,
 .input-mail {
   width: 383px;
-  padding: 10px 0;
+  padding: 9px 0;
   font-size: 14px;
   line-height: 16px;
   color: #e0e0e0;
@@ -909,8 +930,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .form-text {
-  width: 352px;
-  height: 100px;
+  width: 356px;
+  height: 86px;
   background: none;
   padding: 0;
   border: none;
@@ -954,8 +975,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .submit-btn {
-  margin-left: 260px;
-  width: 108px;
+  margin-left: 255px;
+  width: 119px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -1014,6 +1035,10 @@ h1, h2, h3, h4, h5, h6 {
   color: #fefefe;
 }
 
+.footer__text-first {
+  margin-bottom: 5px;
+}
+
 .contacts__link {
   margin: 20px 0;
 }
@@ -1041,12 +1066,20 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 500;
 }
 
-.autor {
+.autor { 
   margin: 0;
   padding: 28px 0 72px;
+}
+
+.autor__inner {
+  margin: 0;
   font-size: 12px;
   line-height: 14px;
   color: #bdbdbd;
+}
+
+.footer__text-first {
+  margin-bottom: 5px;
 }
 
 /* Map section */
@@ -1185,8 +1218,8 @@ h1, h2, h3, h4, h5, h6 {
 
 .side-bar-position {
   position: absolute;
-  top: 154px;
-  left: 26px;
+  top: 150px;
+  left: 17px;
   bottom: -70px;
   visibility: hidden;
 }
@@ -1203,6 +1236,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .side-bar__content {
+  margin: 20px 0;
   height: 511px;
   overflow: hidden;
 }
@@ -1334,10 +1368,71 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0;
 }
 
+#bad-text {
+  white-space: nowrap;
+}
+
 .feed-btn {
+  position: relative;
   margin: 22px 0 0;
+  border-radius: 3px;
+  color: #fff;
   text-transform: uppercase;
+  text-decoration: none;
   padding: 17px 76px;
+  font-weight: 900;
+  font-size: 18px;
+  line-height: 21px;
+  transform-style: preserve-3d;
+}
+
+.watch-online::before,
+.watch-online::after,
+.zoos-pets__btn::before,
+.zoos-pets__btn::after,
+.pay__btn::before,
+.pay__btn::after,
+.feed-btn::before,
+.feed-btn::after {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 3px;
+  transform: translateZ(-1px);
+  transition: opacity 0.5s ease-in-out;
+}
+
+.feed-btn::before,
+.zoos-pets__btn::before,
+.pay__btn::before,
+.watch-online::before {
+  background: linear-gradient(106.89deg, #4BD8B5 -14.32%, #49D6DF 100.68%);
+  opacity: 1;
+}
+
+.feed-btn::after,
+.zoos-pets__btn::after,
+.pay__btn::after,
+.watch-online::after {
+  background: linear-gradient(116deg, #07EEE0 -14.32%, #DF496D 130.68%);
+  opacity: 0;
+}
+
+.feed-btn:hover::before,
+.zoos-pets__btn:hover::before,
+.pay__btn:hover::before,
+.watch-online:hover::before {
+  opacity: 0;
+}
+
+.feed-btn:hover::after,
+.zoos-pets__btn:hover::after,
+.pay__btn:hover::after,
+.watch-online:hover::after {
+  opacity: 1;
 }
 
 
