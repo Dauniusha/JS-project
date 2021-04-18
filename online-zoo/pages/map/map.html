@@ -2,11 +2,14 @@
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link 
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" 
       rel="stylesheet">
-  <link rel="stylesheet" href="../normalize.css">
-  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="../../normalize.css">
+  <link rel="stylesheet" href="../../style.css">
+  <link rel="stylesheet" href="../../header-footer.css">
+  <link rel="stylesheet" href="style.css">
   <title>Online ZOO</title>
 </head>
 <body>
@@ -14,23 +17,26 @@
     <div class="container-info">
       <div class="header__inner">
         <div class="logo">
-          <a class="logo__link" href="../index.html">
+          <a class="logo__link" href="../../index.html">
             <h1 class="logo__text">Online <span class="zoo">Zoo</span></h1>
           </a>
         </div>
         <nav class="header__nav">
-          <a class="nav__link" href="../index.html">About</a>
-          <a class="nav__link" href="zoos/panda.html">Zoos</a>
+          <a class="nav__link" href="../../index.html">About</a>
+          <a class="nav__link" href="../zoos/panda.html">Zoos</a>
           <a class="nav__link active" href="#">Map</a>
           <a class="nav__link" href="#bottom">Contact Us</a>
           <a class="nav__link" href="https://www.figma.com/file/HKt5Nlx0jghQtJp6jW9q8F/zooApp">Design</a>
         </nav>
-        <input id="switch" type="checkbox"><label class="switcher" for="switch"></label>
+        <div class="switcher-menu">
+          <input id="switch" type="checkbox"><label class="switcher" for="switch"></label>
+          <div class="menu" data-theme="light"></div>
+        </div>
       </div>
     </div>
   </header>
   <section class="map-page">
-    <div class="container-main">
+    <div class="container-main map-container">
       <div class="map-page__main">
         <h2 class="title map-page__title">Choose your favorite</h2>
         <p class="text map-page__text">As a voice for wildlife, we are devastated by the impact of the 2020 Australian bushfires on precious species and their habitat, and we are determined to assist in all aspects, including providing veterinary support and raising much-needed emergency funds. Zoo Online saves wildlife and inspires everyone to make conservation a priority in their lives. Animals have the right to a pain-free and happy life. They have equal claim to the resources of this planet, and deserve a life of dignity and compassion.As a voice for wildlife, we are devastated by the impact of the 2020 Australian bushfires on precious species and their habitat.</p>
@@ -39,28 +45,28 @@
           <div class="map-page-slider__all">
             <ul class="map-page-slider__inner">
               <li class="map-page-slider__each">
-                <img class="circle-animals" src="../assets/Circle-animals/circle-dusan.png" alt="Dusan">
+                <img class="circle-animals" src="../../assets/Circle-animals/circle-dusan.png" alt="Dusan">
               </li>
               <li class="map-page-slider__each circle-animals__active">
-                <img class="circle-animals animals__active" src="../assets/Circle-animals/circle-panda.svg" alt="Panda">
+                <img class="circle-animals animals__active" src="../../assets/Circle-animals/circle-panda.svg" alt="Panda">
               </li>
               <li class="map-page-slider__each">
-                <img class="circle-animals" src="../assets/Circle-animals/circle-alligator.png" alt="Alligator">
+                <img class="circle-animals" src="../../assets/Circle-animals/circle-alligator.png" alt="Alligator">
               </li>
               <li class="map-page-slider__each">
-                <img class="circle-animals" src="../assets/Circle-animals/circle-eagle.png" alt="Eagles">
+                <img class="circle-animals" src="../../assets/Circle-animals/circle-eagle.png" alt="Eagles">
               </li>
               <li class="map-page-slider__each">
-                <img class="circle-animals" src="../assets/Circle-animals/circle-tigre.png" alt="Tiger">
+                <img class="circle-animals" src="../../assets/Circle-animals/circle-tigre.png" alt="Tiger">
               </li>
               <li class="map-page-slider__each">
-                <img class="circle-animals" src="../assets/Circle-animals/circle-elefant.png" alt="Elefants">
+                <img class="circle-animals" src="../../assets/Circle-animals/circle-elefant.png" alt="Elefants">
               </li>
               <li class="map-page-slider__each">
-                <img class="circle-animals" src="../assets/Circle-animals/circle-lion.png" alt="Lion">
+                <img class="circle-animals" src="../../assets/Circle-animals/circle-lion.png" alt="Lion">
               </li>
               <li class="map-page-slider__each">
-                <img class="circle-animals" src="../assets/Circle-animals/circle-zebra.png" alt="Zebra">
+                <img class="circle-animals" src="../../assets/Circle-animals/circle-zebra.png" alt="Zebra">
               </li>
             </ul>
           </div>
@@ -72,28 +78,28 @@
         </div>
         <div class="map__main map-page__map" data-theme="light">
           <div class="map-page__each-animal eagles" title="Eagle">
-            <img class="main__placeholder" src="../assets/placeholder.svg" alt="place">
-            <img class="main__placeholder-red" src="../assets/Map/red-placeholder.svg" alt="place">
-            <img class="main__placeholder-inner" src="../assets/Animals/Eagles.jfif" alt="Eagles" width="43px" height="43px">
+            <img class="main__placeholder" src="../../assets/placeholder.svg" alt="place">
+            <img class="main__placeholder-red" src="../../assets/Map/red-placeholder.svg" alt="place">
+            <img class="main__placeholder-inner" src="../../assets/Animals/Eagles.jfif" alt="Eagles" width="43px" height="43px">
           </div>
           <div class="map-page__each-animal alligator" title="Alligator">
-            <img class="main__placeholder" src="../assets/placeholder.svg" alt="place">
-            <img class="main__placeholder-red" src="../assets/Map/red-placeholder.svg" alt="place">
-            <img class="main__placeholder-inner" src="../assets/Animals/aligator.jfif" alt="Alligator" width="43px" height="43px">
+            <img class="main__placeholder" src="../../assets/placeholder.svg" alt="place">
+            <img class="main__placeholder-red" src="../../assets/Map/red-placeholder.svg" alt="place">
+            <img class="main__placeholder-inner" src="../../assets/Animals/aligator.jfif" alt="Alligator" width="43px" height="43px">
           </div>
           <div class="map-page__each-animal dusan" title="Gorilla">
-            <img class="main__placeholder" src="../assets/placeholder.svg" alt="place">
-            <img class="main__placeholder-red" src="../assets/Map/red-placeholder.svg" alt="place">
-            <img class="main__placeholder-inner" src="../assets/Animals/Dusan.jfif" alt="Dusan" width="43px" height="43px">
+            <img class="main__placeholder" src="../../assets/placeholder.svg" alt="place">
+            <img class="main__placeholder-red" src="../../assets/Map/red-placeholder.svg" alt="place">
+            <img class="main__placeholder-inner" src="../../assets/Animals/Dusan.jfif" alt="Dusan" width="43px" height="43px">
           </div>
           <div class="map-page__each-animal panda map__active" title="Panda">
-            <img class="main__placeholder" src="../assets/placeholder.svg" alt="place">
-            <img class="main__placeholder-red" src="../assets/Map/red-placeholder.svg" alt="place">
-            <img class="main__placeholder-inner" src="../assets/Animals/Panda.jfif" alt="Panda" width="43px" height="43px">
+            <img class="main__placeholder" src="../../assets/placeholder.svg" alt="place">
+            <img class="main__placeholder-red" src="../../assets/Map/red-placeholder.svg" alt="place">
+            <img class="main__placeholder-inner" src="../../assets/Animals/Panda.jfif" alt="Panda" width="43px" height="43px">
           </div>
         </div>
-        <a class="watch-online map-page__btn" href="zoos/panda.html">
-          <img src="../assets/play.svg" alt="play">
+        <a class="watch-online map-page__btn" href="../zoos/panda.html">
+          <img src="../../assets/play.svg" alt="play">
           watch online
         </a>
         </div>
@@ -123,15 +129,15 @@
             </label>
             <button class="submit-btn" type="submit">
               <p class="text footer__title submit-btn-text">send</p>
-              <img class="footer-arrow" src="../assets/white-arrow.svg" alt="arrow">
+              <img class="footer-arrow" src="../../assets/white-arrow.svg" alt="arrow">
             </button>
           </form>
         </div>
         <div class="main__contacts">
           <div class="contacts__info">
             <nav class="footer-nav">
-              <a class="nav__link footer-link" href="../index.html">About</a>
-              <a class="nav__link footer-link" href="zoos/panda.html">Zoos</a>
+              <a class="nav__link footer-link" href="../../index.html">About</a>
+              <a class="nav__link footer-link" href="../zoos/panda.html">Zoos</a>
               <a class="nav__link footer-link" href="#">Map</a>
               <a class="nav__link footer-link" href="https://www.figma.com/file/HKt5Nlx0jghQtJp6jW9q8F/zooApp">Design</a>
             </nav>
@@ -147,22 +153,22 @@
             <ul class="footer-networks">
               <li>
                 <a class="social-neworks__link" href="https://www.instagram.com/">
-                  <img class="social-neworks__icon" src="../assets/Social-network/instagram 1.svg" alt="Instagram">
+                  <img class="social-neworks__icon" src="../../assets/Social-network/instagram 1.svg" alt="Instagram">
                 </a>
               </li>
               <li>
                 <a class="social-neworks__link" href="https://twitter.com/">
-                  <img class="social-neworks__icon" src="../assets/Social-network/twit.svg" alt="Twitter">
+                  <img class="social-neworks__icon" src="../../assets/Social-network/twit.svg" alt="Twitter">
                 </a>
               </li>
               <li>
                 <a class="social-neworks__link" href="https://vk.com/">
-                  <img class="social-neworks__icon" src="../assets/Social-network/Group.svg" alt="Vkontakte">
+                  <img class="social-neworks__icon" src="../../assets/Social-network/Group.svg" alt="Vkontakte">
                 </a>
               </li>
               <li>
                 <a class="social-neworks__link" href="https://www.youtube.com/">
-                  <img class="social-neworks__icon" src="../assets/Social-network/YT.svg" alt="YouTube">
+                  <img class="social-neworks__icon" src="../../assets/Social-network/YT.svg" alt="YouTube">
                 </a>
               </li>
             </ul>
@@ -176,5 +182,5 @@
       </div>
     </div>
   </footer>
-  <script src="../script.js"></script>
+  <script src="../../script.js"></script>
 </body>

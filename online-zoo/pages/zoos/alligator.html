@@ -2,11 +2,14 @@
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link 
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" 
       rel="stylesheet">
   <link rel="stylesheet" href="../../normalize.css">
   <link rel="stylesheet" href="../../style.css">
+  <link rel="stylesheet" href="../../header-footer.css">
+  <link rel="stylesheet" href="style.css">
   <title>Online ZOO</title>
 </head>
 <body>
@@ -21,48 +24,65 @@
         <nav class="header__nav">
           <a class="nav__link" href="../../index.html">About</a>
           <a class="nav__link active" href="#">Zoos</a>
-          <a class="nav__link" href="../map.html">Map</a>
+          <a class="nav__link" href="../map/map.html">Map</a>
           <a class="nav__link" href="#bottom">Contact Us</a>
           <a class="nav__link" href="https://www.figma.com/file/HKt5Nlx0jghQtJp6jW9q8F/zooApp">Design</a>
         </nav>
-        <input id="switch" type="checkbox"><label class="switcher" for="switch"></label>
+        <div class="switcher-menu">
+          <input id="switch" type="checkbox"><label class="switcher" for="switch"></label>
+          <div class="menu" data-theme="light"></div>
+        </div>
       </div>
     </div>
   </header>
-  <section class="live-brodcast">
-    <aside class="side-bar-position">
-      <div class="side-bar">
-        <img class="vectors" src="../../assets/Map/up-arrow.svg" alt="up">
-        <div class="side-bar__content">
-          <ul class="side-bar__content-inner">
-            <li class="side-bar__each">
+  <section class="live-brodcast zoos-container">
+    <aside class="side-bar">
+      <img class="vectors" src="../../assets/Map/up-arrow.svg" alt="up">
+      <div class="side-bar__content">
+        <ul class="side-bar__content-inner">
+          <li class="side-bar__each">
+            <a class="side-bar__link" href="panda.html">
               <img class="circle-animals" src="../../assets/Circle-animals/circle-panda.svg" alt="Panda" title="Panda">
-            </li>
-            <li class="side-bar__each">
+            </a>
+          </li>
+          <li class="side-bar__each">
+            <a class="side-bar__link" href="eagle.html">
               <img class="circle-animals" src="../../assets/Circle-animals/circle-eagle.png" alt="Eagle" title="Eagle">
-            </li>
-            <li class="side-bar__each circle-animals__active">
+            </a>
+          </li>
+          <li class="side-bar__each circle-animals__active">
+            <a class="side-bar__link" href="#">
               <img class="circle-animals animals__active" src="../../assets/Circle-animals/circle-alligator.png" alt="Alligator" title="Alligator">
-            </li>
-            <li class="side-bar__each">
+            </a>
+          </li>
+          <li class="side-bar__each">
+            <a class="side-bar__link" href="gorilla.html">
               <img class="circle-animals" src="../../assets/Circle-animals/circle-dusan.png" alt="Dusan" title="Dusan">
-            </li>
-            <li class="side-bar__each">
+            </a>
+          </li>
+          <li class="side-bar__each">
+            <a class="side-bar__link" href="#">
               <img class="circle-animals" src="../../assets/Circle-animals/circle-tigre.png" alt="Tiger" title="Tiger">
-            </li>
-            <li class="side-bar__each">
+            </a>
+          </li>
+          <li class="side-bar__each">
+            <a class="side-bar__link" href="#">
               <img class="circle-animals" src="../../assets/Circle-animals/circle-elefant.png" alt="Elefants" title="Elefants">
-            </li>
-            <li class="side-bar__each">
+            </a>
+          </li>
+          <li class="side-bar__each">
+            <a class="side-bar__link" href="#">
               <img class="circle-animals" src="../../assets/Circle-animals/circle-lion.png" alt="Lion" title="Lion">
-            </li>
-            <li class="side-bar__each">
+            </a>
+          </li>
+          <li class="side-bar__each">
+            <a class="side-bar__link" href="#">
               <img class="circle-animals" src="../../assets/Circle-animals/circle-zebra.png" alt="Zebra" title="Zebra">
-            </li>
-          </ul>
-        </div>
-        <img class="vectors" src="../../assets/Map/down-arrow.svg" alt="down">
+            </a>
+          </li>
+        </ul>
       </div>
+      <img class="vectors" src="../../assets/Map/down-arrow.svg" alt="down">
     </aside>
     <div class="container-main">
       <div class="live-brodcast__inner">
@@ -143,7 +163,7 @@
             <nav class="footer-nav">
               <a class="nav__link footer-link" href="../../index.html">About</a>
               <a class="nav__link footer-link" href="#">Zoos</a>
-              <a class="nav__link footer-link" href="../map.html">Map</a>
+              <a class="nav__link footer-link" href="../map/map.html">Map</a>
               <a class="nav__link footer-link" href="https://www.figma.com/file/HKt5Nlx0jghQtJp6jW9q8F/zooApp">Design</a>
             </nav>
             <p class="text footer-info-title">ZOO Online Centre</p>
