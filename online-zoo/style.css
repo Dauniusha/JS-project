@@ -39,144 +39,15 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Containers */
 .container-info {
-  width: 100%;
+  width: 95%;
   margin: 0 auto;
   max-width: 1620px;
 }
 
 .container-main {
-  width: 100%;
+  width: 95%;
   margin: 0 auto;
   max-width: 1200px;
-}
-
-/* Header */
-.header {
-  width: 100%;
-  box-shadow: 0px 4px 8px rgba(44, 101, 77, 0.08);
-  transform-style: preserve-3d;
-  transform: translateZ(1px);
-}
-
-.header__inner {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 94px;
-}
-
-.logo__link {
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.logo__text {
-  display: flex;
-  flex-direction: column-reverse;
-  text-align: center;
-  text-transform: lowercase;
-  font-size: 18px;
-  line-height: 21px;
-  letter-spacing: 0.08em;
-  font-weight: 900;
-  color: var(--main-text-color);
-}
-
-.zoo {
-  font-size: 36px;
-  letter-spacing: normal;
-  text-transform: lowercase;
-  line-height: 27px;
-}
-
-.header__nav {
-  width: 35.3%;
-  display: flex;
-  justify-content: space-between;
-}
-
-.nav__link {
-  text-decoration: none;
-  color: var(--main-text-color);
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 19px;
-  cursor: pointer;
-  transition: color 0.15s linear;
-  position: relative;
-}
-
-.nav__link::before {
-  position: absolute;
-  content: "";
-  bottom: -3px;
-  left: 50%;
-  width: 0;
-  height: 1px;
-  background: #4bd8b5;
-  transition: all 0.4s ease-in-out;
-}
-
-.nav__link:hover::before {
-  width: 100%;
-  left: 0;
-}
-
-.nav__link:hover,
-.submit-btn:hover .submit-btn-text {
-  color: #4bd8b5;
-}
-
-
-
-.nav__link:active,
-.submit-btn:active {
-  transform: scale(0.96);
-}
-
-.active {
-  font-weight: 900;
-  border-bottom: 1px solid var(--main-text-color);
-  pointer-events: none;
-}
-
-#switch {
-  width: 0;
-  height: 0;
-  display: none;
-}
-
-.switcher {
-  position: relative;
-  width: 54px;
-  height: 30px;
-  border-radius: 190px;
-  background: var(--mini-main-bg-color);
-  cursor: pointer;
-}
-
-.switcher:active::before {
-  width: 30px;
-}
-
-.switcher::before {
-  position: absolute;
-  content: '';
-  top: 5px;
-  left: 6px;
-  width: 20px;
-  height: 20px;
-  border-radius: 10px;
-  background: #fff;
-  box-shadow: 2px 4px 15px rgba(6, 12, 70, 0.15);
-  transition: 0.3s;
-}
-
-#switch:checked + .switcher::before {
-  left: calc(100% - 6px);
-  transform: translateX(-100%);
-  background: #1b1b1b;
-  box-shadow: 2px 4px 15px rgba(230, 230, 230, 0.15);
 }
 
 /* Main */
@@ -247,12 +118,15 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .gallery {
-  position: absolute;
-  top: 43.19%;
-  left: 43.75%;
-  width: 56.2%;
   display: flex;
   flex-direction: column;
+}
+
+.gallery-position {
+  position: absolute;
+  width: 56.2%;
+  top: 43.19%;
+  right: 0;
 }
 
 .gallery__img {
@@ -278,20 +152,26 @@ h1, h2, h3, h4, h5, h6 {
 
 .gallery-pets-info {
   position: absolute;
-  top: 110px;
-  left: -28px;
+  top: 232px;
+  left: 23px;
   width: 194px;
-  transform: scale(0.5714);
   display: none;
 }
 
-.activ-img { 
-  margin: 0 75.5px 12px;
-  transform: scale(1.75);
+.gallery-animals {
+  width: 140px;
+  height: 203px;
+  transition: all 0.4s ease-in-out;
+}
+
+.activ-img {
+  
 }
 
 .gallery-activ-img {
   filter: brightness(80%);
+  width: 245px;
+  height: 352px;
 }
 
 .main-animals {
@@ -302,12 +182,6 @@ h1, h2, h3, h4, h5, h6 {
 
 .main-animals:hover {
   cursor: pointer;
-}
-
-.gallery-animals {
-  width: 140px;
-  height: 203px;
-  transition: filter 1s linear;
 }
 
 .all-animals {
@@ -322,11 +196,13 @@ h1, h2, h3, h4, h5, h6 {
 
 .img-inner__elem:hover .gallery-animals {
   filter: brightness(80%);
+  width: 245px;
+  height: 352px;
 }
 
 .all-pets__elem:hover .pets-info,
 .img-inner__elem:hover .gallery-pets-info {
-  animation-duration: 2s;
+  animation-duration: 1s;
   animation-name: slidein;
   display: block;
 }
@@ -344,7 +220,8 @@ h1, h2, h3, h4, h5, h6 {
 
 .range-slider {
   margin-left: 321px;
-  width: 245px;
+  width: 90%;
+  max-width: 245px;
   height: 47px;
   display: flex;
   flex-direction: column;
@@ -366,7 +243,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .gallery__slider {
-  width: 245px;
+  width: 100%;
   -webkit-appearance: none;
 }
 
@@ -425,6 +302,8 @@ h1, h2, h3, h4, h5, h6 {
 
 .how-works__img {
   border-radius: 5px;
+  object-fit: cover;
+  object-position: -2px 0;
 }
 
 .how-works__range-slider {
@@ -446,7 +325,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* How it works add*/
 .section {
-  padding: 100px 0 115px;
+  padding: 100px 0;
   width: 100%;
 }
 
@@ -488,6 +367,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .zoos-pets__slider-inner {
+  max-width: 1300px;
+  width: 95%;
   display: flex;
   align-items: center;
 }
@@ -509,7 +390,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .vectors {
-  width: 18px;
+  min-width: 18px;
   height: 30px;
   background-position: center;
   transition: transform 0.1s linear;
@@ -642,7 +523,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .pay__text {
-  margin: 30px auto 92px;
+  margin: 30px 51px 92px;
+  text-align: center;
 }
 
 .pay__main {
@@ -667,6 +549,12 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--pay-color);
 }
 
+.pay-arrow {
+  width: 108px;
+  height: 20px;
+  background: url(assets/Vectors/long-arrow.svg) center no-repeat;
+}
+
 .pay__btn {
   position: relative;
   margin-top: 60px;
@@ -680,6 +568,7 @@ h1, h2, h3, h4, h5, h6 {
   color: #fff;
   transition: transform 0.1s linear;
   transform-style: preserve-3d;
+  cursor: pointer;
 }
 
 /* Testimonials */
@@ -693,10 +582,13 @@ h1, h2, h3, h4, h5, h6 {
   margin: 50px auto 40px;
   display: flex;
   align-items: center;
+  width: 95%;
+  max-width: 1288px;
 }
 
 .testimonials__main {
-  width: 1240px;
+  margin: 0 10px;
+  padding: 0 10px;
   position: relative;
   overflow: hidden;
 }
@@ -706,7 +598,7 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
   list-style-type: none;
   margin: 10px 0;
-  transform: translate3d(0, 0, 0);
+  transform: translate3d(-17px, 0, 0);
 }
 
 .testimonials__all-inner {
@@ -739,13 +631,15 @@ h1, h2, h3, h4, h5, h6 {
 /* Map */
 .map {
   background: var(--mini-main-bg-color);
+  overflow: hidden;
 }
 
 .map__main {
   margin: 60px auto 35px;
-  width: 1200px;
+  width: 100%;
   height: 498px;
   background: url(assets/map.svg) center no-repeat;
+  background-size: contain;
   position: relative;
 }
 
@@ -759,27 +653,37 @@ h1, h2, h3, h4, h5, h6 {
 
 .map__each-animal {
   position: relative;
+  pointer-events: none;
+}
+
+.each-animal__inner {
+  pointer-events: visible;
   width: 67px;
   filter: drop-shadow(2px 4px 15px rgba(6, 12, 70, 0.15));
   transition: transform 0.1s linear;
 }
 
 .map__each-animal:hover {
-  transform: scale(1.25);
   z-index: 1;
 }
 
 .map__each-animal:hover .each-animal__promt {
-  transform: none;
   display: flex;
 }
 
 .map__each-animal:hover .main__placeholder-red {
+  transform: scale(1.25);
   opacity: 1;
 }
 
 .map__each-animal:hover .main__placeholder {
+  transform: scale(1.25);
   opacity: 0;
+}
+
+.map__each-animal:hover .main__placeholder-inner {
+  transform: scale(1.25);
+  right: 17%;
 }
 
 .main__placeholder {
@@ -803,38 +707,41 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .eagles {
-  top: 74px;
-  left: 122px;
+  top: 14.5%;
+  left: 10%;
 }
 
 .alligator {
-  top: 7px;
-  left: 245px;
+  top: 1%;
+  left: 20.4%;
 }
 
 .dusan {
-  top: -6px;
-  left: 571px;
+  top: -1%;
+  left: 47.6%;
 }
 
 .panda {
-  top: -200px;
-  left: 893px;
+  top: -41%;
+  left: 74.4%;
 }
 
 .each-animal__promt {
   position: absolute;
-  width: 348px;
+  width: 60%;
+  max-width: 348px;
   padding: 40px 44px 39px;
   display: none;
   background: var(--base-color);
   box-shadow: 2px 4px 15px rgba(6, 12, 70, 0.15);
   border-radius: 8px;
+  pointer-events: visible;
 }
 
 .prompt__img {
   border-radius: 65px;
   object-fit: cover;
+  min-width: 65px;
 }
 
 .prompt__text {
@@ -863,529 +770,7 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0 0 5px;
 }
 
-/* Footer */
-.footer {
-  background: #333;
-}
-
-.footer__main {
-  width: 100%;
-  padding: 100px 0 57px;
-  border-bottom: 0.5px solid #fefefe;
-  display: flex;
-  justify-content: space-between;
-}
-
-.footer-logo {
-  text-align: left;
-  color: #fefefe;
-}
-
-.footer-form {
-  margin-top: 62px;
-  display: flex;
-  flex-direction: column;
-}
-
-.footer-form-title {
-  margin: 0;
-  margin-bottom: 25px;
-  color: #fefefe;
-}
-
-.input-name {
-  margin-bottom: 10px;
-}
-
-.input-name,
-.input-mail {
-  width: 383px;
-  padding: 9px 0;
-  font-size: 14px;
-  line-height: 16px;
-  color: #e0e0e0;
-  background: none;
-  border: none;
-  border-bottom: 1px solid #bdbdbd;
-}
-
-.input-name:focus,
-.input-mail:focus,
-.form-text:focus {
-  outline: none;
-}
-
-.footer-fieldset {
-  margin-top: 23px;
-  border: 1px solid #BDBDBD;
-  box-sizing: border-box;
-  border-radius: 3px;
-}
-
-.form-legend,
-.agree-text {
-  font-size: 12px;
-  line-height: 14px;
-  color: #bdbdbd;
-}
-
-.form-text {
-  width: 356px;
-  height: 86px;
-  background: none;
-  padding: 0;
-  border: none;
-  resize: none;
-  color: #e0e0e0;
-}
-
-.agree-text {
-  margin: 25px 0 20px;
-  width: 243px;
-}
-
-.checkbox__text {
-	position: relative;
-	padding: 0 0 0 19px;
-	cursor: pointer;
-  margin: 0;
-}
-
-.checkbox__text::before {
-	content: '';
-	position: absolute;
-  left: 0;
-	width: 11px;
-	height: 11px;
-	border: 1px solid #BDBDBD;
-  border-radius: 1px;
-	background: none;
-}
-
-.agree:checked + .checkbox__text::before {
-	content: "\2713";
-  text-align: center;
-}
-
-.agree{
-  position: absolute;
-	z-index: -1;
-	opacity: 0;
-	margin: 10px 0 0 20px;
-}
-
-.submit-btn {
-  margin-left: 255px;
-  width: 119px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-
-.submit-btn-text {
-  transition: color 0.15s linear;
-}
-
-.submit-btn:focus {
-  outline: none;
-}
-
-.footer__title {
-  margin: 0;
-  font-weight: 500;
-  text-transform: uppercase;
-  color: #fefefe;
-}
-
-.main__contacts {
-  width: 795px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.contacts__info {
-  margin-top: 17px;
-}
-
-.footer-nav {
-  width: 380px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.footer-link {
-  font-weight: 500;
-  color: #fefefe;
-}
-
-.footer-info-title {
-  margin: 74px 0 35px;
-  font-weight: 700;
-  color: #fefefe;
-  text-transform: uppercase;
-}
-
-.footer__text {
-  margin: 0;
-  font-style: normal;
-  color: #fefefe;
-}
-
-.footer__text-first {
-  margin-bottom: 5px;
-}
-
-.contacts__link {
-  margin: 20px 0;
-}
-
-.contacts__each-link {
-  display: block;
-  text-decoration: none;
-  font-style: normal;
-  color: #fefefe;
-}
-
-.footer-networks {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 125px;
-  list-style-type: none;
-}
-
-.donate-btn {
-  margin: 0;
-  padding: 17px 26px;
-  width: 223px;
-  height: 21px;
-  font-weight: 500;
-}
-
-.autor { 
-  margin: 0;
-  padding: 28px 0 72px;
-}
-
-.autor__inner {
-  margin: 0;
-  font-size: 12px;
-  line-height: 14px;
-  color: #bdbdbd;
-}
-
-.footer__text-first {
-  margin-bottom: 5px;
-}
-
-/* Map section */
-.map-page {
-  background: var(--map-color);
-}
-
-.map-page__main {
-  padding: 60px 0 100px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.map-page__text {
-  margin: 20px 0 54px;
-  width: 790px;
-}
-
-.map-page-slider {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.map-page-slider__all {
-  width: 89.42%;
-  max-width: 1073px;
-  overflow: hidden;
-}
-
-.map-page-slider__inner {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  list-style-type: none;
-  margin: 3px 0;
-}
-
-.map-page-slider__each {
-  padding: 0;
-}
-
-.circle-animals {
-  transition: transform 0.1s linear;
-}
-
-.circle-animals:hover {
-  transform: scale(1.1);
-  cursor: pointer;
-}
-
-.circle-animals__active {
-  padding: 20px;
-  height: 108px;
-  position: relative;
-  background: var(--map-color);
-  border-radius: 137px;
-  transform-style: preserve-3d;
-}
-
-.animals__active,
-.animals__active:hover {
-  transform: scale(1.25);
-}
-
-.circle-animals__active:hover::before {
-  opacity: 0;
-}
-
-.circle-animals__active:hover::after {
-  opacity: 1;
-}
-
-.circle-animals__active::before,
-.circle-animals__active::after {
-  content: "";
-  position: absolute;
-  top: -3px;
-  bottom: -3px;
-  left: -3px;
-  right: -3px;
-  background: linear-gradient(90deg, #07EEE0, #DF496D);
-  border-radius: 157px;
-  transition: opacity 0.5s linear;
-  transform: translateZ(-1px);
-}
-
-.circle-animals__active::before {
-  background: linear-gradient(90deg, #07EEE0, #DF496D);
-  opacity: 1;
-}
-
-.circle-animals__active::after {
-  background: linear-gradient(150deg, #DF496D, #07EEE0);
-  opacity: 0;
-}
-
-.map-page__range-slider {
-  margin: 32px 0 80px;
-}
-
-.map-page__map {
-  margin: 0;
-}
-
-.map-page__btn {
-  margin: 46px 0 0;
-}
-
-.map-page__each-animal {
-  position: relative;
-  width: 67px;
-  filter: drop-shadow(2px 4px 15px rgba(6, 12, 70, 0.15));
-  transition: transform 0.1s linear;
-}
-
-.map-page__each-animal:hover {
-  transform: scale(1.25);
-  z-index: 1;
-}
-
-.map__active .main__placeholder {
-  display: none;
-}
-
-.map__active .main__placeholder-red {
-  opacity: 1;
-}
-
-/* Zoos */
-.live-brodcast {
-  background: var(--map-color);
-}
-
-.side-bar-position {
-  position: absolute;
-  top: 150px;
-  left: 17px;
-  bottom: -70px;
-  visibility: hidden;
-}
-
-.side-bar {
-  position: sticky;
-  width: 154px;
-  top: 60px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  visibility: visible;
-}
-
-.side-bar__content {
-  margin: 20px 0;
-  height: 511px;
-  overflow: hidden;
-}
-
-.side-bar__content-inner {
-  margin: 0 3px;
-  height: 1073px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  list-style-type: none;
-  transform: translate3d(0, -5, 0);
-}
-
-.side-bar__each {
-  margin: 5px 0;
-  height: 108px;
-}
-
-.zoos-main {
-  position: absolute;
-}
-
-.live-brodcast__inner {
-  padding: 60px 0 100px;
-  position: relative;
-}
-
-.live__title {
-  text-align: left;
-}
-
-.live__main {
-  margin-top: 40px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.live__main-video {
-  width: 790px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.main-video__all {
-  width: 100%;
-  overflow: hidden;
-  position: relative;
-}
-
-.clear-elem {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  z-index: 1;
-}
-
-.main-video__all-inner {
-  margin: 30px 0;
-  width: 800px;
-  display: flex;
-  transform: translate3d(-13px, 0, 0);
-  list-style-type: none;
-}
-
-.main-video__mini-frame {
-  margin: 0 13px;
-}
-
-.mini-frame {
-  width: 246px;
-  height: 141px;
-  border-radius: 5px;
-}
-
-.main-frame {
-  width: 100%;
-  height: 442px;
-  border-radius: 5px;
-}
-
-.main-video__slider {
-  display: flex;
-  width: 37px;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.main-video__slider-elem {
-  width: 8px;
-  height: 8px;
-  border-radius: 11px;
-  background: #c4c4c4;
-  transition: transform 0.1s linear;
-}
-
-.main-video__slider-elem:hover {
-  cursor: pointer;
-  transform: scale(1.2);
-}
-
-.slider-elem__active {
-  width: 11px;
-  height: 11px;
-  background: linear-gradient(106.89deg, #4BD8B5 -14.32%, #49D6DF 100.68%);
-}
-
-.live__descryption {
-  width: 380px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.descryption__main-each {
-  margin-bottom: 13px;
-}
-
-.descryption__title {
-  margin: 0;
-  margin-bottom: 6px;
-}
-
-.descryption__text {
-  margin: 0;
-}
-
-#bad-text {
-  white-space: nowrap;
-}
-
-.feed-btn {
-  position: relative;
-  margin: 22px 0 0;
-  border-radius: 3px;
-  color: #fff;
-  text-transform: uppercase;
-  text-decoration: none;
-  padding: 17px 76px;
-  font-weight: 900;
-  font-size: 18px;
-  line-height: 21px;
-  transform-style: preserve-3d;
-}
-
+/* Buttons */
 .watch-online::before,
 .watch-online::after,
 .zoos-pets__btn::before,
@@ -1435,4 +820,777 @@ h1, h2, h3, h4, h5, h6 {
   opacity: 1;
 }
 
+@media (max-width: 1200px) {
+  /* Container */
+  .container-main {
+    max-width: 900px;
+  }
 
+  .main {
+    height: 926px;
+  }
+
+  /* Gallery */
+  .social-neworks {
+    top: 81%;
+  }
+
+  .main-content {
+    top: 127px;
+  }
+
+  .gallery-position {
+    width: 720px;
+  }
+
+  .gallery {
+    top: 46.75%;
+    right: 0;
+    width: auto;
+  }
+
+  .gallery__img-inner {
+    transform: translate3d(120px, -13px, 0);
+  }
+
+  .img-inner__elem {
+    margin: 0 15px;
+  }
+
+  .gallery-animals {
+    width: 180px;
+    height: 261px;
+  }
+
+  .gallery-activ-img {
+    width: 245px;
+    height: 352px;
+  }
+
+  .intro-slider {
+    margin-left: 350px;
+  }
+
+  /* How works */
+  .how-works__container {
+    width: 95%;
+    max-width: 746px;
+  }
+
+  .how-works__text {
+    margin-bottom: 14px;
+  }
+  
+  .how-works__img {
+    width: 100%;
+    max-width: 746px;
+    height: 323px;
+  }
+
+  .how-works__range-slider {
+    margin: 26px auto 31px;
+  }
+
+  .add-inner__elem {
+    width: 286px;
+  }
+
+  /* Zoos */
+  .zoos-pets__main {
+    width: 900px;
+  }
+
+  .all-animals {
+    width: 210px;
+    height: 301px;
+  }
+
+  .zoos-pets__all-pets {
+    transform: translate3d(-10px, 0, 0);
+  }
+
+  .all-pets__elem {
+    height: 301px;
+    margin: 0 10px;
+  }
+
+  .pets-info {
+    left: 6px;
+    top: 183px;
+  }
+
+  /* Pay */
+  .pay-arrow {
+    width: 48px;
+    height: 48px;
+    background: url(assets/Vectors/short-arrow.svg) center no-repeat;
+  }
+
+  .pay__text {
+    margin-bottom: 49px;
+  }
+
+  .pay__btn {
+    margin-top: 47px;
+  }
+
+  /* Zoos */
+  .zoos-pets__slider-inner {
+    max-width: 1000px;
+  }
+
+  /* Testimonials */
+  .testimonials {
+    margin: 52px auto 35px;
+    max-width: 988px;
+  }
+  .testimonials__main {
+    max-width: 920px;
+  }
+
+  .testimonials__main-inner {
+    width: 110%;
+    transform: translate3d(-10px, 0, 0);
+  }
+
+  .testimonials__all-inner {
+    box-sizing: border-box;
+    max-width: 440px;
+    margin: 0 10px;
+    padding: 48px 57px 89px;
+    width: 100%;
+  }
+
+  .testimonials__text {
+    width: 100%;
+    max-width: 326px;
+  }
+
+  /* Map */
+  .map__main {
+    height: 436px;
+    background: url(assets/map-1200.svg) center no-repeat;
+    background-size: 100%;
+  }
+
+  .map__main[data-theme="dark"] {
+    background: url(assets/dark-map-1200.svg) center no-repeat;
+    background-size: 100%;
+  }
+
+  .eagles {
+    top: 12.5%;
+    left: 9.4%;
+  }
+
+  .alligator {
+    top: -6.8%;
+    left: 19.4%;
+  }
+
+  .dusan {
+    top: -10%;
+    left: 46.7%;
+  }
+
+  .panda {
+    top: -52%;
+    left: 72.9%;
+  }
+
+  .each-animal__promt {
+    left: -60px;
+  }
+
+  #panda-promt {
+    left: -277px;
+  }
+}
+
+@media (max-width: 880px) {
+  /* Gallery */
+  .main-content__text {
+    width: auto;
+    max-width: 625px;
+    font-size: 69px;
+    line-height: 80px;
+  }
+
+  /* Pay */
+  .pay__main {
+    flex-direction: column;
+    height: 935px;
+  }
+
+  .pay-arrow {
+    background: url(assets/Vectors/vertical-arrow.svg) center no-repeat;
+  }
+
+  .pay__text {
+    margin-top: 17px;
+  }
+
+  /* Map */
+  .eagles {
+    top: 12.5%;
+    left: 8.4%;
+  }
+
+  .alligator {
+    top: -3.8%;
+    left: 19.3%;
+  }
+
+  .dusan {
+    top: -10%;
+    left: 46.5%;
+  }
+
+  .panda {
+    top: -54%;
+    left: 71.9%;
+  }
+}
+
+@media (max-width: 640px) {
+  /* Container */
+  .container-main {
+    max-width: 600px;
+  }
+
+  /* Gallary */
+  .main {
+    height: 934px;
+  }
+
+  .social-neworks {
+    top: 78%;
+  }
+
+  .main-content {
+    top: 122px;
+  }
+
+  .gallery-position {
+    width: 588px;
+    top: 43.8%;
+  }
+
+  .gallery__img-inner {
+    transform: translate3d(56px, -13px, 0);
+  }
+
+  .intro-slider {
+    margin-left: 287px;
+  }
+
+  .main-content__text {
+    width: auto;
+    font-size: 64px;
+    line-height: 75px;
+  }
+
+  /* How works */
+  .how-works__container {
+    max-width: 600px;
+    margin-bottom: 68px;
+  }
+
+  .how-works__text {
+    margin-bottom: 30px;
+  }
+  
+  .how-works__img {
+    width: 100%;
+    max-width: 600px;
+    max-height: 323px;
+  }
+
+  .how-works__add-inner {
+    flex-direction: column;
+    align-items: center;
+    height: 675px;
+  }
+
+  /* Zoos */
+  .zoos-pets__main {
+    width: 600px;
+    margin-bottom: 35px;
+  }
+
+  .vectors {
+    display: none;
+  }
+
+  .zoos-pets__btn {
+    margin-top: 38px;
+  }
+
+  /* Testimonials */
+  .testimonials {
+    width: 100%;
+    margin: 37px 0;
+  }
+
+  .testimonials__main-inner {
+    width: 205%;
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  .testimonials__all-inner {
+    padding: 47px 72px 106px;
+    max-width: 585px;
+  }
+
+  .testimonials__text {
+    max-width: 440px;
+  }
+
+  /* Map */
+  .map {
+    padding-bottom: 79px;
+  }
+
+  .map__main {
+    height: 290px;
+    margin-top: 50px;
+  }
+
+  .map__main[data-theme="dark"] {
+    height: 290px;
+  }
+
+  .eagles {
+    top: 2.4%;
+    left: 8.8%;
+  }
+
+  .alligator {
+    top: -28.1%;
+    left: 17.2%;
+  }
+
+  .dusan {
+    top: -43.6%;
+    left: 44.5%;
+  }
+
+  .panda {
+    top: -97%;
+    left: 71.1%;
+  }
+
+  #eagles-promt {
+    left: 10px
+  }
+
+  #alligator-promt {
+    left: -10px;
+  }
+
+  #gorilla-promt {
+    left: -180px;
+  }
+}
+
+@media (max-width: 580px) {
+  /* Gallery */
+  .main-content {
+    top: 100px;
+  }
+
+  .main-content__text {
+    width: auto;
+    max-width: 625px;
+    font-size: 52px;
+    line-height: 70px;
+  }
+
+  .gallery-position {
+    top: 40%;
+  }
+
+  /* Map */
+  .eagles {
+    top: 2.4%;
+    left: 6.6%;
+  }
+
+  .alligator {
+    top: -26.1%;
+    left: 17%;
+  }
+
+  .dusan {
+    top: -43.8%;
+    left: 44.3%;
+  }
+
+  .panda {
+    top: -99%;
+    left: 70.1%;
+  }
+}
+
+@media (max-width: 476px) {
+  /* Gallery */
+  .main-content {
+    top: 70px;
+  }
+
+  .main-content__text {
+    width: auto;
+    max-width: 625px;
+    font-size: 54px;
+    line-height: 60px;
+  }
+
+  /* Map */
+  .eagles {
+    top: 5.4%;
+    left: 5.2%;
+  }
+
+  .alligator {
+    top: -24.1%;
+    left: 16%;
+  }
+
+  .dusan {
+    top: -44.8%;
+    left: 43%;
+  }
+
+  .panda {
+    top: -96%;
+    left: 68.1%;
+  }
+}
+
+@media (max-width: 380px) {
+  /* Gallery */
+  .main-content {
+    top: 45px;
+  }
+
+  .main-content__text {
+    width: auto;
+    max-width: 625px;
+    font-size: 45px;
+    line-height: 60px;
+  }
+
+  .gallery-position {
+    width: 550px;
+  }
+
+  /* Map */
+  .eagles {
+    top: 7.1%;
+    left: 3.2%;
+  }
+
+  .alligator {
+    top: -23.1%;
+    left: 14%;
+  }
+
+  .dusan {
+    top: -46%;
+    left: 41%;
+  }
+
+  .panda {
+    top: -94%;
+    left: 66.1%;
+  }
+}
+
+@media (max-width: 320px) {
+  .container-main {
+    max-width: 300px;
+  }
+  /* Main */
+  .main {
+    height: 669px;
+  }
+
+  .main-content {
+    top: 92px;
+  }
+
+  .watch-online {
+    margin-top: 15px;
+  }
+
+  .social-neworks {
+    display: none;
+  }
+
+  .main-content__text {
+    font-size: 48px;
+    line-height: 56px;
+  }
+
+  .gallery-position {
+    width: 317px;
+    top: 54.8%;
+  }
+
+  .gallery-animals {
+    width: 113px;
+    height: 164px;
+  }
+
+  .gallery-activ-img {
+    width: 140px;
+    height: 202px;
+  }
+
+  .gallery__img-inner {
+    transform: translate3d(15px, 0, 0);
+    height: 202px;
+  }
+
+  .img-inner__elem {
+    margin: 0 5px;
+  }
+  
+  .img-inner__elem:hover .gallery-animals {
+    filter: brightness(80%);
+    width: 140px;
+    height: 202px;
+  }
+
+  .gallery-pets-info {
+    width: 122px;
+    top: 75px;
+    left: 8px;
+  }
+
+  .pets-info__text {
+    font-size: 12px;
+    line-height: 14px;
+  }
+
+  .pets-info__text br {
+    display: none;
+  }
+
+  .pets-info__btns {
+    flex-direction: column;
+    height: 54px;
+  }
+
+  .intro-slider {
+    margin-left: 144px;
+    margin-top: 12px;
+    width: 140px;
+    height: 37px;
+  }
+
+  .gallery__slider {
+    width: 140px;
+  }
+
+  .gallery__slider::-webkit-slider-thumb {
+    width: 17px;
+    height: 10px;
+  }
+
+  .btns__watch-online,
+  .btns__donate {
+    height: 24px;
+  }
+
+  /* How works */
+  .how-works__container {
+    max-width: 300px;
+    margin-bottom: 50px;
+  }
+
+  .title {
+    font-size: 36px;
+    line-height: 42px;
+  }
+
+  .how-works__text {
+    margin: 19px 0 32px;
+  }
+
+  .how-works__range-slider {
+    margin: 16px auto 20px;
+  }
+
+  .how-works__slider {
+    width: 245px;
+  }
+
+  .how-works__slider::-webkit-slider-thumb {
+    width: 80px;
+  }
+
+  /* Add */
+  .how-works__add {
+    padding: 50px 0 20px;
+  }
+
+  .how-works__add-inner {
+    height: auto;
+    min-height: 618px;
+  }
+
+  .add-inner__elem {
+    padding-bottom: 30px;
+    height: auto;
+  }
+
+  .add-inner__elem {
+    width: 100%;
+  }
+
+  /* Zoos */
+  .zoos-pets__true-slider {
+    width: 100%;
+  }
+
+  .zoos-pets__true-slider::-webkit-slider-thumb  {
+    width: 30px;
+  }
+
+  .zoos-pets__main {
+    margin: 30px 10px;
+  }
+
+  .zoos-pets__btn {
+    margin-top: 29px;
+  }
+
+  .zoos-pets__all-pets {
+    transform: translate3d(-8px, 0, 0);
+  }
+
+  .all-pets__elem {
+    margin: 0px 8px;
+  }
+
+  .pets-info__text {
+    margin-bottom: 13px;
+  }
+
+  .pets-unique {
+    font-size: 14px;
+    line-height: 16px;
+  }
+
+  .pets-unique br {
+    display: initial;
+  }
+
+  .pets-unique__btns {
+    flex-direction: initial;
+  }
+
+  /* Pay */
+  .pay__text {
+    display: none;
+  }
+
+  .pay {
+    padding: 50px 0;
+  }
+
+  .pay__main {
+    margin-top: 30px
+  }
+
+  .pay-img {
+    width: 100%;
+    max-width: 245px;
+    height: auto;
+  }
+
+  /* Testimonials */
+  .testimonials {
+    margin: 37px 0 0;
+  }
+
+  .testimonials__all-inner {
+    padding: 50px 14px 112px;
+    max-width: 300px;
+  }
+
+  .testimonials__text {
+    max-width: 272px;
+  }
+
+  /* Map */
+  .map {
+    padding: 50px 0 60px;
+  }
+
+  .map__main {
+    max-height: 146px;
+    margin-top: 31px;
+    margin-bottom: 30px;
+  }
+
+  .each-animal__inner {
+    width: 32.85px;
+  }
+
+  .main__placeholder,
+  .main__placeholder-red {
+    width: 32.85px;
+  }
+
+  .main__placeholder-inner {
+    width: 22px;
+    height: 22px;
+    top: 5.85px;
+  }
+
+  .alligator {
+    top: -27.1%;
+    left: 17.5%;
+  }
+
+  .panda {
+    left: 72.1%;
+  }
+
+  .each-animal__promt {
+    width: 77%;
+    padding: 17px 44px 17px 15px;
+  }
+
+  #eagles-promt {
+    left: -7%;
+  }
+
+  #alligator-promt {
+    top: 85%;
+    left: -16%;
+  }
+
+  #gorilla-promt {
+    left: -43%;
+    top: 30%;
+  }
+
+  #panda-promt {
+    top: 90%;
+    left: -70%;
+  }
+
+  .prompt__text-title {
+    font-size: 14px;
+    line-height: 16px;
+  }
+
+  .prompt__text-inner,
+  .prompt__text-main {
+    font-size: 11px;
+    line-height: 13px;
+  }
+}

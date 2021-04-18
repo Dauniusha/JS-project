@@ -2,11 +2,13 @@
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link 
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" 
       rel="stylesheet">
   <link rel="stylesheet" href="normalize.css">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="header-footer.css">
   <title>Online ZOO</title>
 </head>
 <body>
@@ -21,11 +23,14 @@
         <nav class="header__nav">
           <a class="nav__link active" href="#">About</a>
           <a class="nav__link" href="pages/zoos/panda.html">Zoos</a>
-          <a class="nav__link" href="pages/map.html">Map</a>
+          <a class="nav__link" href="pages/map/map.html">Map</a>
           <a class="nav__link" href="#bottom">Contact Us</a>
           <a class="nav__link" href="https://www.figma.com/file/HKt5Nlx0jghQtJp6jW9q8F/zooApp">Design</a>
         </nav>
-        <input id="switch" type="checkbox"><label class="switcher" for="switch"></label>
+        <div class="switcher-menu">
+          <input id="switch" type="checkbox"><label class="switcher" for="switch"></label>
+          <div class="menu" data-theme="light"></div>
+        </div>
       </div>
     </div>
   </header>
@@ -63,92 +68,94 @@
         </a>
       </div>
     </div>
-    <div class="gallery">
-      <div class="gallery__img">
-        <ul class="gallery__img-inner">
-          <li class="img-inner__elem">
-            <img class="main-animals gallery-animals" src="assets/Animals/Eagles.jfif" alt="Eagles">
-            <div class="gallery-pets-info">
-              <p class="text pets-info__text">Panda’s name is Bei Bei. He <br>is 2 years old. Bei Bei is from China. He loves bamboos.</p>
-              <div class="pets-info__btns">
-                <a class="btns__watch-online" href="pages/zoos/eagle.html">
-                  <img class="watch-online__play-btn" src="assets/triangle.svg" alt="play">
-                  <p class="btns__text btns__text-watch">watch online</p>
-                </a>
-                <a class="btns__donate" href="#">
-                  <img class="donate__play-btn" src="assets/$.svg" alt="donate">
-                  <p class="btns__text btns__text-donate">Donate</p>
-                </a>
+    <div class="gallery-position">
+      <div class="gallery">
+        <div class="gallery__img">
+          <ul class="gallery__img-inner">
+            <li class="img-inner__elem">
+              <img class="main-animals gallery-animals" src="assets/Animals/Eagles.jfif" alt="Eagles">
+              <div class="gallery-pets-info">
+                <p class="text pets-info__text">Panda’s name is Bei Bei. He <br>is 2 years old. Bei Bei is from China. He loves bamboos.</p>
+                <div class="pets-info__btns">
+                  <a class="btns__watch-online" href="pages/zoos/eagle.html">
+                    <img class="watch-online__play-btn" src="assets/triangle.svg" alt="play">
+                    <p class="btns__text btns__text-watch">watch online</p>
+                  </a>
+                  <a class="btns__donate" href="#">
+                    <img class="donate__play-btn" src="assets/$.svg" alt="donate">
+                    <p class="btns__text btns__text-donate">Donate</p>
+                  </a>
+                </div>
               </div>
-            </div>
-          </li>
-          <li class="img-inner__elem activ-img">
-            <img class="main-animals gallery-animals gallery-activ-img" src="assets/Animals/Panda.jfif" alt="Panda">
-            <div class="gallery-pets-info all-pets-info-active">
-              <p class="text pets-info__text">Panda’s name is Bei Bei. He <br>is 2 years old. Bei Bei is from China. He loves bamboos.</p>
-              <div class="pets-info__btns">
-                <a class="btns__watch-online" href="pages/zoos/panda.html">
-                  <img class="watch-online__play-btn" src="assets/triangle.svg" alt="play">
-                  <p class="btns__text btns__text-watch">watch online</p>
-                </a>
-                <a class="btns__donate" href="#">
-                  <img class="donate__play-btn" src="assets/$.svg" alt="donate">
-                  <p class="btns__text btns__text-donate">Donate</p>
-                </a>
+            </li>
+            <li class="img-inner__elem activ-img">
+              <img class="main-animals gallery-animals gallery-activ-img" src="assets/Animals/Panda.jfif" alt="Panda">
+              <div class="gallery-pets-info all-pets-info-active">
+                <p class="text pets-info__text">Panda’s name is Bei Bei. He <br>is 2 years old. Bei Bei is from China. He loves bamboos.</p>
+                <div class="pets-info__btns">
+                  <a class="btns__watch-online" href="pages/zoos/panda.html">
+                    <img class="watch-online__play-btn" src="assets/triangle.svg" alt="play">
+                    <p class="btns__text btns__text-watch">watch online</p>
+                  </a>
+                  <a class="btns__donate" href="#">
+                    <img class="donate__play-btn" src="assets/$.svg" alt="donate">
+                    <p class="btns__text btns__text-donate">Donate</p>
+                  </a>
+                </div>
               </div>
-            </div>
-          </li>
-          <li class="img-inner__elem">
-            <img class="main-animals gallery-animals" src="assets/Animals/Dusan.jfif" alt="Monkey">
-            <div class="gallery-pets-info">
-              <p class="text pets-info__text">Panda’s name is Bei Bei. He <br>is 2 years old. Bei Bei is from China. He loves bamboos.</p>
-              <div class="pets-info__btns">
-                <a class="btns__watch-online" href="pages/zoos/gorilla.html">
-                  <img class="watch-online__play-btn" src="assets/triangle.svg" alt="play">
-                  <p class="btns__text btns__text-watch">watch online</p>
-                </a>
-                <a class="btns__donate" href="#">
-                  <img class="donate__play-btn" src="assets/$.svg" alt="donate">
-                  <p class="btns__text btns__text-donate">Donate</p>
-                </a>
+            </li>
+            <li class="img-inner__elem">
+              <img class="main-animals gallery-animals" src="assets/Animals/Dusan.jfif" alt="Monkey">
+              <div class="gallery-pets-info">
+                <p class="text pets-info__text">Panda’s name is Bei Bei. He <br>is 2 years old. Bei Bei is from China. He loves bamboos.</p>
+                <div class="pets-info__btns">
+                  <a class="btns__watch-online" href="pages/zoos/gorilla.html">
+                    <img class="watch-online__play-btn" src="assets/triangle.svg" alt="play">
+                    <p class="btns__text btns__text-watch">watch online</p>
+                  </a>
+                  <a class="btns__donate" href="#">
+                    <img class="donate__play-btn" src="assets/$.svg" alt="donate">
+                    <p class="btns__text btns__text-donate">Donate</p>
+                  </a>
+                </div>
               </div>
-            </div>
-          </li>
-          <li class="img-inner__elem">
-            <img class="main-animals gallery-animals" src="assets/Animals/aligator.jfif" alt="Aligator">
-            <div class="gallery-pets-info">
-              <p class="text pets-info__text">Panda’s name is Bei Bei. He <br>is 2 years old. Bei Bei is from China. He loves bamboos.</p>
-              <div class="pets-info__btns">
-                <a class="btns__watch-online" href="pages/zoos/alligator.html">
-                  <img class="watch-online__play-btn" src="assets/triangle.svg" alt="play">
-                  <p class="btns__text btns__text-watch">watch online</p>
-                </a>
-                <a class="btns__donate" href="#">
-                  <img class="donate__play-btn" src="assets/$.svg" alt="donate">
-                  <p class="btns__text btns__text-donate">Donate</p>
-                </a>
+            </li>
+            <li class="img-inner__elem">
+              <img class="main-animals gallery-animals" src="assets/Animals/aligator.jfif" alt="Aligator">
+              <div class="gallery-pets-info">
+                <p class="text pets-info__text">Panda’s name is Bei Bei. He <br>is 2 years old. Bei Bei is from China. He loves bamboos.</p>
+                <div class="pets-info__btns">
+                  <a class="btns__watch-online" href="pages/zoos/alligator.html">
+                    <img class="watch-online__play-btn" src="assets/triangle.svg" alt="play">
+                    <p class="btns__text btns__text-watch">watch online</p>
+                  </a>
+                  <a class="btns__donate" href="#">
+                    <img class="donate__play-btn" src="assets/$.svg" alt="donate">
+                    <p class="btns__text btns__text-donate">Donate</p>
+                  </a>
+                </div>
               </div>
-            </div>
-          </li>
-          <li class="img-inner__elem">
-            <img class="main-animals gallery-animals" src="assets/Animals/scott.jfif" alt="Scott">
-          </li>
-          <li class="img-inner__elem">
-            <img class="main-animals gallery-animals" src="assets/Animals/molinares.jfif" alt="Molinares">
-          </li>
-          <li class="img-inner__elem">
-            <img class="main-animals gallery-animals" src="assets/Animals/elefant.jfif" alt="Elefants">
-          </li>
-          <li class="img-inner__elem">
-            <img class="main-animals gallery-animals" src="assets/Animals/pantera.jfif" alt="Pantera">
-          </li>
-        </ul>
+            </li>
+            <li class="img-inner__elem">
+              <img class="main-animals gallery-animals" src="assets/Animals/scott.jfif" alt="Scott">
+            </li>
+            <li class="img-inner__elem">
+              <img class="main-animals gallery-animals" src="assets/Animals/molinares.jfif" alt="Molinares">
+            </li>
+            <li class="img-inner__elem">
+              <img class="main-animals gallery-animals" src="assets/Animals/elefant.jfif" alt="Elefants">
+            </li>
+            <li class="img-inner__elem">
+              <img class="main-animals gallery-animals" src="assets/Animals/pantera.jfif" alt="Pantera">
+            </li>
+          </ul>
+        </div>
+        <div class="range-slider intro-slider">
+          <span class="slider__text">0<span class="slider__text-now">2</span>/<span class="slider__text-value">08</span></span>
+          <input class="gallery__slider" type="range" value="2" min="1" max="8"></input>
+        </div>
+        </div>
       </div>
-      <div class="range-slider">
-        <span class="slider__text">0<span class="slider__text-now">2</span>/<span class="slider__text-value">08</span></span>
-        <input class="gallery__slider" type="range" value="2" min="1" max="8"></input>
-      </div>
-    </div>
   </section>
     <section class="how-works">
       <div class="how-works__container">
@@ -200,8 +207,8 @@
             <li class="all-pets__elem">
               <img class="main-animals all-animals all-pets-active" src="assets/Animals/Panda.jfif" alt="Panda">
               <div class="pets-info all-pets-info-active">
-                <p class="text pets-info__text">Panda’s name is Bei Bei. He <br>is 2 years old. Bei Bei is from China. He loves bamboos.</p>
-                <div class="pets-info__btns">
+                <p class="text pets-info__text pets-unique">Panda’s name is Bei Bei. He <br>is 2 years old. Bei Bei is from China. He loves bamboos.</p>
+                <div class="pets-info__btns pets-unique__btns">
                   <a class="btns__watch-online" href="pages/zoos/panda.html">
                     <img class="watch-online__play-btn" src="assets/triangle.svg" alt="play">
                     <p class="btns__text btns__text-watch">watch online</p>
@@ -216,8 +223,8 @@
             <li class="all-pets__elem">
               <img class="main-animals all-animals" src="assets/Animals/Eagles.jfif" alt="Eagles">
               <div class="pets-info">
-                <p class="text pets-info__text">Panda’s name is Bei Bei. He <br>is 2 years old. Bei Bei is from China. He loves bamboos.</p>
-                <div class="pets-info__btns">
+                <p class="text pets-info__text pets-unique">Panda’s name is Bei Bei. He <br>is 2 years old. Bei Bei is from China. He loves bamboos.</p>
+                <div class="pets-info__btns pets-unique__btns">
                   <a class="btns__watch-online" href="pages/zoos/eagle.html">
                     <img class="watch-online__play-btn" src="assets/triangle.svg" alt="play">
                     <p class="btns__text btns__text-watch">watch online</p>
@@ -232,8 +239,8 @@
             <li class="all-pets__elem">
               <img class="main-animals all-animals" src="assets/Animals/Dusan.jfif" alt="Dusan">
               <div class="pets-info">
-                <p class="text pets-info__text">Panda’s name is Bei Bei. He <br>is 2 years old. Bei Bei is from China. He loves bamboos.</p>
-                <div class="pets-info__btns">
+                <p class="text pets-info__text pets-unique">Panda’s name is Bei Bei. He <br>is 2 years old. Bei Bei is from China. He loves bamboos.</p>
+                <div class="pets-info__btns pets-unique__btns">
                   <a class="btns__watch-online" href="pages/zoos/gorilla.html">
                     <img class="watch-online__play-btn" src="assets/triangle.svg" alt="play">
                     <p class="btns__text btns__text-watch">watch online</p>
@@ -248,8 +255,8 @@
             <li class="all-pets__elem">
               <img class="main-animals all-animals" src="assets/Animals/aligator.jfif" alt="Alligator">
               <div class="pets-info">
-                <p class="text pets-info__text">Panda’s name is Bei Bei. He <br>is 2 years old. Bei Bei is from China. He loves bamboos.</p>
-                <div class="pets-info__btns">
+                <p class="text pets-info__text pets-unique">Panda’s name is Bei Bei. He <br>is 2 years old. Bei Bei is from China. He loves bamboos.</p>
+                <div class="pets-info__btns pets-unique__btns">
                   <a class="btns__watch-online" href="pages/zoos/alligator.html">
                     <img class="watch-online__play-btn" src="assets/triangle.svg" alt="play">
                     <p class="btns__text btns__text-watch">watch online</p>
@@ -264,8 +271,8 @@
             <li class="all-pets__elem">
               <img class="main-animals all-animals" src="assets/Animals/scott.jfif" alt="Scott">
               <div class="pets-info">
-                <p class="text pets-info__text">Panda’s name is Bei Bei. He <br>is 2 years old. Bei Bei is from China. He loves bamboos.</p>
-                <div class="pets-info__btns">
+                <p class="text pets-info__text pets-unique">Panda’s name is Bei Bei. He <br>is 2 years old. Bei Bei is from China. He loves bamboos.</p>
+                <div class="pets-info__btns pets-unique__btns">
                   <a class="btns__watch-online" href="#">
                     <img class="watch-online__play-btn" src="assets/triangle.svg" alt="play">
                     <p class="btns__text btns__text-watch">watch online</p>
@@ -280,8 +287,8 @@
             <li class="all-pets__elem">
               <img class="main-animals all-animals" src="assets/Animals/molinares.jfif" alt="Molinares">
               <div class="pets-info">
-                <p class="text pets-info__text">Panda’s name is Bei Bei. He <br>is 2 years old. Bei Bei is from China. He loves bamboos.</p>
-                <div class="pets-info__btns">
+                <p class="text pets-info__text pets-unique">Panda’s name is Bei Bei. He <br>is 2 years old. Bei Bei is from China. He loves bamboos.</p>
+                <div class="pets-info__btns pets-unique__btns">
                   <a class="btns__watch-online" href="#">
                     <img class="watch-online__play-btn" src="assets/triangle.svg" alt="play">
                     <p class="btns__text btns__text-watch">watch online</p>
@@ -296,8 +303,8 @@
             <li class="all-pets__elem">
               <img class="main-animals all-animals" src="assets/Animals/elefant.jfif" alt="Elefants">
               <div class="pets-info">
-                <p class="text pets-info__text">Panda’s name is Bei Bei. He <br>is 2 years old. Bei Bei is from China. He loves bamboos.</p>
-                <div class="pets-info__btns">
+                <p class="text pets-info__text pets-unique">Panda’s name is Bei Bei. He <br>is 2 years old. Bei Bei is from China. He loves bamboos.</p>
+                <div class="pets-info__btns pets-unique__btns">
                   <a class="btns__watch-online" href="#">
                     <img class="watch-online__play-btn" src="assets/triangle.svg" alt="play">
                     <p class="btns__text btns__text-watch">watch online</p>
@@ -312,8 +319,8 @@
             <li class="all-pets__elem">
               <img class="main-animalsall-animals" src="assets/Animals/pantera.jfif" alt="Pantera">
               <div class="pets-info">
-                <p class="text pets-info__text">Panda’s name is Bei Bei. He <br>is 2 years old. Bei Bei is from China. He loves bamboos.</p>
-                <div class="pets-info__btns">
+                <p class="text pets-info__text pets-unique">Panda’s name is Bei Bei. He <br>is 2 years old. Bei Bei is from China. He loves bamboos.</p>
+                <div class="pets-info__btns pets-unique__btns">
                   <a class="btns__watch-online" href="#">
                     <img class="watch-online__play-btn" src="assets/triangle.svg" alt="play">
                     <p class="btns__text btns__text-watch">watch online</p>
@@ -342,17 +349,17 @@
     <div class="container-main">
       <div class="pay__main">
         <div class="pay-main__inner">
-          <img src="assets/Pay-section/clear-VISA.svg" alt="VISA">
+          <img class="pay-img" src="assets/Pay-section/clear-VISA.svg" alt="VISA">
           <h3 class="add-title pay__title">You pay with a<br>VISA card</h3>
         </div>
-        <img src="assets/Vectors/long-arrow.svg" alt="arrow">
+        <div class="pay-arrow"></div>
         <div class="pay-main__inner">
-          <img src="assets/Pay-section/payments-go.svg" alt="Take goes">
+          <img class="pay-img" src="assets/Pay-section/payments-go.svg" alt="Take goes">
           <h3 class="add-title pay__title">Payment goes<br>to the Zoo</h3>
         </div>
-        <img src="assets/Vectors/long-arrow.svg" alt="arrow">
+        <div class="pay-arrow"></div>
         <div class="pay-main__inner">
-          <img src="assets/Pay-section/panda-gets-bamboo.svg" alt="Panda eat">
+          <img class="pay-img" src="assets/Pay-section/panda-gets-bamboo.svg" alt="Panda eat">
           <h3 class="add-title pay__title">Panda gets<br>the bamboo</h3>
         </div>
       </div>
@@ -363,7 +370,7 @@
     <h2 class="title">Testimonials</h2>
     <div class="testimonials">
       <div class="vectors vectors-left" data-theme="light"></div>
-      <div class="testimonials__main">
+      <div class="container-main testimonials__main">
         <ul class="testimonials__main-inner">
           <li class="testimonials__all-inner">
             <img class="testimonials__avatar" src="assets/unknown user.svg" alt="ava"></img>
@@ -387,56 +394,66 @@
   </section>
   <section class="section map">
     <h2 class="title">Map</h2>
-    <div class="map__main" data-theme="light">
-      <div class="map__each-animal eagles">
-        <img class="main__placeholder" src="assets/placeholder.svg" alt="place">
-        <img class="main__placeholder-red" src="assets/Map/red-placeholder.svg" alt="place">
-        <img class="main__placeholder-inner" src="assets/Animals/Eagles.jfif" alt="Eagles" width="43px" height="43px">
-        <div class="each-animal__promt">
-          <img class="prompt__img" src="assets/Animals/Eagles.jfif" alt="Eagles" width="65px" height="65px">
-          <div class="prompt__text">
-            <h3 class="prompt__text-title">West End Bald Eagle</h3>
-            <p class="text prompt__text-main"><span class="prompt__text-inner">Region: </span>on an island near Los Angeles</p>
-            <p class="text prompt__text-main"><span class="prompt__text-inner">Population: </span>more than 270 pairs in 2013</p>
+    <div class="container-main">
+      <div class="map__main" data-theme="light">
+        <div class="map__each-animal eagles">
+          <div class="each-animal__inner">
+            <img class="main__placeholder" src="assets/placeholder.svg" alt="place">
+            <img class="main__placeholder-red" src="assets/Map/red-placeholder.svg" alt="place">
+            <img class="main__placeholder-inner" src="assets/Animals/Eagles.jfif" alt="Eagles" width="43px" height="43px">
+          </div>
+          <div class="each-animal__promt" id="eagles-promt">
+            <img class="prompt__img" src="assets/Animals/Eagles.jfif" alt="Eagles" width="65px" height="65px">
+            <div class="prompt__text">
+              <h3 class="prompt__text-title">West End Bald Eagle</h3>
+              <p class="text prompt__text-main"><span class="prompt__text-inner">Region: </span>on an island near Los Angeles</p>
+              <p class="text prompt__text-main"><span class="prompt__text-inner">Population: </span>more than 270 pairs in 2013</p>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="map__each-animal alligator">
-        <img class="main__placeholder" src="assets/placeholder.svg" alt="place">
-        <img class="main__placeholder-red" src="assets/Map/red-placeholder.svg" alt="place">
-        <img class="main__placeholder-inner" src="assets/Animals/aligator.jfif" alt="Alligator" width="43px" height="43px">
-        <div class="each-animal__promt">
-          <img class="prompt__img" src="assets/Animals/aligator.jfif" alt="Alligator" width="65px" height="65px">
-          <div class="prompt__text">
-            <h3 class="prompt__text-title">West End Bald Eagle</h3>
-            <p class="text prompt__text-main"><span class="prompt__text-inner">Region: </span>on an island near Los Angeles</p>
-            <p class="text prompt__text-main"><span class="prompt__text-inner">Population: </span>more than 270 pairs in 2013</p>
+        <div class="map__each-animal alligator">
+          <div class="each-animal__inner">
+            <img class="main__placeholder" src="assets/placeholder.svg" alt="place">
+            <img class="main__placeholder-red" src="assets/Map/red-placeholder.svg" alt="place">
+            <img class="main__placeholder-inner" src="assets/Animals/aligator.jfif" alt="Alligator" width="43px" height="43px">
+          </div>
+          <div class="each-animal__promt" id="alligator-promt">
+            <img class="prompt__img" src="assets/Animals/aligator.jfif" alt="Alligator" width="65px" height="65px">
+            <div class="prompt__text">
+              <h3 class="prompt__text-title">West End Bald Eagle</h3>
+              <p class="text prompt__text-main"><span class="prompt__text-inner">Region: </span>on an island near Los Angeles</p>
+              <p class="text prompt__text-main"><span class="prompt__text-inner">Population: </span>more than 270 pairs in 2013</p>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="map__each-animal dusan">
-        <img class="main__placeholder" src="assets/placeholder.svg" alt="place">
-        <img class="main__placeholder-red" src="assets/Map/red-placeholder.svg" alt="place">
-        <img class="main__placeholder-inner" src="assets/Animals/Dusan.jfif" alt="Dusan" width="43px" height="43px">
-        <div class="each-animal__promt">
-          <img class="prompt__img" src="assets/Animals/Dusan.jfif" alt="Dusan" width="65px" height="65px">
-          <div class="prompt__text">
-            <h3 class="prompt__text-title">West End Bald Eagle</h3>
-            <p class="text prompt__text-main"><span class="prompt__text-inner">Region: </span>on an island near Los Angeles</p>
-            <p class="text prompt__text-main"><span class="prompt__text-inner">Population: </span>more than 270 pairs in 2013</p>
+        <div class="map__each-animal dusan">
+          <div class="each-animal__inner">
+            <img class="main__placeholder" src="assets/placeholder.svg" alt="place">
+            <img class="main__placeholder-red" src="assets/Map/red-placeholder.svg" alt="place">
+            <img class="main__placeholder-inner" src="assets/Animals/Dusan.jfif" alt="Dusan" width="43px" height="43px">
+          </div>
+          <div class="each-animal__promt" id="gorilla-promt">
+            <img class="prompt__img" src="assets/Animals/Dusan.jfif" alt="Dusan" width="65px" height="65px">
+            <div class="prompt__text">
+              <h3 class="prompt__text-title">West End Bald Eagle</h3>
+              <p class="text prompt__text-main"><span class="prompt__text-inner">Region: </span>on an island near Los Angeles</p>
+              <p class="text prompt__text-main"><span class="prompt__text-inner">Population: </span>more than 270 pairs in 2013</p>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="map__each-animal panda">
-        <img class="main__placeholder" src="assets/placeholder.svg" alt="place">
-        <img class="main__placeholder-red" src="assets/Map/red-placeholder.svg" alt="place">
-        <img class="main__placeholder-inner" src="assets/Animals/Panda.jfif" alt="Panda" width="43px" height="43px">
-        <div class="each-animal__promt">
-          <img class="prompt__img" src="assets/Animals/Panda.jfif" alt="Panda" width="65px" height="65px">
-          <div class="prompt__text">
-            <h3 class="prompt__text-title">West End Bald Eagle</h3>
-            <p class="text prompt__text-main"><span class="prompt__text-inner">Region: </span>on an island near Los Angeles</p>
-            <p class="text prompt__text-main"><span class="prompt__text-inner">Population: </span>more than 270 pairs in 2013</p>
+        <div class="map__each-animal panda">
+          <div class="each-animal__inner">
+            <img class="main__placeholder" src="assets/placeholder.svg" alt="place">
+            <img class="main__placeholder-red" src="assets/Map/red-placeholder.svg" alt="place">
+            <img class="main__placeholder-inner" src="assets/Animals/Panda.jfif" alt="Panda" width="43px" height="43px">
+          </div>
+          <div class="each-animal__promt" id="panda-promt">
+            <img class="prompt__img" src="assets/Animals/Panda.jfif" alt="Panda" width="65px" height="65px">
+            <div class="prompt__text">
+              <h3 class="prompt__text-title">West End Bald Eagle</h3>
+              <p class="text prompt__text-main"><span class="prompt__text-inner">Region: </span>on an island near Los Angeles</p>
+              <p class="text prompt__text-main"><span class="prompt__text-inner">Population: </span>more than 270 pairs in 2013</p>
+            </div>
           </div>
         </div>
       </div>
@@ -478,7 +495,7 @@
             <nav class="footer-nav">
               <a class="nav__link footer-link" href="#up">About</a>
               <a class="nav__link footer-link" href="pages/zoos/panda.html">Zoos</a>
-              <a class="nav__link footer-link" href="pages/map.html">Map</a>
+              <a class="nav__link footer-link" href="pages/map/map.html">Map</a>
               <a class="nav__link footer-link" href="https://www.figma.com/file/HKt5Nlx0jghQtJp6jW9q8F/zooApp">Design</a>
             </nav>
             <p class="text footer-info-title">ZOO Online Centre</p>
