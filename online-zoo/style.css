@@ -1508,7 +1508,7 @@ h1, h2, h3, h4, h5, h6 {
 
   /* Testimonials */
   .testimonials {
-    margin: 37px 0 0;
+    margin: 37px 0 40px;
   }
 
   .testimonials__all-inner {
@@ -1531,10 +1531,7 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 30px;
   }
 
-  .each-animal__inner {
-    width: 32.85px;
-  }
-
+  .each-animal__inner,
   .main__placeholder,
   .main__placeholder-red {
     width: 32.85px;
@@ -1546,12 +1543,23 @@ h1, h2, h3, h4, h5, h6 {
     top: 5.85px;
   }
 
+  .eagles {
+    top: 2.1%;
+    left: 7.2%;
+  }
+
   .alligator {
     top: -27.1%;
     left: 17.5%;
   }
 
+  .dusan {
+    top: -44%;
+    left: 45%;
+  }
+
   .panda {
+    top: -100%;
     left: 72.1%;
   }
 

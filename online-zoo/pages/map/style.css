@@ -194,6 +194,28 @@
   }
 }
 
+@media (max-width: 880px) {
+  /* Map */
+  .eagles {
+    top: 16%;
+    left: 8.4%;
+  }
+
+  .alligator {
+    top: 1.7%;
+    left: 19.3%;
+  }
+
+  .dusan {
+    left: 46.7%;
+  }
+
+  .panda {
+    top: -43%;
+    left: 71.9%;
+  }
+}
+
 @media (max-width: 640px) {
   .map-container {
     max-width: 600px;
@@ -256,6 +278,175 @@
   }
 }
 
+@media (max-width: 580px) {
+  .eagles {
+    left: 6.4%;
+  }
+
+  .alligator {
+    top: -25.4%;
+    left: 17.2%;
+  }
+
+  .dusan {
+    top: -42.6%;
+    left: 44.3%;
+  }
+
+  .panda {
+    top: -98.4%;
+    left: 70.3%;
+  }
+}
+
+@media (max-width: 476px) {
+  .eagles {
+    top: 5%;
+    left: 5%;
+  }
+
+  .alligator {
+    top: -23.5%;
+    left: 15.8%;
+  }
+
+  .dusan {
+    top: -43.7%;
+    left: 43.1%;
+  }
+
+  .panda {
+    top: -95.4%;
+    left: 69.3%;
+  }
+}
+
+@media (max-width: 380px) {
+  .eagles {
+    top: 8%;
+    left: 3.5%;
+  }
+
+  .alligator {
+    top: -22%;
+    left: 14%;
+  }
+
+  .dusan {
+    top: -44.8%;
+    left: 41.2%;
+  }
+
+  .panda {
+    top: -92.4%;
+    left: 66.3%;
+  }
+}
+
 @media (max-width: 320px) {
-  
+  .map-container {
+    max-width: 280px;
+  }
+
+  .map-page__main {
+    padding: 35px 0 60px;
+  }
+
+  .map-page__title {
+    font-size: 24px;
+    line-height: 28px;
+  }
+
+  .map-page__text {
+    margin: 10px 0 47px;
+    font-size: 12px;
+    line-height: 14px;
+  }
+
+  .map-page-slider {
+    max-width: 267px;
+  }
+
+  .map-page-slider__all {
+    margin: 0 3px;
+  }
+
+  .map-page-slider__inner {
+    transform: translate3d(-5px, 0, 0);
+  }
+
+  .map-page-slider__each {
+    margin: 0 5px;
+  }
+
+  .circle-animals {
+    width: 60px;
+    height: 60px;
+  }
+
+  .circle-animals__active {
+    height: 75px;
+    padding: 2px;
+  }
+
+  .animals__active {
+    width: 75px;
+    height: 75px;
+    transform: none;
+  }
+
+  .map-page__range-slider {
+    margin: 18px 0 35px;
+    padding-left: 23px;
+  }
+
+  .map-page__btn {
+    margin-top: 35px;
+  }
+
+  .map__main {
+    width: 290px;
+  }
+
+  .map-page__true-slider {
+    width: 100%;
+  }
+
+  .map-page__true-slider::-webkit-slider-thumb {
+    width: 30px;
+    height: 10px;
+  }
+
+  /* Animals */
+  .map-page__each-animal,
+  .main__placeholder,
+  .main__placeholder-red {
+    width: 32.85px;
+  }
+
+  .main__placeholder-inner {
+    width: 22px;
+    height: 22px;
+    top: 5.85px;
+  }
+
+  .eagles {
+    top: 3%;
+    left: 6.9%;
+  }
+
+  .alligator {
+    top: -25.1%;
+    left: 16.5%;
+  }
+
+  .dusan {
+    top: -41.8%;
+    left: 44.2%;
+  }
+
+  .panda {
+    top: -95.4%;
+    left: 73.1%;
+  }
 }
