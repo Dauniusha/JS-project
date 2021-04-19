@@ -286,14 +286,16 @@
   width: 795px;
   display: flex;
   justify-content: space-between;
+  margin-left: 50px;
 }
 
 .contacts__info {
+  width: 100%;
+  max-width: 380px;
   margin-top: 17px;
 }
 
 .footer-nav {
-  max-width: 380px;
   display: flex;
   justify-content: space-between;
   align-items: center;

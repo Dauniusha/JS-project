@@ -164,10 +164,6 @@ h1, h2, h3, h4, h5, h6 {
   transition: all 0.4s ease-in-out;
 }
 
-.activ-img {
-  
-}
-
 .gallery-activ-img {
   filter: brightness(80%);
   width: 245px;
