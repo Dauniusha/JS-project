@@ -369,9 +369,15 @@
 }
 
 @media (max-width: 640px) {
+  .live-brodcast {
+    margin-top: 94px;
+  }
+
   .side-bar {
     margin: 0 6px;
+    top: 60px;
   }
+
   .vectors {
     display: block;
   }
