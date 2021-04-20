@@ -4,6 +4,7 @@
   box-shadow: 0px 4px 8px rgba(44, 101, 77, 0.08);
   transform-style: preserve-3d;
   transform: translateZ(1px);
+  background: #fff;
 }
 
 .header__inner {
@@ -454,6 +455,13 @@
 
 @media (max-width: 640px) {
   /* Header */
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+  }
+
   .container-info {
     max-width: 600px;
   }
