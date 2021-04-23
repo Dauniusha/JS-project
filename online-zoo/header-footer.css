@@ -477,6 +477,11 @@
   .menu {
     display: block;
   }
+
+  /* Footer */
+  .submit-btn {
+    margin-left: 66.4%;
+  }
 }
 
 @media (max-width: 370px) {
@@ -508,7 +513,7 @@
   }
 
   .submit-btn {
-    margin-left: 62%;
+    margin-left: 54%;
     padding: 0;
     width: 110px;
   }

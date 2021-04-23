@@ -399,7 +399,8 @@ h1, h2, h3, h4, h5, h6 {
 
 .zoos-pets__main {
   margin: 35px 20px 30px;
-  width: 1206px;
+  max-width: 1206px;
+  width: 100%;
   position: relative;
   overflow: hidden;
 }
@@ -837,6 +838,7 @@ h1, h2, h3, h4, h5, h6 {
 
   .gallery-position {
     width: 720px;
+    top: 46.79%;
   }
 
   .gallery {
@@ -893,7 +895,7 @@ h1, h2, h3, h4, h5, h6 {
 
   /* Zoos */
   .zoos-pets__main {
-    width: 900px;
+    max-width: 900px;
   }
 
   .all-animals {
@@ -902,7 +904,7 @@ h1, h2, h3, h4, h5, h6 {
   }
 
   .zoos-pets__all-pets {
-    transform: translate3d(-10px, 0, 0);
+    transform: translate3d(-6px, 0, 0);
   }
 
   .all-pets__elem {
@@ -1111,8 +1113,8 @@ h1, h2, h3, h4, h5, h6 {
 
   /* Zoos */
   .zoos-pets__main {
-    width: 600px;
-    margin-bottom: 35px;
+    max-width: 600px;
+    margin: 35px 0;
   }
 
   .vectors {
@@ -1307,6 +1309,11 @@ h1, h2, h3, h4, h5, h6 {
   .container-main {
     max-width: 300px;
   }
+
+  .section {
+    padding: 50px 0;
+  }
+
   /* Main */
   .main {
     height: 669px;
@@ -1403,7 +1410,7 @@ h1, h2, h3, h4, h5, h6 {
   /* How works */
   .how-works__container {
     max-width: 300px;
-    margin-bottom: 50px;
+    margin: 50px auto;
   }
 
   .title {
@@ -1456,7 +1463,8 @@ h1, h2, h3, h4, h5, h6 {
   }
 
   .zoos-pets__main {
-    margin: 30px 10px;
+    max-width: 300px;
+    margin: 30px 0;
   }
 
   .zoos-pets__btn {
@@ -1464,7 +1472,7 @@ h1, h2, h3, h4, h5, h6 {
   }
 
   .zoos-pets__all-pets {
-    transform: translate3d(-8px, 0, 0);
+    transform: translate3d(-7px, 0, 0);
   }
 
   .all-pets__elem {

@@ -433,6 +433,7 @@
   .zoos-container {
     margin-left: 18px;
     max-width: 205px;
+    width: 64%;
   }
   
   .live__title {
