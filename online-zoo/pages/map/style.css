@@ -220,6 +220,11 @@
   .map-page {
     margin-top: 94px;
   }
+
+  .map-page__main {
+    padding-bottom: 79px;
+  }
+
   .map-container {
     max-width: 600px;
   }
@@ -278,6 +283,10 @@
   .panda {
     top: -96.4%;
     left: 71.3%;
+  }
+
+  .map-page__btn {
+    margin-top: 34px;
   }
 }
 
