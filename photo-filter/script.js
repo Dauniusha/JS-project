@@ -64,7 +64,8 @@ function upload() {
     reader.onload = () => {
       img.src = reader.result;
     }
-  })
+  });
+  inputFiles.value = null; // Обнуляю изображения
 }
 
 const uploadBtn = document.querySelector('.btn-load');
@@ -74,26 +75,35 @@ uploadBtn.addEventListener('click', upload);
 function download() {
   const canvas = document.querySelector('canvas');
   const ctx = canvas.getContext('2d');
-  canvas.width = img.width;
-  canvas.height = img.height;
-  let filters = '';
-  inputs.forEach( (input) => {
-    const suffix = input.dataset.sizing || '';
-    if (input.name === 'hue') {
-      filters += `hue-rotate(${input.value + suffix})`;
-    } else {
-      filters += `${input.name}(${input.value + suffix})`;
-    }
-  });
-  console.log(filters);
-  ctx.filter = filters;
-  ctx.drawImage(img, 0, 0);
-  //create temporely link for download img
-  const link = document.createElement('a');
-  link.download = 'image.png';
-  link.href = canvas.toDataURL();
-  link.click();
-  link.delete;
+  const tempImg = new Image(); // Чтобы отрисовать потом в нужном разрешении
+  tempImg.crossOrigin = '*'; // Для CORS
+  tempImg.src = img.src;
+  tempImg.onload = function() {
+    canvas.width = tempImg.width;
+    canvas.height = tempImg.height;
+    let filters = '';
+    inputs.forEach( (input) => {
+      const suffix = input.dataset.sizing || '';
+      if (input.name === 'hue') {
+        filters += `hue-rotate(${input.value + suffix})`;
+      } else if (input.name === 'blur') { // Нужно высчитывать для blur коэффициент
+        const coefficient = tempImg.height / img.height;
+        filters += `${input.name}(${input.value * coefficient + suffix})`;
+        console.log(input.value * coefficient + suffix);
+      } else {
+        filters += `${input.name}(${input.value + suffix})`;
+      }
+    });
+    console.log(filters);
+    ctx.filter = filters;
+    ctx.drawImage(tempImg, 0, 0);
+    // Временная ссылка для скачивания
+    const link = document.createElement('a');
+    link.download = 'image.png';
+    link.href = canvas.toDataURL();
+    link.click();
+    link.delete;
+  };
 }
 
 const downloadBtn = document.querySelector('.btn-save');

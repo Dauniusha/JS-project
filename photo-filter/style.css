@@ -50,8 +50,21 @@ label:hover {
 label:hover output {
   color: #a2abb3;
 }
+label:active input[type='range']::-webkit-slider-thumb {
+  background-color: #008275;
+  width: 20px;
+  border-radius: 25%;
+}
+input[type='range']::-webkit-slider-runnable-track {
+  transition: 0.3s;
+}
+label:active input[type='range']::-webkit-slider-runnable-track {
+  background-color: #9eb9d015;
+  border-radius: 50%;
+}
 label:active output {
   color: #cbd5de;
+  background-color: #74808c;
 }
 input[type='range'] {
   display: block;
