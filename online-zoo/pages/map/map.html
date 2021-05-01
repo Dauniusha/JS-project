@@ -44,28 +44,28 @@
           <div class="vectors vectors-left" data-theme="light"></div>
           <div class="map-page-slider__all">
             <ul class="map-page-slider__inner">
-              <li class="map-page-slider__each">
+              <li class="map-page-slider__each" data-pos="1" data-state="h">
                 <img class="circle-animals" src="../../assets/Circle-animals/circle-dusan.png" alt="Dusan">
               </li>
-              <li class="map-page-slider__each circle-animals__active">
+              <li class="map-page-slider__each circle-animals__active"  data-pos="2" data-state="h">
                 <img class="circle-animals animals__active" src="../../assets/Circle-animals/circle-panda.svg" alt="Panda">
               </li>
-              <li class="map-page-slider__each">
+              <li class="map-page-slider__each" data-pos="3" data-state="h">
                 <img class="circle-animals" src="../../assets/Circle-animals/circle-alligator.png" alt="Alligator">
               </li>
-              <li class="map-page-slider__each">
+              <li class="map-page-slider__each" data-pos="4" data-state="h">
                 <img class="circle-animals" src="../../assets/Circle-animals/circle-eagle.png" alt="Eagles">
               </li>
-              <li class="map-page-slider__each">
+              <li class="map-page-slider__each" data-pos="5" data-state="h">
                 <img class="circle-animals" src="../../assets/Circle-animals/circle-tigre.png" alt="Tiger">
               </li>
-              <li class="map-page-slider__each">
+              <li class="map-page-slider__each" data-pos="6" data-state="h">
                 <img class="circle-animals" src="../../assets/Circle-animals/circle-elefant.png" alt="Elefants">
               </li>
-              <li class="map-page-slider__each">
+              <li class="map-page-slider__each" data-pos="7" data-state="h">
                 <img class="circle-animals" src="../../assets/Circle-animals/circle-lion.png" alt="Lion">
               </li>
-              <li class="map-page-slider__each">
+              <li class="map-page-slider__each" data-pos="8" data-state="h">
                 <img class="circle-animals" src="../../assets/Circle-animals/circle-zebra.png" alt="Zebra">
               </li>
             </ul>
@@ -73,29 +73,37 @@
           <div class="vectors vectors-right" data-theme="light"></div>
         </div>
         <div class="range-slider map-page__range-slider">
-          <span class="slider__text map-page__slider-text">0<span class="slider__text-now">2</span>/<span class="slider__text-value">08</span></span>
+          <span class="slider__text map-page__slider-text"><span class="slider__text-now">02</span>/<span class="slider__text-value">08</span></span>
           <input class="gallery__slider map-page__true-slider" type="range" value="2" min="1" max="8"></input>
         </div>
         <div class="map__main map-page__map" data-theme="light">
-          <div class="map-page__each-animal eagles" title="Eagle">
-            <img class="main__placeholder" src="../../assets/placeholder.svg" alt="place">
-            <img class="main__placeholder-red" src="../../assets/Map/red-placeholder.svg" alt="place">
-            <img class="main__placeholder-inner" src="../../assets/Animals/Eagles.jfif" alt="Eagles" width="43px" height="43px">
+          <div class="icon-location eagles">
+            <div class="map-page__each-animal" title="Eagle" data-pos="4">
+              <img class="main__placeholder" src="../../assets/placeholder.svg" alt="place">
+              <img class="main__placeholder-red" src="../../assets/Map/red-placeholder.svg" alt="place">
+              <img class="main__placeholder-inner" src="../../assets/Animals/Eagles.jfif" alt="Eagles" width="43px" height="43px">
+            </div>
           </div>
-          <div class="map-page__each-animal alligator" title="Alligator">
-            <img class="main__placeholder" src="../../assets/placeholder.svg" alt="place">
-            <img class="main__placeholder-red" src="../../assets/Map/red-placeholder.svg" alt="place">
-            <img class="main__placeholder-inner" src="../../assets/Animals/aligator.jfif" alt="Alligator" width="43px" height="43px">
+          <div class="icon-location alligator">
+            <div class="map-page__each-animal" title="Alligator" data-pos="3">
+              <img class="main__placeholder" src="../../assets/placeholder.svg" alt="place">
+              <img class="main__placeholder-red" src="../../assets/Map/red-placeholder.svg" alt="place">
+              <img class="main__placeholder-inner" src="../../assets/Animals/aligator.jfif" alt="Alligator" width="43px" height="43px">
+            </div>
           </div>
-          <div class="map-page__each-animal dusan" title="Gorilla">
-            <img class="main__placeholder" src="../../assets/placeholder.svg" alt="place">
-            <img class="main__placeholder-red" src="../../assets/Map/red-placeholder.svg" alt="place">
-            <img class="main__placeholder-inner" src="../../assets/Animals/Dusan.jfif" alt="Dusan" width="43px" height="43px">
+          <div class="icon-location dusan">
+            <div class="map-page__each-animal" title="Gorilla" data-pos="1">
+              <img class="main__placeholder" src="../../assets/placeholder.svg" alt="place">
+              <img class="main__placeholder-red" src="../../assets/Map/red-placeholder.svg" alt="place">
+              <img class="main__placeholder-inner" src="../../assets/Animals/Dusan.jfif" alt="Dusan" width="43px" height="43px">
+            </div>
           </div>
-          <div class="map-page__each-animal panda map__active" title="Panda">
-            <img class="main__placeholder" src="../../assets/placeholder.svg" alt="place">
-            <img class="main__placeholder-red" src="../../assets/Map/red-placeholder.svg" alt="place">
-            <img class="main__placeholder-inner" src="../../assets/Animals/Panda.jfif" alt="Panda" width="43px" height="43px">
+          <div class="icon-location panda">
+            <div class="map-page__each-animal map__active" title="Panda" data-pos="2">
+              <img class="main__placeholder" src="../../assets/placeholder.svg" alt="place">
+              <img class="main__placeholder-red" src="../../assets/Map/red-placeholder.svg" alt="place">
+              <img class="main__placeholder-inner" src="../../assets/Animals/Panda.jfif" alt="Panda" width="43px" height="43px">
+            </div>
           </div>
         </div>
         <a class="watch-online map-page__btn" href="../zoos/panda.html">
@@ -182,5 +190,6 @@
       </div>
     </div>
   </footer>
-  <script src="../../script.js"></script>
+  <script src="script.js"></script>
+  <script src="../../dark-mode.js"></script>
 </body>
