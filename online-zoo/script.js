@@ -198,6 +198,7 @@ function howWorkSlide() {
       move = false;
       slider.style.transform = `translateX(${-width * (this.max)}px)`;
       slider.addEventListener('transitionend', () => {
+        slide.call(this);
         slider.style.transition = 'none';
         howWorkTransform(slider, width, this);
         move = true;
