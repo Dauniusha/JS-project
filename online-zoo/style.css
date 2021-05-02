@@ -311,6 +311,7 @@ h1, h2, h3, h4, h5, h6 {
   width: 100%;
   max-width: 790px;
   overflow: hidden;
+  border-radius: 5px;
 }
 
 .how-works__images {
@@ -322,7 +323,6 @@ h1, h2, h3, h4, h5, h6 {
 
 .how-works__img {
   width: 100%;
-  border-radius: 5px;
   object-fit: cover;
   object-position: -2px 0;
   max-width: 790px;
@@ -912,8 +912,6 @@ h1, h2, h3, h4, h5, h6 {
   
   .how-works__img {
     width: 100%;
-    max-width: 746px;
-    height: 323px;
   }
 
   .how-works__range-slider {
@@ -1142,8 +1140,6 @@ h1, h2, h3, h4, h5, h6 {
   
   .how-works__img {
     width: 100%;
-    max-width: 600px;
-    max-height: 323px;
   }
 
   .how-works__add-inner {

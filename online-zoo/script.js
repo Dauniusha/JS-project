@@ -198,13 +198,37 @@ function howWorkSlide() {
       move = false;
       slider.style.transform = `translateX(${-width * (this.max)}px)`;
       slider.addEventListener('transitionend', () => {
+        slide.call(this);
         slider.style.transition = 'none';
-        slider.style.transform = `translateX(${-width * (this.value - 1)}px)`;
+        howWorkTransform(slider, width, this);
         move = true;
       });
     } else {
-      slider.style.transform = `translateX(${-width * (this.value - 1)}px)`;
+      howWorkTransform(slider, width, this);
     }
+  }
+}
+
+function howWorkTransform(slider, width, input) {
+  if(slider.parentElement.offsetWidth <= 475) {
+    switch(Number(input.value)) {
+      case 1:
+        slider.style.transform = `translateX(${-width * (input.value - 1)}px)`;
+        break;
+      case 2:
+        slider.style.transform = `translateX(${-width * (input.value - 1) - 120}px)`;
+        break;
+      case 3:
+        slider.style.transform = `translateX(${-width * (input.value - 1) - 160}px)`;
+        break;
+      case 4:
+        slider.style.transform = `translateX(${-width * (input.value - 1) - 110}px)`;
+        break;
+      default:
+        break;
+    };
+  } else {
+    slider.style.transform = `translateX(${-width * (input.value - 1)}px)`;
   }
 }
 
