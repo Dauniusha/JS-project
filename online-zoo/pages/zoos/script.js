@@ -2,7 +2,7 @@ function chooseVideo(elem) {
   if (elem.target.classList.contains('mini-frame')) {
     let src = elem.target.src;
     let mainId;
-    miniId = src.slice(26, 37);
+    miniId = src.slice(27, 38);
     mainId = video.src.slice(30, 41);
     console.log(mainId);
     const link = 'https://www.youtube.com/embed/';
