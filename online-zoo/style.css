@@ -134,9 +134,9 @@ h1, h2, h3, h4, h5, h6 {
 .gallery__img {
   overflow: hidden;
   margin-left: 110px;
-  background: url(assets/point.svg) 9% 50.8% no-repeat,
-              url(assets/point.svg) 60% 50.8% no-repeat,
-              url(assets/point.svg) 80% 50.8% no-repeat;
+  background: url(assets/point.svg) 9% 51% no-repeat,
+              url(assets/point.svg) 60% 51% no-repeat,
+              url(assets/point.svg) 80% 51% no-repeat;
 }
 
 .gallery__img-inner {
