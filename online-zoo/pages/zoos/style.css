@@ -99,6 +99,7 @@
   display: flex;
   transform: translate3d(-13px, 0, 0);
   list-style-type: none;
+  transition: 0.4s all ease-out;
 }
 
 .main-video__mini-frame {
@@ -121,12 +122,13 @@
 
 .main-video__slider {
   display: flex;
-  width: 37px;
+  width: 100%;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 }
 
 .main-video__slider-elem {
+  margin: 0 2.5px;
   width: 8px;
   height: 8px;
   border-radius: 11px;
@@ -143,6 +145,11 @@
   width: 11px;
   height: 11px;
   background: linear-gradient(106.89deg, #4BD8B5 -14.32%, #49D6DF 100.68%);
+  pointer-events: none;
+}
+
+.hidden {
+  display: none;
 }
 
 .live__descryption {
