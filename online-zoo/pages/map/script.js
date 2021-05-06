@@ -31,8 +31,10 @@ function mapSlide() {
   } else {
     switch(slideWidth) {
       case 108:
+      case 109:
         margins = 15;
         activeMargins = 12;
+        slideWidth = 108;
         break;
       case 60:
         margins = 5;
