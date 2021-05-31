@@ -1,0 +1,48 @@
+[
+  {
+    "categoryName": "space",
+    "imagesURL": [
+      "earth.svg",
+      "jupiter.svg",
+      "mars.svg",
+      "mercury.svg",
+      "neptune.svg",
+      "pluto.svg",
+      "saturn.svg",
+      "solar-system.svg",
+      "asteroid.svg",
+      "comet.svg",
+      "nebula.svg",
+      "eclipse.svg",
+      "milky-way.svg",
+      "milky-way-1.svg",
+      "sun.svg",
+      "uranus.svg",
+      "orbit.svg",
+      "venus.svg"
+    ]
+  },
+  {
+    "categoryName": "transport",
+    "imagesURL": [
+      "aeroplane.svg",
+      "bicycle.svg",
+      "car.svg",
+      "cargo-ship.svg",
+      "double-decker.svg",
+      "formula-1.svg",
+      "garbage-truck.svg",
+      "helicopter.svg",
+      "motorbike-2.svg",
+      "motorbike.svg",
+      "off-road.svg",
+      "pickup.svg",
+      "taxi.svg",
+      "train.svg",
+      "trolleybus.svg",
+      "truck-1.svg",
+      "truck.svg",
+      "zeppelin.svg"
+    ]
+  }
+]
