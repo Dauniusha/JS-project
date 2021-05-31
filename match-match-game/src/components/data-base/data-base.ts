@@ -1,4 +1,4 @@
-import { setting } from '../setting.ts/setting-object';
+import { setting } from '../setting-object/setting-object';
 import { DBObject } from './DB-object-interface';
 
 const VERSION = 1;

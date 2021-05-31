@@ -1,7 +1,7 @@
 import { switcher } from '../../../shared/heigth-switcher';
 import { BaseComponents } from '../base-conponents';
 import { Card } from '../play-card/play-card';
-import { setting } from '../setting.ts/setting-object';
+import { setting } from '../setting-object/setting-object';
 import './cards-field.css';
 
 const SHOW_TIME = 3;

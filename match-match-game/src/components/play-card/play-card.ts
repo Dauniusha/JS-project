@@ -1,6 +1,6 @@
 import { switcher } from '../../../shared/heigth-switcher';
 import { BaseComponents } from '../base-conponents';
-import { setting } from '../setting.ts/setting-object';
+import { setting } from '../setting-object/setting-object';
 import './play-card.css';
 
 const CLEAR_CLASS = 'clear';

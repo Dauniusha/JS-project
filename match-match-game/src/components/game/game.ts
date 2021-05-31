@@ -3,7 +3,7 @@ import { storage } from '../data-base/data-base-elem';
 import { delay } from '../delay/delay';
 import { ImgCategory } from '../models/img-category';
 import { Card } from '../play-card/play-card';
-import { setting } from '../setting.ts/setting-object';
+import { setting } from '../setting-object/setting-object';
 import { shuffle } from '../shuffle';
 import { Timer } from '../timer/timer';
 import { WinPopup } from '../win-pop-up/win-pop-up';

@@ -1,6 +1,6 @@
 import './setting.css';
 import { Field } from '../field-components';
-import { setting } from '../setting.ts/setting-object';
+import { setting } from '../setting-object/setting-object';
 import { storage } from '../data-base/data-base-elem';
 import { BaseComponents } from '../base-conponents';
 
@@ -114,10 +114,10 @@ export class Setting extends Field {
         elem.classList.add(MENU_ACTIVE);
         switch (elem.dataset.difficulty) {
           case '4':
-            setting.amountPairs = Math.sqrt(4) / 2;
+            setting.amountPairs = 4 ** 4 / 2;
             break;
           case '6':
-            setting.amountPairs = Math.sqrt(6) / 2;
+            setting.amountPairs = 6 ** 6 / 2;
             break;
           default:
             break;
