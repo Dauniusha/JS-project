@@ -1,0 +1,127 @@
+.setting {
+  min-height: 750px;
+  height: auto;
+}
+
+.setting-container {
+  display: block;
+}
+
+.slide-menu {
+  margin-bottom: 40px;
+  padding: 0 20px;
+  border-bottom: #e5e5e5 1px solid;
+  width: 300px;
+  height: 100px;
+  overflow-y: hidden;
+}
+
+.menu-open {
+  height: 100%;
+  border-bottom: #2196f3 1px solid;
+}
+
+.setting__description {
+  margin: 10px auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.vector {
+  display: block;
+  margin-top: 14px;
+  border: 10px solid transparent;
+  border-top: 10px solid rgba(0, 0, 0, 0.3);
+  transition: all 0.4s ease;
+}
+
+.vector-open {
+  margin-top: -5px;
+  transform: rotate(180deg);
+  border-top-color: #2196f3;
+}
+
+.menu-inner {
+  list-style-type: none;
+  transition: transform 0.3s ease;
+  padding-left: 30px;
+}
+
+.menu__inner-each {
+  position: relative;
+}
+
+.menu__inner-each::before {
+  position: absolute;
+  content: '';
+  left: -30px;
+  top: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 10px;
+  border: 3px solid rgba(0, 0, 0, 0.3)
+}
+
+.menu_active::after {
+  position: absolute;
+  content: '';
+  left: -25px;
+  top: 7px;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: #2196f3;
+}
+
+.menu__inner-each {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0;
+}
+
+.menu__text {
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.description__img {
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.add-player {
+  position: relative;
+  width: 6vh;
+  height: 6vh;
+  margin: 0 25px;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.add-player:hover {
+  transform: scale(1.05);
+}
+
+.add-player:hover > ::after,
+.add-player:hover > ::before {
+  box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.6);
+}
+
+.add-player::before,
+.add-player::after {
+  position: absolute;
+  content: '';
+  width: 6vh;
+  height: 1vh;
+  background: #333;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  box-shadow: 2px 3px 8px rgba(0, 0, 0, 0.6);
+}
+
+.add-player::before {
+  transform: translate3d(-50%, -50%, 0) rotateZ(90deg);
+}

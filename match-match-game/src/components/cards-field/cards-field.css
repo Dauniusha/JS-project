@@ -1,0 +1,14 @@
+.cards-field {
+  margin: 0 auto;
+  max-width: 1200px;
+  width: 50vw;
+  height: 90vh;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  perspective: 1200px;
+}
+
+.main-game {
+  display: flex;
+}

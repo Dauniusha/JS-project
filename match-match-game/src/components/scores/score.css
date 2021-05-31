@@ -1,0 +1,50 @@
+.each-score {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 2vh 0;
+  border-bottom: rgba(0, 0, 0, 0.4) 2px solid;
+  margin-bottom: 2vh;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.score-img {
+  max-width: 8vh;
+  min-width: 8vh;
+  height: 8vh;
+  border-radius: 4vh;
+  object-fit: cover;
+  margin-right: 1vw;
+}
+
+.user-name {
+  font-size: 3vh;
+  color: #333;
+  white-space: nowrap;
+  font-weight: 600;
+  letter-spacing: 0.1px;
+  margin-bottom: 1vh;
+}
+
+.user-mail {
+  font-size: 2.3vh;
+  color: #333;
+  font-weight: 500;
+}
+
+.user-score {
+  color: #333;
+  font-size: 2.5vh;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-right: 1vw;
+}
+
+.user-score__inner {
+  color: #2196F3;
+}

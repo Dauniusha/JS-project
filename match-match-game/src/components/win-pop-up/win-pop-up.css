@@ -1,0 +1,56 @@
+.popup{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.75);
+  opacity: 1;
+  transition: all 0.15s linear;
+  z-index: 100;
+}
+
+.popup_close {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.popup__inner {
+  width: 600px;
+  background: #fff;
+}
+
+.popup__container {
+  width: 90%;
+  margin: 5% auto;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.congratulations {
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.win-popup-btn {
+  font-size: 5vh;
+  border-radius: 6px;
+  background: #2196F3;
+  color: #fff;
+  padding: 1vh 2.5vh;
+  text-transform: uppercase;
+  border: none;
+  box-shadow: 2px 6px 5px rgba(0, 0, 0, 0.3);
+  text-shadow: 2px 4px 5px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.win-popup-btn:hover {
+  transform: scale(0.98);
+}
