@@ -114,10 +114,10 @@ export class Setting extends Field {
         elem.classList.add(MENU_ACTIVE);
         switch (elem.dataset.difficulty) {
           case '4':
-            setting.amountPairs = 4 ** 4 / 2;
+            setting.amountPairs = 4 ** 2 / 2;
             break;
           case '6':
-            setting.amountPairs = 6 ** 6 / 2;
+            setting.amountPairs = 6 ** 2 / 2;
             break;
           default:
             break;

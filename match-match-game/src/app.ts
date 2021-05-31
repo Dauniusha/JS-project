@@ -122,7 +122,6 @@ export class App {
       this.header.toggleStartBtn();
       this.game?.timer.stopTimer();
     });
-    // this.game.t
   }
 
   startAbout() {
@@ -134,6 +133,7 @@ export class App {
   }
 
   startScores() {
+    this.header.changeActiveRoute(window.location.hash);
     this.contantElement.innerHTML = '';
     this.scores = new Scores();
     this.contantElement.appendChild(this.scores.element);

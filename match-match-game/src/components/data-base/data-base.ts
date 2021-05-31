@@ -92,6 +92,7 @@ export class DataBase {
       throw Error('Data base not exist!');
     }
     const store = transaction.objectStore(STORE_USER_NAME);
+    console.log(setting);
     const user = {
       user: this.user,
       setting,
