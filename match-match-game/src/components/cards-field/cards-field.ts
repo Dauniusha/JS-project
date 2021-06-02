@@ -1,5 +1,5 @@
 import { switcher } from '../../../shared/heigth-switcher';
-import { BaseComponents } from '../base-conponents';
+import { BaseComponents } from '../models/base-conponents';
 import { Card } from '../play-card/play-card';
 import { setting } from '../setting-object/setting-object';
 import './cards-field.css';

@@ -1,8 +1,8 @@
 import './setting.css';
-import { Field } from '../field-components';
+import { Field } from '../models/field-components';
 import { setting } from '../setting-object/setting-object';
 import { storage } from '../data-base/data-base-elem';
-import { BaseComponents } from '../base-conponents';
+import { BaseComponents } from '../models/base-conponents';
 
 const MENU_OPEN = 'menu-open';
 const MENU_ACTIVE = 'menu_active';
@@ -27,9 +27,9 @@ export class Setting extends Field {
           <span class="vector"></span>
         </p>
         <ul class="menu-inner" id="type-menu__inner">
-          <li class="menu__inner-each" data-type="animal">
-            <p class="description__text menu__text">Animal</p>
-            <img class="description__img" src="" alt="animal">
+          <li class="menu__inner-each" data-type="ingredients">
+            <p class="description__text menu__text">Ingredients</p>
+            <img class="description__img" src="./images/ingredients/avocado.svg" alt="ingredients">
           </li>
           <li class="menu__inner-each menu_active" data-type="space">
             <p class="description__text menu__text">Space</p>
@@ -38,10 +38,6 @@ export class Setting extends Field {
           <li class="menu__inner-each" data-type="transport">
             <p class="description__text menu__text">Transport</p>
             <img class="description__img" src="./images/transport/car.svg" alt="transport">
-          </li>
-          <li class="menu__inner-each" data-type="anything">
-            <p class="description__text menu__text">Anything</p>
-            <img class="description__img" src="" alt="">
           </li>
         </ul>
       </div>
@@ -57,6 +53,7 @@ export class Setting extends Field {
           <li class="menu__inner-each" data-difficulty="6">
             <p class="description__text menu__text">6 * 6</p>
           </li>
+          <p class="description__text menu__text">8 * 8 (можно не добавлять по заданию)</p>
         </ul>
       </div>
     `;
@@ -65,7 +62,24 @@ export class Setting extends Field {
     this.newPlayer.element.title = 'Add new player :)';
   }
 
-  initSetting() {
+  private newSetting() {
+    this.types.forEach((type) => {
+      if (type.dataset.type === setting.category) {
+        type.classList.add(MENU_ACTIVE);
+      } else if (type.classList.contains(MENU_ACTIVE)) {
+        type.classList.remove(MENU_ACTIVE);
+      }
+    });
+    this.difficultys.forEach((difficulty) => {
+      if (difficulty.dataset.difficulty && (parseInt(difficulty.dataset.difficulty, 10) ** 2 / 2) === setting.amountPairs) {
+        difficulty.classList.add(MENU_ACTIVE);
+      } else if (difficulty.classList.contains(MENU_ACTIVE)) {
+        difficulty.classList.remove(MENU_ACTIVE);
+      }
+    });
+  }
+
+  private initMenu() {
     this.typeMenu = <HTMLElement>document.getElementById('card-type');
     this.contantsField.element.querySelectorAll('li[data-type]').forEach((elem) => {
       this.types.push(<HTMLElement>elem);
@@ -74,6 +88,11 @@ export class Setting extends Field {
     this.contantsField.element.querySelectorAll('li[data-difficulty]').forEach((elem) => {
       this.difficultys.push(<HTMLElement>elem);
     });
+  }
+
+  initSetting() {
+    this.initMenu();
+    this.newSetting();
     this.changeSetting();
   }
 

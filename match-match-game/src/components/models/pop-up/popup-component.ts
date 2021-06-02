@@ -18,7 +18,10 @@ export class Popup extends BaseComponents {
     this.element.classList.remove(CLOSE_CLASS);
   }
 
-  closePopup() {
-    this.element.classList.add(CLOSE_CLASS);
+  closePopup(): Promise<void> {
+    return new Promise((resolve) => {
+      this.element.classList.add(CLOSE_CLASS);
+      this.element.addEventListener('transitionend', () => resolve());
+    });
   }
 }

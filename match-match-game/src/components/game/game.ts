@@ -4,7 +4,7 @@ import { delay } from '../delay/delay';
 import { ImgCategory } from '../models/img-category';
 import { Card } from '../play-card/play-card';
 import { setting } from '../setting-object/setting-object';
-import { shuffle } from '../shuffle';
+import { shuffle } from '../../../shared/shuffle';
 import { Timer } from '../timer/timer';
 import { WinPopup } from '../win-pop-up/win-pop-up';
 
@@ -24,8 +24,6 @@ export class Game {
 
   private winPopup?: WinPopup;
 
-  private gameIsActive = false;
-
   constructor() {
     this.cardsField = new CardsField();
     this.timer = new Timer();
@@ -41,7 +39,6 @@ export class Game {
 
   async createGame(imagesURL: string[]) {
     this.cardsField.clear();
-    this.gameIsActive = true;
 
     const cards = imagesURL.concat(imagesURL).map((imageURL) => new Card(imageURL));
     shuffle(cards);
@@ -111,7 +108,6 @@ export class Game {
   }
 
   private endGame() {
-    this.gameIsActive = false;
     let score = setting.amountPairs * 100 - this.timer.getTimeNow() * 10;
     if (score < 0) {
       score = 0;

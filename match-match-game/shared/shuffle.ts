@@ -1,4 +1,4 @@
-import { Card } from './play-card/play-card';
+import { Card } from '../src/components/play-card/play-card';
 
 export function shuffle(cards: Card[]) {
   for (let i = cards.length - 1; i > 0; i--) {

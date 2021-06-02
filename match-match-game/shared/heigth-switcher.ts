@@ -5,6 +5,7 @@ export function switcher(cardPairs: number): string {
     case 18:
       return '15vh';
     default:
-      throw Error('This type of game is not found!');
+      console.log('now does not exist');
+      return '';
   }
 }

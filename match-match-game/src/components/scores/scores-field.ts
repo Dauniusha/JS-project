@@ -1,7 +1,7 @@
 import './scores-field.css';
 import { storage } from '../data-base/data-base-elem';
-import { DBObject } from '../data-base/DB-object-interface';
-import { Field } from '../field-components';
+import { DBObject } from '../models/DB-object-interface';
+import { Field } from '../models/field-components';
 import { Score } from './score';
 
 export class Scores extends Field {

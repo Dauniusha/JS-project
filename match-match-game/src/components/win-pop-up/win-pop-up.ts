@@ -1,4 +1,4 @@
-import { Popup } from '../pop-up/popup-component';
+import { Popup } from '../models/pop-up/popup-component';
 import './win-pop-up.css';
 
 export class WinPopup extends Popup {

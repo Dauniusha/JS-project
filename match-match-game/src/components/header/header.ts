@@ -1,5 +1,5 @@
 import './header.css';
-import { BaseComponents } from '../base-conponents';
+import { BaseComponents } from '../models/base-conponents';
 
 const navClassName = '.nav__inner';
 const navClassActiveName = 'nav_active';
@@ -21,6 +21,8 @@ export class Header extends BaseComponents {
   private readonly startBtn: HTMLElement | null;
 
   private readonly avatarImg: HTMLImageElement;
+
+  startActive = true;
 
   constructor() {
     super('header', ['header']);

@@ -44,5 +44,28 @@
       "truck.svg",
       "zeppelin.svg"
     ]
+  },
+  {
+    "categoryName": "ingredients",
+    "imagesURL": [
+      "almond.svg",
+      "aloe.svg",
+      "apricot.svg",
+      "avocado.svg",
+      "blueberry.svg",
+      "cucumber.svg",
+      "jar.svg",
+      "lavender.svg",
+      "lemon.svg",
+      "milk.svg",
+      "mint.svg",
+      "mushroom.svg",
+      "olive.svg",
+      "palm.svg",
+      "rose.svg",
+      "strawberry.svg",
+      "tea.svg",
+      "tomato.svg"
+    ]
   }
 ]

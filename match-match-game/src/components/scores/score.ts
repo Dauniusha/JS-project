@@ -1,6 +1,6 @@
 import './score.css';
-import { BaseComponents } from '../base-conponents';
-import { DBObject } from '../data-base/DB-object-interface';
+import { BaseComponents } from '../models/base-conponents';
+import { DBObject } from '../models/DB-object-interface';
 
 export class Score extends BaseComponents {
   constructor(player: DBObject) {

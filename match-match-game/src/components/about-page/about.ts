@@ -1,4 +1,4 @@
-import { Field } from '../field-components';
+import { Field } from '../models/field-components';
 import './about.css';
 
 const gameExImg = './Rules/Game-ex.png';

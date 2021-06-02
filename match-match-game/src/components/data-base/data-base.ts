@@ -1,5 +1,5 @@
 import { setting } from '../setting-object/setting-object';
-import { DBObject } from './DB-object-interface';
+import { DBObject } from '../models/DB-object-interface';
 
 const VERSION = 1;
 const STORE_NAME = 'players';
@@ -21,13 +21,6 @@ export class DataBase {
         } */
         this.dataBase.createObjectStore(STORE_NAME, { keyPath: 'id' });
         this.dataBase.createObjectStore(STORE_USER_NAME, { keyPath: 'number' });
-        this.user = {
-          firstName: '',
-          lastName: '',
-          mail: '',
-          id: 0,
-          score: 0,
-        };
       };
 
       openRequest.onsuccess = () => {
@@ -125,7 +118,15 @@ export class DataBase {
           this.user = request.result.user;
           resolve();
         } else {
-          reject();
+          // Первый запуск
+          this.user = {
+            firstName: '',
+            lastName: '',
+            mail: '',
+            id: 0,
+            score: 0,
+          };
+          resolve();
         }
       };
 

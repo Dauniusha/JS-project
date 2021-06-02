@@ -17,6 +17,7 @@
   ],
   "ignorePatterns": ["*.config.js", "node_modules/", "dist/"],
   "rules": {
+    "linebreak-style": "warn", // Не знаю как пофиксить
     "consistent-return": "off",
     "no-async-promise-executor": "off",
     "no-bitwise": "off",

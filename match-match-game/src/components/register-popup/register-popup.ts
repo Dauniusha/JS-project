@@ -1,5 +1,5 @@
 import './register-popup.css';
-import { Popup } from '../pop-up/popup-component';
+import { Popup } from '../models/pop-up/popup-component';
 import { storage } from '../data-base/data-base-elem';
 
 const START_IMG = './Unknown.png';
@@ -55,32 +55,34 @@ export class RegisterPopup extends Popup {
     this.inputAvatar = <HTMLInputElement> this.popUp.element.querySelector('.input-avatar');
   }
 
-  showRegisterPopup() {
-    this.showPopup();
-    this.firstName?.addEventListener('input', () => {
-      RegisterPopup.nameValidation(this.firstName);
+  showRegisterPopup(): Promise<void> {
+    return new Promise((resolve) => {
+      this.showPopup();
+      this.firstName?.addEventListener('input', () => {
+        RegisterPopup.nameValidation(this.firstName);
+      });
+      this.lastName?.addEventListener('input', () => {
+        RegisterPopup.nameValidation(this.lastName);
+      });
+      this.email?.addEventListener('input', () => {
+        if (!this.email.validity.valid && this.email.parentElement) {
+          this.email.parentElement.classList.remove('valid');
+          this.email.parentElement.classList.add('invalid');
+        } else if (this.email.parentElement) {
+          this.email.parentElement.classList.remove('invalid');
+          this.email.parentElement.classList.add('valid');
+        }
+      });
+      this.cancelBtn?.addEventListener('click', () => {
+        this.cancel().then(() => resolve());
+      });
+      this.element.addEventListener('click', (elem) => {
+        if (!(<Element>elem.target).closest('.popup__inner')) {
+          this.cancel().then(() => resolve());
+        }
+      });
+      this.upload();
     });
-    this.lastName?.addEventListener('input', () => {
-      RegisterPopup.nameValidation(this.lastName);
-    });
-    this.email?.addEventListener('input', () => {
-      if (!this.email.validity.valid && this.email.parentElement) {
-        this.email.parentElement.classList.remove('valid');
-        this.email.parentElement.classList.add('invalid');
-      } else if (this.email.parentElement) {
-        this.email.parentElement.classList.remove('invalid');
-        this.email.parentElement.classList.add('valid');
-      }
-    });
-    this.cancelBtn?.addEventListener('click', () => {
-      this.cancel();
-    });
-    this.element.addEventListener('click', (elem) => {
-      if (!(<Element>elem.target).closest('.popup__inner')) {
-        this.cancel();
-      }
-    });
-    this.upload();
   }
 
   private static nameValidation(name: HTMLInputElement) {
@@ -127,16 +129,18 @@ export class RegisterPopup extends Popup {
     }
   }
 
-  cancel() {
-    const inputs = [this.email, this.firstName, this.lastName];
-    inputs.forEach((input) => {
-      input.value = '';
-      input.parentElement?.classList.remove('invalid');
-      input.parentElement?.classList.remove('valid');
+  cancel(): Promise<void> {
+    return new Promise((resolve) => {
+      const inputs = [this.email, this.firstName, this.lastName];
+      inputs.forEach((input) => {
+        input.value = '';
+        input.parentElement?.classList.remove('invalid');
+        input.parentElement?.classList.remove('valid');
+      });
+      this.inputAvatar.style.background = `url(${START_IMG}) center no-repeat`;
+      this.inputAvatar.style.backgroundSize = 'cover';
+      this.closePopup().then(() => resolve());
     });
-    this.inputAvatar.style.background = `url(${START_IMG}) center no-repeat`;
-    this.inputAvatar.style.backgroundSize = 'cover';
-    this.closePopup();
   }
 
   getForm() {

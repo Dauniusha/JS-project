@@ -1,5 +1,5 @@
 import './timer.css';
-import { BaseComponents } from '../base-conponents';
+import { BaseComponents } from '../models/base-conponents';
 
 export class Timer extends BaseComponents {
   private timer?: NodeJS.Timeout;
@@ -20,6 +20,7 @@ export class Timer extends BaseComponents {
     this.second = new BaseComponents('label', ['timer__inner']);
     this.element.appendChild(this.second.element);
     this.showTime();
+    console.log('con');
   }
 
   private showTime(minute = 0, second = 0) {
