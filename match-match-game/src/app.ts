@@ -129,7 +129,7 @@ export class App {
     const field = new Field('game', 'main-game');
     this.contantElement.appendChild(field.element);
     await this.game.start(field.contantsField.element);
-    if (this.isFirst) { // Тоже очень неприятный костыль, не знаю как фиксить, потому что с каждым разом невешиваются listner'ы
+    if (this.isFirst) {
       this.header.toggleStartBtn();
       this.header.startActive = false;
       this.header.getStartBtn()?.addEventListener('click', () => {
@@ -164,7 +164,7 @@ export class App {
     this.contantElement.innerHTML = '';
     this.setting = new Setting();
     this.contantElement.appendChild(this.setting.element);
-    await storage.getUserAndSetting(); // Костыль, потом обязательно спросить
+    await storage.getUserAndSetting();
     this.setting.initSetting();
     this.setting.getNewPlayerBtn().element.addEventListener('click', () => {
       this.createRegpopup();
