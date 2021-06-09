@@ -152,28 +152,29 @@ export class Garage extends Field {
   }
 
   private async addGenerateListner() {
-    Garage.generateCars().then(() => {
-      this.getCars([{ key: '_page', value: '1' }, { key: '_limit', value: '7' }]);
-    });
-  }
-
-  private static async generateCars(): Promise<void> {
-    return new Promise(async (resolve) => {
-      const cars: CreateCarInterface[] = [];
+    const cars: CreateCarInterface[] = [];
+    await new Promise<void>((resolve) => {
       for (let i = 0; i < 100; i++) {
         cars.push(Garage.getRandomCar());
       }
+      resolve();
+    });
+    await Garage.generateCars(cars);
+    this.getCars([{ key: '_page', value: '1' }, { key: '_limit', value: '7' }]);
+  }
+
+  private static async generateCars(cars: CreateCarInterface[]): Promise<void> {
+    return new Promise(async (resolve) => {
       const promises = cars.map((car) => API.createCar(car));
-      Promise.all(promises).then(() => {
-        resolve();
-      });
+      await Promise.all(promises);
+      resolve();
     });
   }
 
   private static getRandomCar(): CreateCarInterface {
-    const indexCarName = Math.round(Math.random() * setting.carNames.length); // Рандомная марка машины (индекс)
+    const indexCarName = Math.round(Math.random() * (setting.carNames.length - 1)); // Рандомная марка машины (индекс)
     const { name } = setting.carNames[indexCarName];
-    const indexCarModel = Math.round(Math.random() * setting.carNames[indexCarName].model.length);
+    const indexCarModel = Math.round(Math.random() * (setting.carNames[indexCarName].model.length - 1));
     const model = setting.carNames[indexCarName].model[indexCarModel].modelName;
     const color = getRandomColor();
     return { name: `${name} ${model}`, color };
