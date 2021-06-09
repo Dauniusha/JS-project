@@ -1,5 +1,5 @@
 import './field.css';
-import { BaseComponents } from "../base-component";
+import { BaseComponents } from '../base-component';
 
 export class Field extends BaseComponents {
   readonly contantsField: BaseComponents;
@@ -7,7 +7,7 @@ export class Field extends BaseComponents {
   constructor(sectionName: string[], ownContainerName?: string) {
     super('section', sectionName);
     this.contantsField = ownContainerName ? new BaseComponents('div', ['container-field', ownContainerName])
-    : new BaseComponents('div', ['container-field']);
+      : new BaseComponents('div', ['container-field']);
     this.element.appendChild(this.contantsField.element);
   }
 }

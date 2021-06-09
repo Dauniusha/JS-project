@@ -1,0 +1,8 @@
+.inputs-container {
+  margin-bottom: 3vh;
+}
+
+.disable {
+  opacity: 0.5;
+  pointer-events: none;
+}

@@ -60,17 +60,17 @@ module.exports = ({development})=>( { //деструктуризация
     new ESLintPlugin({ extensions: ['ts', 'js'] }),
     new HtmlWebpackPlugin({
       title: 'Async-race',
-      // template: './src/index.html',
+      template: './async-race/index.html',
     }),
     new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }), 
     new MiniCssExtractPlugin({ filename: '[name].[contenthash].css' }),
     //копирование файлов не требуемых хеширования (без последующего изменения)
     //!без содержимого папки public билд не соберется
-    /*  new CopyPlugin({ 
+    new CopyPlugin({ 
       patterns: [
         { from: 'async-race/public' },
       ],
-    }),*/
+    }),
   ],
   ...devServer(development)
 });

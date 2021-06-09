@@ -17,6 +17,7 @@
   ],
   "ignorePatterns": ["*.config.js", "node_modules/", "dist/"],
   "rules": {
+    "no-await-in-loop": "warn", // Почему бы и нет
     "linebreak-style": "warn", // Не знаю как пофиксить
     "consistent-return": "off",
     "no-async-promise-executor": "off",

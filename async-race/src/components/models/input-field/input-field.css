@@ -1,0 +1,54 @@
+.input-field {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1vh;
+}
+
+.car-name {
+  width: 160px;
+  padding: 2px;
+  background: #e5e5e5;
+  color: #222;
+  font-size: 1.5vh;
+  font-weight: 500;
+  border-radius: 5px;
+  border: teal 2px solid;
+}
+
+.car-color {
+  padding: 0;
+  margin: 0 1%;
+  width: 4vh;
+  height: 2.5vh;
+}
+
+.confirm-btn,
+.control-btn {
+  box-sizing: border-box;
+  height: 2.7vh;
+  border: teal 2px solid;
+  border-radius: 5px;
+  text-transform: uppercase;
+  font-size: 1.5vh;
+  font-weight: 700;
+  letter-spacing: 1.25px;
+  line-height: 2.05vh;
+  color: #222;
+  background: #e5e5e5;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.control-btn {
+  border-color: crimson;
+  margin-right: 1vw;
+}
+
+.confirm-btn {
+  width: 9vh;
+}
+
+.confirm-btn:hover,
+.control-btn:hover {
+  transform: scale(0.98);
+}

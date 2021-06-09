@@ -1,0 +1,68 @@
+.setting-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5vh;
+}
+
+.car-type {
+  margin: 0;
+  font-size: 2vh;
+  color: khaki;
+}
+
+.track-container {
+  border-bottom: #e5e5e5 0.5vh dashed;
+  display: flex;
+  position: relative;
+  margin-bottom: 1vh;
+}
+
+.track-btn {
+  box-sizing: border-box;
+  padding: 0;
+  width: 3.2vh;
+  height: 4vh;
+  font-size: 3.5vh;
+  line-height: 2vh;
+  border: 2px solid;
+  border-radius: 5px;
+  background: none;
+  text-align: center;
+  cursor: pointer;
+  margin-right: 0.5vw;
+  opacity: 1;
+  transition: opacity 0.1s ease;
+}
+
+.start-btn {
+  border-color: rgba(72, 172, 47, 1);
+  color: rgba(72, 172, 47, 1);
+}
+
+.stop-btn {
+  border-color: rgba(207, 3, 44, 0.85);
+  color: rgba(207, 3, 44, 0.85);
+}
+
+.track-btn:active {
+  opacity: 0.7;
+}
+
+.track-btn-disable {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.finish-flag {
+  position: absolute;
+  bottom: 0;
+  width: 6vh;
+  right: 15%;
+  transform: rotateZ(30deg);
+}
+
+.car {
+  transform: rotateY(180deg);
+  width: 15vh;
+  height: 5.5vh;
+}
