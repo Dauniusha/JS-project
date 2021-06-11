@@ -100,9 +100,42 @@ export class API {
       }
     });
   }
+
+  static getWinner(id: number): Promise<Winner> {
+    return new Promise(async (resolve) => {
+      const response = await fetch(`${APISettings.baseURL}${APISettings.path.winners}/${id}`);
+      API.validation(response);
+      const winData = await response.json();
+      resolve(winData);
+    });
+  }
+
+  static createWinner(winner: Winner): Promise<void> {
+    return new Promise(async (resolve) => {
+      const response = await fetch(`${APISettings.baseURL}${APISettings.path.winners}`, {
+        method: APISettings.methods.post,
+        headers: {
+          'Content-Type': APISettings.headers.contentType,
+        },
+        body: JSON.stringify(winner),
+      });
+      API.validation(response);
+      resolve();
+    });
+  }
+
+  static updateWinner(winner: Winner): Promise<void> {
+    return new Promise(async (resolve) => {
+      const { wins, time } = winner;
+      const response = await fetch(`${APISettings.baseURL}${APISettings.path.winners}/${winner.id}`, {
+        method: APISettings.methods.put,
+        headers: {
+          'Content-Type': APISettings.headers.contentType,
+        },
+        body: JSON.stringify({ wins, time }),
+      });
+      API.validation(response);
       resolve();
     });
   }
 }
-
-// export const api = new API();
