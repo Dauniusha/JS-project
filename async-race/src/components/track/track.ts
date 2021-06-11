@@ -2,6 +2,9 @@ import './track.css';
 import { Car } from '../car/car';
 import { BaseComponents } from '../models/base-component';
 import { API } from '../API/API';
+import { APISettings } from '../API/API-setting';
+import { setting } from '../setting';
+import { CarDataInterface } from '../models/car-interface';
 
 export class Track extends BaseComponents {
   private car: Car;
@@ -14,6 +17,8 @@ export class Track extends BaseComponents {
 
   private stopButton?: HTMLButtonElement;
 
+  private readonly carElement: HTMLElement;
+
   constructor(car: Car) {
     super('div', ['track']);
 
@@ -22,6 +27,18 @@ export class Track extends BaseComponents {
     this.createSettingContainer();
 
     this.createTrackWithButtons();
+    const carElement = <HTMLElement> this.element.querySelector('.car');
+    if (carElement) {
+      this.carElement = carElement;
+    } else {
+      throw Error('Car element does not exist!');
+    }
+    this.startButton?.addEventListener('click', () => {
+      this.carStart();
+    });
+    this.stopButton?.addEventListener('click', () => {
+      this.carStop();
+    });
   }
 
   private createSettingContainer() {
@@ -60,7 +77,7 @@ export class Track extends BaseComponents {
     trackButtonsContainer.appendChild(this.startButton);
 
     this.stopButton = document.createElement('button');
-    this.stopButton.classList.add('track-btn', 'stop-btn', 'track-btn-disable');
+    this.stopButton.classList.add('track-btn', 'stop-btn', setting.offClasses.trackBtnOffClass);
     this.stopButton.innerHTML = 'B';
     trackButtonsContainer.appendChild(this.stopButton);
 
@@ -93,5 +110,59 @@ export class Track extends BaseComponents {
 
   setCar(car: Car) {
     this.car = car;
+  }
+
+  getCarElement(): HTMLElement {
+    return this.carElement;
+  }
+
+  private async carStart() {
+    this.toggleTrackBtns();
+    const carData = await API.toggleCarsEngine([{ key: 'id', value: String(this.car.id) }, {
+      key: 'status', value: APISettings.status.start,
+    }]);
+    this.carAnimationOn(carData);
+    const driveModeOn = await API.switchToDriveMode([{ key: 'id', value: String(this.car.id) }, {
+      key: 'status', value: APISettings.status.drive,
+    }]);
+    if (!driveModeOn) {
+      this.carElement.style.animationPlayState = 'paused';
+    }
+  }
+
+  async carStop(): Promise<void> {
+    return new Promise(async (resolve) => {
+      this.stopButton?.classList.add(setting.offClasses.trackBtnOffClass);
+      await API.switchToDriveMode([{ key: 'id', value: String(this.car.id) }, {
+        key: 'status', value: APISettings.status.stop,
+      }]);
+      this.carAnimationOff();
+      this.startButton?.classList.remove(setting.offClasses.trackBtnOffClass);
+      resolve();
+    });
+  }
+
+  private carAnimationOn(carData: CarDataInterface) {
+    this.carElement.style.animationDuration = `${setting.trackSize / carData.velocity}s`;
+    this.carElement.classList.add(setting.animationClass.on);
+    this.carElement.style.animationPlayState = 'running';
+  }
+
+  private carAnimationOff() {
+    this.carElement.classList.remove(setting.animationClass.on);
+  }
+
+  private toggleTrackBtns() {
+    this.startButton?.classList.toggle(setting.offClasses.trackBtnOffClass);
+    this.stopButton?.classList.toggle(setting.offClasses.trackBtnOffClass);
+  }
+
+  carRaceStart(): Promise<Track> {
+    return new Promise((resolve) => {
+      this.carStart();
+      this.carElement.addEventListener('animationend', () => {
+        resolve(this);
+      });
+    });
   }
 }

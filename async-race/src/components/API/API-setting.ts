@@ -3,6 +3,7 @@ export const APISettings = {
   path: {
     garage: '/garage',
     winners: '/winners',
+    engine: '/engine',
   },
   methods: {
     post: 'POST',
@@ -16,4 +17,10 @@ export const APISettings = {
     name: 'Unknown',
     color: '#e5e5e5',
   },
+  status: {
+    start: 'started',
+    stop: 'stopped',
+    drive: 'drive',
+  },
+  serverErrorCode: 500,
 };

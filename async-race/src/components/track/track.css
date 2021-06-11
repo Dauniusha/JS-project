@@ -15,6 +15,8 @@
   display: flex;
   position: relative;
   margin-bottom: 1vh;
+  overflow: hidden;
+  height: 5.5vh;
 }
 
 .track-btn {
@@ -29,7 +31,7 @@
   background: none;
   text-align: center;
   cursor: pointer;
-  margin-right: 0.5vw;
+  margin-right: 0.8vh;
   opacity: 1;
   transition: opacity 0.1s ease;
 }
@@ -65,4 +67,20 @@
   transform: rotateY(180deg);
   width: 15vh;
   height: 5.5vh;
+  position: absolute;
+  left: 8vh;
 }
+
+.animation-on {
+  animation-name: move;
+  animation-timing-function: linear;
+  left: auto;
+  right: 1vw;
+}
+
+@keyframes move {
+  from {
+    right: calc(100% - 8vh - 15vh);
+  }
+}
+

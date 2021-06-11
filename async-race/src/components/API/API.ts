@@ -1,5 +1,6 @@
-import { CarInterface, CreateCarInterface } from '../models/car-interface';
+import { CarDataInterface, CarInterface, CreateCarInterface } from '../models/car-interface';
 import { Query } from '../models/query-interface';
+import { Winner } from '../models/winner-interface';
 import { APISettings } from './API-setting';
 
 // [{ key: 'page', value: '1' }]
@@ -69,7 +70,36 @@ export class API {
         },
         body: JSON.stringify(car),
       });
-      this.validation(response);
+      API.validation(response);
+      resolve();
+    });
+  }
+
+  static toggleCarsEngine(queryParams: Query[]): Promise<CarDataInterface> {
+    return new Promise(async (resolve) => {
+      const response = await fetch(`${APISettings.baseURL}${APISettings.path.engine}${API.generateQueryString(queryParams)}`);
+      const carData = await response.json();
+      resolve(carData);
+    });
+  }
+
+  static switchToDriveMode(queryParams: Query[]): Promise<boolean> {
+    return new Promise(async (resolve) => {
+      const response = await fetch(`${APISettings.baseURL}${APISettings.path.engine}${API.generateQueryString(queryParams)}`);
+      if (response.ok) {
+        resolve(true);
+      } else {
+        switch (response.status) {
+          case APISettings.serverErrorCode:
+            resolve(false);
+            break;
+          default:
+            console.log(`Error ${response.status}!`);
+            resolve(false);
+        }
+      }
+    });
+  }
       resolve();
     });
   }

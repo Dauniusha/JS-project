@@ -8,6 +8,7 @@ import { API } from '../API/API';
 import { setting } from '../setting';
 import { getRandomColor } from '../../../shared/random-color';
 import { CreateCarInterface } from '../models/car-interface';
+import { Popup } from '../popup/popup';
 
 export class Garage extends Field {
   private readonly createInput: InputField;
@@ -62,12 +63,18 @@ export class Garage extends Field {
     this.raceBtn = document.createElement('button');
     this.raceBtn.innerHTML = 'race';
     this.raceBtn.classList.add('control-btn', 'race-btn');
+    this.raceBtn.addEventListener('click', () => {
+      this.race();
+    });
     contaner.appendChild(this.raceBtn);
 
     this.resetBtn = document.createElement('button');
     this.resetBtn.innerHTML = 'reset';
-    this.resetBtn.classList.add('control-btn', 'reset-btn');
+    this.resetBtn.classList.add('control-btn', 'reset-btn', setting.offClasses.garageOffClass);
     contaner.appendChild(this.resetBtn);
+    this.resetBtn.addEventListener('click', () => {
+      this.resetRace();
+    });
 
     this.generateBtn = document.createElement('button');
     this.generateBtn.innerHTML = 'generate cars';
@@ -178,5 +185,52 @@ export class Garage extends Field {
     const model = setting.carNames[indexCarName].model[indexCarModel].modelName;
     const color = getRandomColor();
     return { name: `${name} ${model}`, color };
+  }
+
+  private async race() {
+    this.toggleRaceBtn();
+    const stopPromises: Promise<void>[] = [];
+    this.tracks.forEach((track) => {
+      stopPromises.push(track.carStop());
+    });
+    await Promise.all(stopPromises);
+
+    const promises: Promise<Track>[] = [];
+    this.tracks.forEach((track) => {
+      promises.push(track.carRaceStart());
+    });
+    const bestTrack = await Promise.race(promises);
+    this.createWinPopup(bestTrack);
+  }
+
+  private resetRace() {
+    this.resetBtn?.classList.add(setting.offClasses.garageOffClass);
+    const promises: Promise<void>[] = [];
+    this.tracks.forEach((track) => {
+      promises.push(track.carStop());
+    });
+    Promise.all(promises).then(() => {
+      this.raceBtn?.classList.remove(setting.offClasses.garageOffClass);
+    });
+  }
+
+  private toggleRaceBtn() {
+    this.raceBtn?.classList.toggle(setting.offClasses.garageOffClass);
+    this.resetBtn?.classList.toggle(setting.offClasses.garageOffClass);
+  }
+
+  private createWinPopup(track: Track) {
+    const winPopup = new Popup();
+    const time = parseFloat(track.getCarElement().style.animationDuration);
+    const clearTime = time.toFixed(2);
+    winPopup.popUp.element.innerHTML = `
+    ${track.getCar().name} won in ${clearTime} seconds
+    `;
+    this.element.appendChild(winPopup.element);
+    winPopup.showPopup();
+    winPopup.element.addEventListener('click', async () => {
+      await winPopup.closePopup();
+      winPopup.element.remove();
+    });
   }
 }

@@ -490,4 +490,13 @@ export const setting = {
       ],
     },
   ],
+  trackSize: 300,
+  animationClass: {
+    on: 'animation-on',
+  },
+  offClasses: {
+    trackBtnOffClass: 'track-btn-disable',
+    garageOffClass: 'disable',
+    popupCloseClass: 'popup_close',
+  },
 };
