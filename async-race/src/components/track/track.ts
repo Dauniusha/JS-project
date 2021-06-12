@@ -101,6 +101,7 @@ export class Track extends BaseComponents {
   }
 
   deleteCar(): Promise<void> {
+    API.deleteWinner(this.car.id);
     return API.deleteCar(this.car.id);
   }
 

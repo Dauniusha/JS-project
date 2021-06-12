@@ -1,7 +1,7 @@
 .input-field {
   display: flex;
   align-items: center;
-  margin-bottom: 1vh;
+  margin: 1vh 0;
 }
 
 .car-name {

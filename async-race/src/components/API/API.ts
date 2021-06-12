@@ -75,6 +75,14 @@ export class API {
     });
   }
 
+  static getCar(id: number): Promise<CarInterface> {
+    return new Promise(async (resolve) => {
+      const response = await fetch(`${APISettings.baseURL}${APISettings.path.garage}/${id}`);
+      const carData = await response.json();
+      resolve(carData);
+    });
+  }
+
   static toggleCarsEngine(queryParams: Query[]): Promise<CarDataInterface> {
     return new Promise(async (resolve) => {
       const response = await fetch(`${APISettings.baseURL}${APISettings.path.engine}${API.generateQueryString(queryParams)}`);
@@ -136,6 +144,26 @@ export class API {
       });
       API.validation(response);
       resolve();
+    });
+  }
+
+  static deleteWinner(id: number): Promise<void> {
+    return new Promise(async (resolve) => {
+      const response = await fetch(`${APISettings.baseURL}${APISettings.path.winners}/${id}`, {
+        method: APISettings.methods.delete,
+      });
+      API.validation(response);
+      resolve();
+    });
+  }
+
+  static getAllWinner(queryParams: Query[]): Promise<{ winners: Winner[], totalCount: number }> {
+    return new Promise(async (resolve) => {
+      const response = await fetch(`${APISettings.baseURL}${APISettings.path.winners}${API.generateQueryString(queryParams)}`);
+      API.validation(response);
+      const winners = await response.json();
+      const totalCount = Number(response.headers.get('X-Total-Count'));
+      resolve({ winners, totalCount });
     });
   }
 }

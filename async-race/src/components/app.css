@@ -1,0 +1,12 @@
+.header {
+  display: flex;
+  align-items: center;
+  margin: 1vh auto;
+  height: auto;
+}
+
+.header__btn {
+  margin-right: 2vw;
+  width: 15vh !important;
+  height: 4vh !important;
+}

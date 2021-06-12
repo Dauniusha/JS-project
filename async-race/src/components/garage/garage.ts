@@ -9,6 +9,7 @@ import { setting } from '../setting';
 import { getRandomColor } from '../../../shared/random-color';
 import { CreateCarInterface } from '../models/car-interface';
 import { Popup } from '../popup/popup';
+import { createSwitchBtns } from '../../../shared/switch-btns';
 
 export class Garage extends Field {
   private readonly createInput: InputField;
@@ -25,9 +26,13 @@ export class Garage extends Field {
 
   tracks: Track[] = [];
 
-  private garageCounter?: number;
+  private garageCounter?: HTMLSpanElement;
 
-  private pageCounter?: number;
+  private pageCounter?: HTMLSpanElement;
+
+  private nextPage?: HTMLButtonElement;
+
+  private prevPage?: HTMLButtonElement;
 
   private activeCar?: Car;
 
@@ -48,11 +53,34 @@ export class Garage extends Field {
     inputsContainer.appendChild(this.updateInput.element);
 
     this.createButtonsField(inputsContainer);
+    this.createGarageCounterAndPageCounter();
 
     this.carContainer = document.createElement('div');
     this.contantsField.element.appendChild(this.carContainer);
 
-    this.getCars([{ key: '_page', value: '1' }, { key: '_limit', value: '7' }]); // Пока так
+    this.getCars([{ key: '_page', value: String(setting.activePageSetting.page) }, {
+      key: '_limit', value: String(setting.activePageSetting.limit),
+    }]);
+
+    this.createPageSwitchBtns();
+  }
+
+  private createGarageCounterAndPageCounter() {
+    const garageCounterElement = document.createElement('h2');
+    garageCounterElement.classList.add('garage-counter');
+    garageCounterElement.innerHTML = `
+      Garage (<span></span>)
+    `;
+    this.contantsField.element.appendChild(garageCounterElement);
+    this.garageCounter = <HTMLSpanElement> garageCounterElement.querySelector('span');
+
+    const pageCounterElement = document.createElement('h3');
+    pageCounterElement.classList.add('page-counter');
+    pageCounterElement.innerHTML = `
+      Page #<span></span>
+    `;
+    this.contantsField.element.appendChild(pageCounterElement);
+    this.pageCounter = <HTMLSpanElement> pageCounterElement.querySelector('span');
   }
 
   private createButtonsField(rootElement: HTMLElement) {
@@ -85,17 +113,52 @@ export class Garage extends Field {
     contaner.appendChild(this.generateBtn);
   }
 
-  private async getCars(query: Query[]) {
+  private createPageSwitchBtns() {
+    const btnsContainer = document.createElement('div');
+    btnsContainer.classList.add('switch-page__container');
+    this.contantsField.element.appendChild(btnsContainer);
+
+    this.prevPage = createSwitchBtns('prev');
+    btnsContainer.appendChild(this.prevPage);
+    this.prevPage.addEventListener('click', () => {
+      if (setting.activePageSetting.page > 1) {
+        setting.activePageSetting.page--;
+        this.getCars([{ key: '_page', value: String(setting.activePageSetting.page) }, {
+          key: '_limit', value: String(setting.activePageSetting.limit),
+        }]);
+      }
+    });
+
+    this.nextPage = createSwitchBtns('next');
+    btnsContainer.appendChild(this.nextPage);
+    this.nextPage.addEventListener('click', () => {
+      setting.activePageSetting.page++;
+      this.getCars([{ key: '_page', value: String(setting.activePageSetting.page) }, {
+        key: '_limit', value: String(setting.activePageSetting.limit),
+      }]);
+    });
+  }
+
+  private async getCars(querys: Query[]) {
     this.carContainer.innerHTML = '';
-    const responseObj = await API.getCars(query);
-    this.garageCounter = responseObj.totalCount;
-    console.log(this.garageCounter);
+    const responseObj = await API.getCars(querys);
+    if (this.garageCounter) {
+      this.garageCounter.innerHTML = String(responseObj.totalCount);
+    }
+    querys.forEach((query) => {
+      if (query.key === '_page' && this.pageCounter) {
+        this.pageCounter.innerHTML = query.value;
+      }
+    });
     responseObj.cars.forEach((carProto) => {
       const track = new Track(new Car(carProto));
       this.addTrackListner(track);
       this.tracks.push(track);
       this.carContainer.appendChild(track.element);
     });
+    if (this.raceBtn && this.raceBtn.classList.contains(setting.offClasses.garageOffClass)) {
+      this.toggleRaceBtn();
+    }
   }
 
   private addTrackListner(track: Track) {
@@ -110,7 +173,9 @@ export class Garage extends Field {
 
   private async deleteCar(track: Track) {
     await track.deleteCar();
-    this.getCars([{ key: '_page', value: '1' }, { key: '_limit', value: '7' }]); // Потом все такие переделать
+    this.getCars([{ key: '_page', value: String(setting.activePageSetting.page) }, {
+      key: '_limit', value: String(setting.activePageSetting.limit),
+    }]);
   }
 
   private selectCar(track: Track) {
@@ -121,7 +186,9 @@ export class Garage extends Field {
     this.updateInput.confirmButton.addEventListener('click', async () => {
       await this.confirmUpdateCar();
       this.resetUpdateField();
-      this.getCars([{ key: '_page', value: '1' }, { key: '_limit', value: '7' }]); // Потом все такие переделать
+      this.getCars([{ key: '_page', value: String(setting.activePageSetting.page) }, {
+        key: '_limit', value: String(setting.activePageSetting.limit),
+      }]);
     }, { once: true });
   }
 
@@ -150,7 +217,9 @@ export class Garage extends Field {
     };
     await API.createCar(car);
     this.resetCreateField();
-    this.getCars([{ key: '_page', value: '1' }, { key: '_limit', value: '7' }]);
+    this.getCars([{ key: '_page', value: String(setting.activePageSetting.page) }, {
+      key: '_limit', value: String(setting.activePageSetting.limit),
+    }]);
   }
 
   private resetCreateField() {
@@ -167,7 +236,9 @@ export class Garage extends Field {
       resolve();
     });
     await Garage.generateCars(cars);
-    this.getCars([{ key: '_page', value: '1' }, { key: '_limit', value: '7' }]);
+    this.getCars([{ key: '_page', value: String(setting.activePageSetting.page) }, {
+      key: '_limit', value: String(setting.activePageSetting.limit),
+    }]);
   }
 
   private static async generateCars(cars: CreateCarInterface[]): Promise<void> {
@@ -201,6 +272,7 @@ export class Garage extends Field {
     });
     const bestTrack = await Promise.race(promises);
     this.createWinPopup(bestTrack);
+    Garage.updateWinnerData(bestTrack);
   }
 
   private resetRace() {
@@ -221,8 +293,7 @@ export class Garage extends Field {
 
   private createWinPopup(track: Track) {
     const winPopup = new Popup();
-    const time = parseFloat(track.getCarElement().style.animationDuration);
-    const clearTime = time.toFixed(2);
+    const clearTime = Garage.getClearTime(track.getCarElement().style.animationDuration);
     winPopup.popUp.element.innerHTML = `
     ${track.getCar().name} won in ${clearTime} seconds
     `;
@@ -232,5 +303,23 @@ export class Garage extends Field {
       await winPopup.closePopup();
       winPopup.element.remove();
     });
+  }
+
+  private static getClearTime(time: string): number {
+    const clearTime = parseFloat(time);
+    return Number(clearTime.toFixed(setting.fractionDigits));
+  }
+
+  private static async updateWinnerData(track: Track) {
+    const car = track.getCar();
+    const time = Garage.getClearTime(track.getCarElement().style.animationDuration);
+    const response = await API.getWinner(car.id);
+    if (!response.id) {
+      API.createWinner({ id: car.id, wins: 1, time });
+    } else if (response.time > time) {
+      API.updateWinner({ id: car.id, wins: response.wins + 1, time });
+    } else {
+      API.updateWinner({ id: car.id, wins: response.wins + 1, time: response.time });
+    }
   }
 }

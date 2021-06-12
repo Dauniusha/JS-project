@@ -1,5 +1,4 @@
 import './index.css';
-import { Garage } from './components/garage/garage';
+import { App } from './components/app';
 
-const app = new Garage();
-document.body.appendChild(app.element);
+const app = new App(document.body);

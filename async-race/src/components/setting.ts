@@ -499,4 +499,9 @@ export const setting = {
     garageOffClass: 'disable',
     popupCloseClass: 'popup_close',
   },
+  fractionDigits: 2,
+  activePageSetting: {
+    page: 1,
+    limit: 7,
+  },
 };
