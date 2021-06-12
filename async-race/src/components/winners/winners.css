@@ -1,0 +1,33 @@
+.winners__container {
+  height: auto;
+}
+
+.wins-template,
+.best-time-template {
+  position: relative;
+}
+
+.wins-template::after,
+.best-time-template::after {
+  position: absolute;
+  display: block;
+  content: '';
+  top: 1vh;
+  right: 0;
+  border: 1vh solid transparent;
+  border-top: 1vh solid #e5e5e5;
+  transition: all 0.4s ease;
+}
+
+.best-time-template::after {
+  right: -3vh;
+}
+
+.active-field::after {
+  border-top-color: khaki;
+}
+
+.ASC-sort::after {
+  transform: rotate(180deg);
+  top: 0;
+}

@@ -1,6 +1,8 @@
+import './score.css';
 import { Car } from '../car/car';
 import { BaseComponents } from '../models/base-component';
 import { Winner } from '../models/winner-interface';
+import { createDivElement } from '../../../shared/create-div';
 
 export class Score extends BaseComponents {
   private readonly place: number;
@@ -18,11 +20,11 @@ export class Score extends BaseComponents {
   }
 
   private createScoreTable() {
-    const placeContainer = Score.createDivElement('place-container');
+    const placeContainer = createDivElement(['place-container']);
     placeContainer.innerHTML = String(this.place);
     this.element.appendChild(placeContainer);
 
-    const carImgContainer = Score.createDivElement('car-container');
+    const carImgContainer = createDivElement(['car-container']);
     if (this.car.svg) {
       carImgContainer.innerHTML = this.car.svg;
     }
@@ -32,22 +34,16 @@ export class Score extends BaseComponents {
     }
     this.element.appendChild(carImgContainer);
 
-    const nameContainer = Score.createDivElement('name-container');
+    const nameContainer = createDivElement(['name-container']);
     nameContainer.innerHTML = this.car.name;
     this.element.appendChild(nameContainer);
 
-    const winsContainer = Score.createDivElement('wins-container');
+    const winsContainer = createDivElement(['wins-container']);
     winsContainer.innerHTML = String(this.winData.wins);
     this.element.appendChild(winsContainer);
 
-    const bestTimeContainer = Score.createDivElement('best-time-container');
+    const bestTimeContainer = createDivElement(['best-time-container']);
     bestTimeContainer.innerHTML = String(this.winData.time);
     this.element.appendChild(bestTimeContainer);
-  }
-
-  private static createDivElement(className: string): HTMLElement {
-    const container = document.createElement('div');
-    container.classList.add(className);
-    return container;
   }
 }

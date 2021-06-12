@@ -2,6 +2,7 @@ import { Field } from './models/field/field';
 import './app.css';
 import { Garage } from './garage/garage';
 import { Winners } from './winners/winners';
+import { setting } from './setting';
 
 export class App extends Field {
   private garageButton?: HTMLButtonElement;
@@ -21,10 +22,11 @@ export class App extends Field {
 
   private createNavBtns() {
     this.garageButton = document.createElement('button');
-    this.garageButton.classList.add('confirm-btn', 'header__btn');
+    this.garageButton.classList.add('confirm-btn', 'header__btn', 'disable');
     this.garageButton.innerHTML = 'to Garage';
     this.contantsField.element.appendChild(this.garageButton);
     this.garageButton.addEventListener('click', () => {
+      this.toggleBtns();
       this.startGarage();
     });
 
@@ -33,6 +35,7 @@ export class App extends Field {
     this.scoreButton.innerHTML = 'to Score';
     this.contantsField.element.appendChild(this.scoreButton);
     this.scoreButton.addEventListener('click', () => {
+      this.toggleBtns();
       this.startWinners();
     });
   }
@@ -49,6 +52,12 @@ export class App extends Field {
     this.cleaning();
     if (!this.winners) {
       this.winners = new Winners();
+    } else {
+      this.winners.getWinners([{ key: '_page', value: String(setting.activeWinnerSetting.page) },
+        { key: '_limit', value: String(setting.activeWinnerSetting.limit) },
+        { key: '_sort', value: String(setting.activeWinnerSetting.sort) },
+        { key: '_order', value: String(setting.activeWinnerSetting.order) },
+      ]);
     }
     this.rootElement.appendChild(this.winners.element);
   }
@@ -60,5 +69,10 @@ export class App extends Field {
     if (this.winners) {
       this.winners.element.remove();
     }
+  }
+
+  private toggleBtns() {
+    this.garageButton?.classList.toggle('disable');
+    this.scoreButton?.classList.toggle('disable');
   }
 }

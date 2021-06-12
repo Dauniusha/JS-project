@@ -515,5 +515,9 @@ export const setting = {
       asc: 'ASC',
       desc: 'DESC',
     },
+    activeSort: {
+      sort: 'wins',
+      order: 'DESC',
+    },
   },
 };

@@ -1,7 +1,8 @@
 .header {
   display: flex;
   align-items: center;
-  margin: 1vh auto;
+  margin: 0 auto 1vh;
+  padding-top: 1vh;
   height: auto;
 }
 

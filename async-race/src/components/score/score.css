@@ -1,0 +1,28 @@
+.score {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  color: #e5e5e5;
+  font-size: 2.5vh;
+  margin: 2vh 0;
+}
+
+.place-container {
+  width: 3%;
+}
+
+.car-container {
+  width: 10%;
+  display: flex;
+  justify-content: center;
+}
+
+.name-container {
+  margin: 0 2%;
+  width: 20%;
+}
+
+.wins-container {
+  margin: 0 1%;
+  width: 5%;
+}

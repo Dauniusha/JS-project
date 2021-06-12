@@ -141,6 +141,7 @@ export class Garage extends Field {
 
   private async getCars(querys: Query[]) {
     this.carContainer.innerHTML = '';
+    this.tracks.length = 0;
     const responseObj = await API.getCars(querys);
     if (this.garageCounter) {
       this.garageCounter.innerHTML = String(responseObj.totalCount);
@@ -271,8 +272,8 @@ export class Garage extends Field {
       promises.push(track.carRaceStart());
     });
     const bestTrack = await Promise.race(promises);
-    this.createWinPopup(bestTrack);
     Garage.updateWinnerData(bestTrack);
+    this.createWinPopup(bestTrack);
   }
 
   private resetRace() {
