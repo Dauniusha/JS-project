@@ -464,7 +464,7 @@ export const setting = {
       model: [
         { modelName: 'Arcana', type: 'sedan' },
         { modelName: '11', type: 'coupe' },
-        { modelName: 'RS', type: 'hupercar' },
+        { modelName: 'RS', type: 'hypercar' },
         { modelName: '14', type: 'coupe' },
         { modelName: 'SFX', type: 'coupe' },
         { modelName: 'Satis', type: 'coupe' },
@@ -520,4 +520,5 @@ export const setting = {
       order: 'DESC',
     },
   },
+  numberOfCreatedCars: 100,
 };

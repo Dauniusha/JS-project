@@ -231,7 +231,7 @@ export class Garage extends Field {
   private async addGenerateListner() {
     const cars: CreateCarInterface[] = [];
     await new Promise<void>((resolve) => {
-      for (let i = 0; i < 100; i++) {
+      for (let i = 0; i < setting.numberOfCreatedCars; i++) {
         cars.push(Garage.getRandomCar());
       }
       resolve();

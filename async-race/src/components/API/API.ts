@@ -103,7 +103,7 @@ export class API {
             break;
           default:
             console.log(`Error ${response.status}!`);
-            resolve(false);
+            resolve(true);
         }
       }
     });
