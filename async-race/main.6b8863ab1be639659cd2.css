@@ -1,0 +1,292 @@
+body {
+  padding: 0;
+  margin: 0;
+  height: 100vh;
+  background: #0d1117;
+}
+
+* {
+  font-family: 'Roboto', sans-serif;
+  outline: none;
+}
+.container-field {
+  width: 95%;
+  height: 100vh;
+  margin: 0 auto;
+}
+.header {
+  display: flex;
+  align-items: center;
+  margin: 0 auto 1vh;
+  padding-top: 1vh;
+  height: auto;
+}
+
+.header__btn {
+  margin-right: 2vw;
+  width: 15vh !important;
+  height: 4vh !important;
+}
+.inputs-container {
+  margin: 2vh 0 3vh;
+}
+
+.disable {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.garage-counter,
+.page-counter {
+  margin: 0;
+  color: #e5e5e5;
+}
+
+.garage-counter {
+  margin-bottom: 1vh;
+  font-size: 3.5vh;
+}
+
+.page-counter {
+  margin-bottom: 2vh;
+  font-size: 2.5vh;
+}
+
+.switch-page__container {
+  display: flex;
+  align-items: center;
+  padding: 2vh 0 3vh;
+}
+
+.switch-page__btn {
+  margin-right: 0.5vw;
+}
+.input-field {
+  display: flex;
+  align-items: center;
+  margin: 1vh 0;
+}
+
+.car-name {
+  width: 160px;
+  padding: 2px;
+  background: #e5e5e5;
+  color: #222;
+  font-size: 1.5vh;
+  font-weight: 500;
+  border-radius: 5px;
+  border: teal 2px solid;
+}
+
+.car-color {
+  padding: 0;
+  margin: 0 1%;
+  width: 4vh;
+  height: 2.5vh;
+}
+
+.confirm-btn,
+.control-btn {
+  box-sizing: border-box;
+  height: 2.7vh;
+  border: teal 2px solid;
+  border-radius: 5px;
+  text-transform: uppercase;
+  font-size: 1.5vh;
+  font-weight: 700;
+  letter-spacing: 1.25px;
+  line-height: 2.05vh;
+  color: #222;
+  background: #e5e5e5;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.control-btn {
+  border-color: crimson;
+  margin-right: 1vw;
+}
+
+.confirm-btn {
+  width: 9vh;
+}
+
+.confirm-btn:hover,
+.control-btn:hover {
+  transform: scale(0.98);
+}
+.setting-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5vh;
+}
+
+.car-type {
+  margin: 0;
+  font-size: 2vh;
+  color: khaki;
+}
+
+.track-container {
+  border-bottom: #e5e5e5 0.5vh dashed;
+  display: flex;
+  position: relative;
+  margin-bottom: 1vh;
+  overflow: hidden;
+  height: 5.5vh;
+}
+
+.track-btn {
+  box-sizing: border-box;
+  padding: 0;
+  width: 3.2vh;
+  height: 4vh;
+  font-size: 3.5vh;
+  line-height: 2vh;
+  border: 2px solid;
+  border-radius: 5px;
+  background: none;
+  text-align: center;
+  cursor: pointer;
+  margin-right: 0.8vh;
+  opacity: 1;
+  transition: opacity 0.1s ease;
+}
+
+.start-btn {
+  border-color: rgba(72, 172, 47, 1);
+  color: rgba(72, 172, 47, 1);
+}
+
+.stop-btn {
+  border-color: rgba(207, 3, 44, 0.85);
+  color: rgba(207, 3, 44, 0.85);
+}
+
+.track-btn:active {
+  opacity: 0.7;
+}
+
+.track-btn-disable {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.finish-flag {
+  position: absolute;
+  bottom: 0;
+  width: 6vh;
+  right: 15%;
+  transform: rotateZ(30deg);
+}
+
+.car {
+  transform: rotateY(180deg);
+  width: 15vh;
+  height: 5.5vh;
+  position: absolute;
+  left: 8vh;
+}
+
+.animation-on {
+  animation-name: move;
+  animation-timing-function: linear;
+  left: auto;
+  right: 1vw;
+}
+
+@keyframes move {
+  from {
+    right: calc(100% - 8vh - 15vh);
+  }
+}
+
+
+.popup{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.75);
+  opacity: 1;
+  transition: all 0.15s linear;
+  z-index: 100;
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 52px;
+  font-weight: 700;
+  color: #e5e5e5;
+  text-shadow: 2px 2px 5px teal,
+              -2px 2px 5px crimson;
+}
+
+.popup_close {
+  visibility: hidden;
+  opacity: 0;
+}
+.winners__container {
+  height: auto;
+}
+
+.wins-template,
+.best-time-template {
+  position: relative;
+}
+
+.wins-template::after,
+.best-time-template::after {
+  position: absolute;
+  display: block;
+  content: '';
+  top: 1vh;
+  right: 0;
+  border: 1vh solid transparent;
+  border-top: 1vh solid #e5e5e5;
+  transition: all 0.4s ease;
+}
+
+.best-time-template::after {
+  right: -3vh;
+}
+
+.active-field::after {
+  border-top-color: khaki;
+}
+
+.ASC-sort::after {
+  transform: rotate(180deg);
+  top: 0;
+}
+.score {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  color: #e5e5e5;
+  font-size: 2.5vh;
+  margin: 2vh 0;
+}
+
+.place-container {
+  width: 3%;
+}
+
+.car-container {
+  width: 10%;
+  display: flex;
+  justify-content: center;
+}
+
+.name-container {
+  margin: 0 2%;
+  width: 20%;
+}
+
+.wins-container {
+  margin: 0;
+  margin-right: 4%;
+  width: 10%;
+}
