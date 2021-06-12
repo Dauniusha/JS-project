@@ -504,4 +504,16 @@ export const setting = {
     page: 1,
     limit: 7,
   },
+  activeWinnerSetting: {
+    page: 1,
+    limit: 10,
+    sort: {
+      wins: 'wins',
+      time: 'time',
+    },
+    order: {
+      asc: 'ASC',
+      desc: 'DESC',
+    },
+  },
 };
