@@ -490,7 +490,6 @@ export const setting = {
       ],
     },
   ],
-  trackSize: 300,
   animationClass: {
     on: 'animation-on',
   },

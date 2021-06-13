@@ -37,11 +37,7 @@ export class Winners extends Field {
     this.scoresContainer = document.createElement('div');
     this.contantsField.element.appendChild(this.scoresContainer);
 
-    this.getWinners([{ key: '_page', value: String(setting.activeWinnerSetting.page) },
-      { key: '_limit', value: String(setting.activeWinnerSetting.limit) },
-      { key: '_sort', value: String(setting.activeWinnerSetting.activeSort.sort) },
-      { key: '_order', value: String(setting.activeWinnerSetting.activeSort.order) },
-    ]);
+    this.sortDataWinner('wins', setting.activeWinnerSetting.order.desc);
 
     this.createPageSwitchBtns();
   }

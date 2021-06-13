@@ -144,7 +144,7 @@ export class Track extends BaseComponents {
   }
 
   private carAnimationOn(carData: CarDataInterface) {
-    this.carElement.style.animationDuration = `${setting.trackSize / carData.velocity}s`;
+    this.carElement.style.animationDuration = `${carData.distance / 1000 / carData.velocity}s`;
     this.carElement.classList.add(setting.animationClass.on);
     this.carElement.style.animationPlayState = 'running';
   }

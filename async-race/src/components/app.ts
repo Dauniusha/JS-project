@@ -41,38 +41,30 @@ export class App extends Field {
   }
 
   private startGarage() {
-    this.cleaning();
     if (!this.garage) {
       this.garage = new Garage();
+      this.rootElement.appendChild(this.garage.element);
+      this.garage.element.classList.add('show-class');
     }
-    this.rootElement.appendChild(this.garage.element);
+    this.toogleElement();
   }
 
   private startWinners() {
-    this.cleaning();
     if (!this.winners) {
       this.winners = new Winners();
-    } else {
-      this.winners.getWinners([{ key: '_page', value: String(setting.activeWinnerSetting.page) },
-        { key: '_limit', value: String(setting.activeWinnerSetting.limit) },
-        { key: '_sort', value: String(setting.activeWinnerSetting.sort) },
-        { key: '_order', value: String(setting.activeWinnerSetting.order) },
-      ]);
+      this.rootElement.appendChild(this.winners.element);
+      this.winners.element.classList.add('show-class');
     }
-    this.rootElement.appendChild(this.winners.element);
-  }
-
-  private cleaning() {
-    if (this.garage) {
-      this.garage.element.remove();
-    }
-    if (this.winners) {
-      this.winners.element.remove();
-    }
+    this.toogleElement();
   }
 
   private toggleBtns() {
     this.garageButton?.classList.toggle('disable');
     this.scoreButton?.classList.toggle('disable');
+  }
+
+  private toogleElement() {
+    this.garage?.element.classList.toggle('show-class');
+    this.winners?.element.classList.toggle('show-class');
   }
 }

@@ -11,3 +11,8 @@
   width: 15vh !important;
   height: 4vh !important;
 }
+
+.show-class {
+  visibility: hidden;
+  position: absolute;
+}
