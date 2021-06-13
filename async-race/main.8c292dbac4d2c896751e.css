@@ -27,6 +27,11 @@ body {
   width: 15vh !important;
   height: 4vh !important;
 }
+
+.show-class {
+  visibility: hidden;
+  position: absolute;
+}
 .inputs-container {
   margin: 2vh 0 3vh;
 }
