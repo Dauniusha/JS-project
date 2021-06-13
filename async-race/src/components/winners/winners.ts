@@ -94,6 +94,20 @@ export class Winners extends Field {
     });
   }
 
+  private pageButtonsValidation() {
+    if (setting.activeWinnerSetting.page <= 1) {
+      this.prevPage?.classList.add('disable');
+    } else {
+      this.prevPage?.classList.remove('disable');
+    }
+    const garageCount = this.winnersCounter?.innerHTML;
+    if (setting.activeWinnerSetting.page >= Math.ceil(Number(garageCount) / setting.activeWinnerSetting.limit)) {
+      this.nextPage?.classList.add('disable');
+    } else {
+      this.nextPage?.classList.remove('disable');
+    }
+  }
+
   private createScoresTemplate() {
     this.scoresTemplate = createDivElement(['score', 'score-template']);
     this.contantsField.element.appendChild(this.scoresTemplate);
@@ -122,6 +136,7 @@ export class Winners extends Field {
     if (this.winnersCounter) {
       this.winnersCounter.innerHTML = String(response.totalCount);
     }
+    this.pageButtonsValidation();
     queryes.forEach((query) => {
       if (query.key === '_page' && this.pageCounter) {
         this.pageCounter.innerHTML = query.value;

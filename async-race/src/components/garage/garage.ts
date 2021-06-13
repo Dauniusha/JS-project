@@ -121,12 +121,10 @@ export class Garage extends Field {
     this.prevPage = createSwitchBtns('prev');
     btnsContainer.appendChild(this.prevPage);
     this.prevPage.addEventListener('click', () => {
-      if (setting.activePageSetting.page > 1) {
-        setting.activePageSetting.page--;
-        this.getCars([{ key: '_page', value: String(setting.activePageSetting.page) }, {
-          key: '_limit', value: String(setting.activePageSetting.limit),
-        }]);
-      }
+      setting.activePageSetting.page--;
+      this.getCars([{ key: '_page', value: String(setting.activePageSetting.page) }, {
+        key: '_limit', value: String(setting.activePageSetting.limit),
+      }]);
     });
 
     this.nextPage = createSwitchBtns('next');
@@ -139,6 +137,20 @@ export class Garage extends Field {
     });
   }
 
+  private pageButtonsValidation() {
+    if (setting.activePageSetting.page <= 1) {
+      this.prevPage?.classList.add('disable');
+    } else {
+      this.prevPage?.classList.remove('disable');
+    }
+    const garageCount = this.garageCounter?.innerHTML;
+    if (setting.activePageSetting.page >= Math.ceil(Number(garageCount) / setting.activePageSetting.limit)) {
+      this.nextPage?.classList.add('disable');
+    } else {
+      this.nextPage?.classList.remove('disable');
+    }
+  }
+
   private async getCars(querys: Query[]) {
     this.carContainer.innerHTML = '';
     this.tracks.length = 0;
@@ -146,6 +158,7 @@ export class Garage extends Field {
     if (this.garageCounter) {
       this.garageCounter.innerHTML = String(responseObj.totalCount);
     }
+    this.pageButtonsValidation();
     querys.forEach((query) => {
       if (query.key === '_page' && this.pageCounter) {
         this.pageCounter.innerHTML = query.value;
