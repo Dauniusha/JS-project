@@ -16,6 +16,8 @@ export class Garage extends Field {
 
   private readonly updateInput: InputField;
 
+  private readonly carSvg: SVGElement;
+
   private resetBtn?: HTMLButtonElement;
 
   private generateBtn?: HTMLButtonElement;
@@ -52,6 +54,14 @@ export class Garage extends Field {
     this.updateInput = new InputField('update', 'disable');
     inputsContainer.appendChild(this.updateInput.element);
 
+    this.carSvg = Garage.addCarProto(inputsContainer);
+    const colorElements = inputsContainer.querySelectorAll('input[type="color"]');
+    colorElements.forEach((elem) => {
+      elem.addEventListener('input', () => {
+        this.carSvg.style.fill = (<HTMLInputElement>elem).value;
+      });
+    });
+
     this.createButtonsField(inputsContainer);
     this.createGarageCounterAndPageCounter();
 
@@ -63,6 +73,18 @@ export class Garage extends Field {
     }]);
 
     this.createPageSwitchBtns();
+  }
+
+  private static addCarProto(container: HTMLElement): SVGElement {
+    const car = document.createElement('div');
+    car.classList.add('car-proto');
+    car.innerHTML = setting.carTypes.sedan;
+    container.appendChild(car);
+    const svg = car.querySelector('svg');
+    if (svg) {
+      return svg;
+    }
+    throw Error('Svg does not exist!');
   }
 
   private createGarageCounterAndPageCounter() {

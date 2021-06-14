@@ -1,4 +1,5 @@
 .inputs-container {
+  position: relative;
   margin: 2vh 0 3vh;
 }
 
@@ -31,4 +32,11 @@
 
 .switch-page__btn {
   margin-right: 0.5vw;
+}
+
+.car-proto {
+  position: absolute;
+  transform: rotateY(180deg);
+  top: 1vh;
+  left: 40vh;
 }

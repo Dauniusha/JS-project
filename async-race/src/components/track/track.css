@@ -17,13 +17,16 @@
   margin-bottom: 1vh;
   overflow: hidden;
   height: 5.5vh;
+  max-height: 42px;
 }
 
 .track-btn {
   box-sizing: border-box;
   padding: 0;
   width: 3.2vh;
+  max-width: 32px;
   height: 4vh;
+  max-height: 39px;
   font-size: 3.5vh;
   line-height: 2vh;
   border: 2px solid;
@@ -66,6 +69,7 @@
 .car {
   transform: rotateY(180deg);
   width: 15vh;
+  max-width: 120px;
   height: 5.5vh;
   position: absolute;
   left: 8vh;

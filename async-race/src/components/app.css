@@ -16,4 +16,5 @@
   visibility: hidden;
   position: absolute;
   top: 0;
+  opacity: 0;
 }
