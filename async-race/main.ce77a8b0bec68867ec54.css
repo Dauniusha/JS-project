@@ -31,8 +31,11 @@ body {
 .show-class {
   visibility: hidden;
   position: absolute;
+  top: 0;
+  opacity: 0;
 }
 .inputs-container {
+  position: relative;
   margin: 2vh 0 3vh;
 }
 
@@ -66,6 +69,13 @@ body {
 .switch-page__btn {
   margin-right: 0.5vw;
 }
+
+.car-proto {
+  position: absolute;
+  transform: rotateY(180deg);
+  top: 1vh;
+  left: 40vh;
+}
 .input-field {
   display: flex;
   align-items: center;
@@ -73,7 +83,7 @@ body {
 }
 
 .car-name {
-  width: 160px;
+  width: 21vh;
   padding: 2px;
   background: #e5e5e5;
   color: #222;
@@ -139,13 +149,16 @@ body {
   margin-bottom: 1vh;
   overflow: hidden;
   height: 5.5vh;
+  max-height: 42px;
 }
 
 .track-btn {
   box-sizing: border-box;
   padding: 0;
   width: 3.2vh;
+  max-width: 32px;
   height: 4vh;
+  max-height: 39px;
   font-size: 3.5vh;
   line-height: 2vh;
   border: 2px solid;
@@ -188,6 +201,7 @@ body {
 .car {
   transform: rotateY(180deg);
   width: 15vh;
+  max-width: 120px;
   height: 5.5vh;
   position: absolute;
   left: 8vh;
