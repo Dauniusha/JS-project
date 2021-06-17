@@ -74,7 +74,7 @@ body {
   position: absolute;
   transform: rotateY(180deg);
   top: 1vh;
-  left: 40vh;
+  left: 55vh;
 }
 .input-field {
   display: flex;
