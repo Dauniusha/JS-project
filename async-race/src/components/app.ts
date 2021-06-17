@@ -54,6 +54,12 @@ export class App extends Field {
       this.winners = new Winners();
       this.rootElement.appendChild(this.winners.element);
       this.winners.element.classList.add('show-class');
+    } else {
+      this.winners.getWinners([{ key: '_page', value: String(setting.activeWinnerSetting.page) },
+        { key: '_limit', value: String(setting.activeWinnerSetting.limit) },
+        { key: '_sort', value: String(setting.activeWinnerSetting.activeSort.sort) },
+        { key: '_order', value: String(setting.activeWinnerSetting.activeSort.order) },
+      ]);
     }
     this.toogleElement();
   }

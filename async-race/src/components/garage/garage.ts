@@ -307,7 +307,7 @@ export class Garage extends Field {
       promises.push(track.carRaceStart());
     });
     const bestTrack = await Promise.race(promises);
-    Garage.updateWinnerData(bestTrack);
+    await Garage.updateWinnerData(bestTrack);
     this.createWinPopup(bestTrack);
   }
 
