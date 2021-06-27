@@ -57,7 +57,7 @@ module.exports = ({development})=>( { //деструктуризация
   },
   plugins: [
     //...esLintPlugin(development),
-    new ESLintPlugin({ extensions: ['ts', 'js'] }),
+    // new ESLintPlugin({ extensions: ['ts', 'js'] }),
     new HtmlWebpackPlugin({
       title: 'chess',
       // template: './src/index.html',
@@ -66,11 +66,11 @@ module.exports = ({development})=>( { //деструктуризация
     new MiniCssExtractPlugin({ filename: '[name].[contenthash].css' }),
     //копирование файлов не требуемых хеширования (без последующего изменения)
     //!без содержимого папки public билд не соберется
-      /* new CopyPlugin({ 
+      new CopyPlugin({ 
       patterns: [
-        { from: 'chess/public' },
+        { from: 'public' },
       ],
-    }), */
+    }),
   ],
   ...devServer(development)
 });

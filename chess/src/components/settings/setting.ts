@@ -1,0 +1,128 @@
+import { Bishop } from "../chess-pieces/each-pieces/bishop";
+import { King } from "../chess-pieces/each-pieces/king";
+import { Knight } from "../chess-pieces/each-pieces/knight";
+import { Pawn } from "../chess-pieces/each-pieces/pawn";
+import { Queen } from "../chess-pieces/each-pieces/queen";
+import { Rook } from "../chess-pieces/each-pieces/rook";
+import { color } from "../models/color-interface";
+
+export let setting = {
+  classNames: {
+    board: 'chess-board',
+    cell: 'cell',
+    whiteCell: 'white-cell',
+    blackCell: 'black-cell',
+    numerationAll: 'cell-numeration',
+    numerationEach: 'cell-nnumeration__each',
+    letterId: 'letter',
+    numberId: 'number',
+    piece: 'piece',
+    dataPiece: 'piece-type',
+  },
+
+  startGame: {
+    a8: 'blackRook',
+    b8: 'blackKnight',
+    c8: 'blackBishop',
+    d8: 'blackQueen',
+    e8: 'blackKing',
+    f8: 'blackBishop',
+    g8: 'blackKnight',
+    h8: 'blackRook',
+    a7: 'blackPawn',
+    b7: 'blackPawn',
+    c5: 'blackPawn',
+    d6: 'blackPawn',
+    e7: 'blackPawn',
+    f7: 'blackPawn',
+    g7: 'blackPawn',
+    h7: 'blackPawn',
+    
+    a1: 'whiteRook',
+    b1: 'whiteKnight',
+    c1: 'whiteBishop',
+    d1: 'whiteQueen',
+    e1: 'whiteKing',
+    f1: 'whiteBishop',
+    g1: 'whiteKnight',
+    h1: 'whiteRook',
+    a2: 'whitePawn',
+    b2: 'whitePawn',
+    c2: 'whitePawn',
+    d2: 'whitePawn',
+    e5: 'whitePawn',
+    f2: 'whitePawn',
+    g2: 'whitePawn',
+    h2: 'whitePawn',
+  },
+
+  currentPosition: {
+    a8: 'blackRook',
+    b8: 'blackKnight',
+    c8: 'blackBishop',
+    d8: 'blackQueen',
+    e8: 'blackKing',
+    f8: 'blackBishop',
+    g8: 'blackKnight',
+    h8: 'blackRook',
+    a7: 'blackPawn',
+    b7: 'blackPawn',
+    c7: 'blackPawn',
+    d7: 'blackPawn',
+    e7: 'blackPawn',
+    f7: 'blackPawn',
+    g7: 'blackPawn',
+    h7: 'blackPawn',
+    
+    a1: 'whiteRook',
+    b1: 'whiteKnight',
+    c1: 'whiteBishop',
+    d1: 'whiteQueen',
+    e1: 'whiteKing',
+    f1: 'whiteBishop',
+    g1: 'whiteKnight',
+    h1: 'whiteRook',
+    // a2: 'whitePawn',
+    // b2: 'whitePawn',
+    // c2: 'whitePawn',
+    // d2: 'whitePawn',
+    // e2: 'whitePawn',
+    // f2: 'whitePawn',
+    // g2: 'whitePawn',
+    // h2: 'whitePawn',
+  },
+
+  imgNames: {
+    blackQueen: './chess/black-queen.svg',
+    blackKing: './chess/black-king.svg',
+    blackBishop: './chess/black-bishop.svg',
+    blackKnight: './chess/black-knight.svg',
+    blackRook: './chess/black-rook.svg',
+    blackPawn: './chess/black-pawn.svg',
+    
+    whiteQueen: './chess/white-queen.svg',
+    whiteKing: './chess/white-king.svg',
+    whiteBishop: './chess/white-bishop.svg',
+    whiteKnight: './chess/white-knight.svg',
+    whiteRook: './chess/white-rook.svg',
+    whitePawn: './chess/white-pawn.svg',
+  },
+
+  createFunctions: {
+    blackQueen: (position: string) => new Queen(position, color.black),
+    blackKing: (position: string) => new King(position, color.black),
+    blackBishop: (position: string) => new Bishop(position, color.black),
+    blackKnight: (position: string) => new Knight(position, color.black),
+    blackRook: (position: string) => new Rook(position, color.black),
+    blackPawn: (position: string) => new Pawn(position, color.black),
+    
+    whiteQueen: (position: string) => new Queen(position, color.white),
+    whiteKing: (position: string) => new King(position, color.white),
+    whiteBishop: (position: string) => new Bishop(position, color.white),
+    whiteKnight: (position: string) => new Knight(position, color.white),
+    whiteRook: (position: string) => new Rook(position, color.white),
+    whitePawn: (position: string) => new Pawn(position, color.white),
+  },
+
+  isWhiteFromBelow: true,
+}

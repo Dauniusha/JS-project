@@ -1,0 +1,169 @@
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  font-family: 'Open Sans', sans-serif;
+  color: #fff;
+}
+
+.nav {
+  width: 100%;
+  background: #66a5ad;
+  box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.6);
+
+  &__container {
+    margin: 0 auto;
+    width: 95%;
+    height: 8vh;
+    display: flex;
+    align-items: center;
+  }
+
+  &-logo {
+    position: relative;
+    width: 15%;
+
+    &__img {
+      width: 25%;
+      height: auto;
+    }
+
+    &__text {
+      position: absolute;
+      left: 13%;
+      bottom: 1vh;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 4vh;
+      line-height: 4vh;
+      text-shadow: #000 0.12vh 0.07vh,
+        #000 0.12vh 0.12vh, 
+        #fff 0.07vh 0.12vh,
+        #000 -0.12vh 0.12vh,
+        #000 -0.12vh 0.07vh,
+        #000 -0.12vh -0.12vh,
+        #000 0.07vh -0.12vh,
+        #000 0.12vh -0.12vh;
+    }
+  }
+}
+
+.footer {
+  width: 100%;
+  height: 8vh;
+  margin: 0;
+  background: #ff936f;
+  display: flex;
+  justify-content: center;
+
+  &__container {
+    margin: 0 auto;
+    width: 95%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  &__link,
+  &__text {
+    font-weight: bold;
+    font-size: 2.25vh;
+  }
+
+  &__link {
+    position: relative;
+    color: #fff;
+    text-decoration: none;
+    outline: none;
+    margin-right: 2%;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &::before {
+      position: absolute;
+      content: "";
+      bottom: -3px;
+      left: 50%;
+      width: 0;
+      height: 1px;
+      background: #fff;
+      transition: all 0.4s ease-in-out;
+    }
+
+    &:hover::before {
+      width: 100%;
+      left: 0;
+    }
+  }
+}
+
+.game {
+  height: 84vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.chess-board {
+  position: relative;
+  width: 70vh;
+  height: 70vh;
+  display: flex;
+  flex-wrap: wrap;
+  border: #07575B 1vh solid;
+  border-radius: 2px;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.8);
+
+  .cell-numeration {
+    position: absolute;
+    font-size: 2.5vh;
+    font-weight: 700;
+    color: rgba(0, 0, 0, 0.7);
+  }
+
+  #number {
+    left: -4vh;
+    top: 3%;
+    height: 100%;
+
+    .cell-nnumeration__each {
+      height: 12.5%;
+    }
+  }
+
+  #letter {
+    top: -5.2vh;
+    left: 0;
+    width: 100%;
+    display: flex;
+    text-align: center;
+
+    .cell-nnumeration__each {
+      width: 12.5%;
+    }
+  }
+
+  .cell {
+    width: 12.5%;
+    height: 12.5%;
+  }
+
+  .white-cell {
+    background: #fff;
+  }
+
+  .black-cell {
+    background: #66a5ad;
+  }
+}
+
+
+
+
+
+
+
+

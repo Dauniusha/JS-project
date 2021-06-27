@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <title>Chess</title>
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav__container">
+      <div class="nav-logo">
+        <img class="nav-logo__img" src="./public/logo/logo.svg">
+        <span class="nav-logo__text">Chess</span>
+      </div>
+      <div class="logo__btns">
+
+      </div>
+    </div>
+  </nav>
+
+  <section class="game">
+    <div class="player-game">
+      <div class="player-game__avatar">
+
+      </div>
+      <div class="player-game__info player-game__name">
+
+      </div>
+      <div class="player-game__info player-game__time">
+
+      </div>
+      <div class="player-game__info player-game__move-table">
+
+      </div>
+    </div>
+
+    
+      <div class="chess-board">
+        <div class="cell-numeration" id="number">
+          <div class="cell-nnumeration__each">8</div>
+          <div class="cell-nnumeration__each">7</div>
+          <div class="cell-nnumeration__each">6</div>
+          <div class="cell-nnumeration__each">5</div>
+          <div class="cell-nnumeration__each">4</div>
+          <div class="cell-nnumeration__each">3</div>
+          <div class="cell-nnumeration__each">2</div>
+          <div class="cell-nnumeration__each">1</div>
+        </div>
+
+        <div class="cell-numeration" id="letter">
+          <div class="cell-nnumeration__each">a</div>
+          <div class="cell-nnumeration__each">b</div>
+          <div class="cell-nnumeration__each">c</div>
+          <div class="cell-nnumeration__each">d</div>
+          <div class="cell-nnumeration__each">e</div>
+          <div class="cell-nnumeration__each">f</div>
+          <div class="cell-nnumeration__each">g</div>
+          <div class="cell-nnumeration__each">h</div>
+        </div>
+
+        <div id="a1" class="cell white-cell"></div>
+        <div id="b1" class="cell black-cell"></div>
+        <div id="c1" class="cell white-cell"></div>
+        <div id="h1" class="cell black-cell"></div>
+        <div id="h1" class="cell white-cell"></div>
+        <div id="h1" class="cell black-cell"></div>
+        <div id="h1" class="cell white-cell"></div>
+        <div id="h1" class="cell black-cell"></div>
+
+        <div id="b1" class="cell black-cell"></div>
+        <div id="c1" class="cell white-cell"></div>
+        <div id="h1" class="cell black-cell"></div>
+        <div id="h1" class="cell white-cell"></div>
+        <div id="h1" class="cell black-cell"></div>
+        <div id="h1" class="cell white-cell"></div>
+        <div id="h1" class="cell black-cell"></div>
+        <div id="a1" class="cell white-cell"></div>
+
+        <div id="a1" class="cell white-cell"></div>
+        <div id="b1" class="cell black-cell"></div>
+        <div id="c1" class="cell white-cell"></div>
+        <div id="h1" class="cell black-cell"></div>
+        <div id="h1" class="cell white-cell"></div>
+        <div id="h1" class="cell black-cell"></div>
+        <div id="h1" class="cell white-cell"></div>
+        <div id="h1" class="cell black-cell"></div>
+
+        <div id="b1" class="cell black-cell"></div>
+        <div id="c1" class="cell white-cell"></div>
+        <div id="h1" class="cell black-cell"></div>
+        <div id="h1" class="cell white-cell"></div>
+        <div id="h1" class="cell black-cell"></div>
+        <div id="h1" class="cell white-cell"></div>
+        <div id="h1" class="cell black-cell"></div>
+        <div id="a1" class="cell white-cell"></div>
+
+        <div id="a1" class="cell white-cell"></div>
+        <div id="b1" class="cell black-cell"></div>
+        <div id="c1" class="cell white-cell"></div>
+        <div id="h1" class="cell black-cell"></div>
+        <div id="h1" class="cell white-cell"></div>
+        <div id="h1" class="cell black-cell"></div>
+        <div id="h1" class="cell white-cell"></div>
+        <div id="h1" class="cell black-cell"></div>
+
+        <div id="b1" class="cell black-cell"></div>
+        <div id="c1" class="cell white-cell"></div>
+        <div id="h1" class="cell black-cell"></div>
+        <div id="h1" class="cell white-cell"></div>
+        <div id="h1" class="cell black-cell"></div>
+        <div id="h1" class="cell white-cell"></div>
+        <div id="h1" class="cell black-cell"></div>
+        <div id="a1" class="cell white-cell"></div>
+
+        <div id="a1" class="cell white-cell"></div>
+        <div id="b1" class="cell black-cell"></div>
+        <div id="c1" class="cell white-cell"></div>
+        <div id="h1" class="cell black-cell"></div>
+        <div id="h1" class="cell white-cell"></div>
+        <div id="h1" class="cell black-cell"></div>
+        <div id="h1" class="cell white-cell"></div>
+        <div id="h1" class="cell black-cell"></div>
+
+        <div id="b1" class="cell black-cell"></div>
+        <div id="c1" class="cell white-cell"></div>
+        <div id="h1" class="cell black-cell"></div>
+        <div id="h1" class="cell white-cell"></div>
+        <div id="h1" class="cell black-cell"></div>
+        <div id="h1" class="cell white-cell"></div>
+        <div id="h1" class="cell black-cell"></div>
+        <div id="a1" class="cell white-cell"></div>
+      </div>
+
+    <div class="player-game">
+      <div class="player-game__avatar">
+
+      </div>
+      <div class="player-game__info player-game__name">
+
+      </div>
+      <div class="player-game__info player-game__time">
+
+      </div>
+      <div class="player-game__info player-game__move-table">
+        
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer__container">
+      <a class="footer__link" href="https://github.com/Dauniusha">GitHub</a>
+      <span class="footer__text">RS School 2021</span>
+    </div>
+  </footer>
+</body>
+</html>
