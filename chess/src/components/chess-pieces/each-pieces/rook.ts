@@ -11,10 +11,10 @@ export class Rook extends BasePiece {
     const pieceType = color + 'Rook';
     this.element.setAttribute(setting.classNames.dataPiece, pieceType);
     (<HTMLImageElement> this.element).src = setting.imgNames[<keyof typeof setting.imgNames> pieceType];
-    this.possibleMovesDetermination();
   }
 
-  possibleMovesDetermination() {
+  possibleMoveDetermination() {
+    this.possibleMoves = [];
     const cellCoordinates = cellNameToCoordinates(this.cell);
 
     this.possibleMoveCheck(cellCoordinates, 0, 1);

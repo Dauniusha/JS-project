@@ -19,7 +19,13 @@ export class BasePiece extends BaseComponents {
 
   static piecesCheck(coordinates: Coordinates): string | void {
     const name = cellCoordinatesToName({ X: coordinates.X, Y: coordinates.Y });
-    const piece = setting.startGame[<keyof typeof setting.startGame> name]; // ПОТОМ ИЗМЕНИТЬ НА ТЕКУЩУЮ ИГРУ!!!
+    let piece: string = ''; // Clear
+    setting.gameSetup.forEach((setup) => {
+      if (setup.cell === name) {
+        piece = setup.piece;
+        return;
+      }
+    });
     if(piece) {
       if (piece.indexOf(color.black) !== -1) {
         return color.black;

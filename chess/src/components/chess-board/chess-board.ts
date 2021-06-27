@@ -26,7 +26,7 @@ export class ChessBoard extends BaseComponents {
 
     this.newPlacePieces();
 
-    this.allPossibleMoves();
+    this.allPossibleMoveDetermination();
   }
 
   private cellsInit(): HTMLElement[] {
@@ -74,19 +74,24 @@ export class ChessBoard extends BaseComponents {
   }
 
   private newPlacePieces() {
-    const gameSetup = setting.startGame;
-    for (const piecePosition in setting.startGame) {
-      const pieceType = gameSetup[<keyof typeof setting.startGame> piecePosition];
-      const piece = setting.createFunctions[<keyof typeof setting.createFunctions> pieceType](piecePosition);
+    setting.gameSetup.forEach((setup) => {
+      const pieceType = setup.piece;
+      const piece = setting.createFunctions[<keyof typeof setting.createFunctions> pieceType](setup.cell);
       this.pieces.push(piece);
-
-      const positionInArray = 63 - cellNameToCellPosition(piecePosition);
+      const positionInArray = cellNameToCellPosition(setup.cell);
       this.cells[positionInArray].appendChild(piece.element);
-    }
+    });
   }
 
-  private allPossibleMoves() {
-    this.allMoves;
+  private allPossibleMoveDetermination() {
+    this.pieces.forEach((piece) => {
+      piece.possibleMoveDetermination();
+    });
+    this.updateAllPossibleMoves();
+  }
+
+  private updateAllPossibleMoves() {
+    this.allMoves = [];
     this.pieces.forEach((piece) => {
       this.allMoves.push({ cell: piece.cell, moves: piece.possibleMoves });
     });
@@ -96,12 +101,45 @@ export class ChessBoard extends BaseComponents {
     return this.cells;
   }
 
-  selectPiece(cell: string): string[] {
+  selectPiece(cell: string): Queen | King | Knight | Bishop | Pawn | Rook {
     for (let i = 0; i < this.pieces.length; i++) {
       if (this.pieces[i].cell === cell) {
-        return this.pieces[i].possibleMoves;
+        return this.pieces[i];
       }
     }
-    return [];
+    throw Error();
+  }
+
+  pieceMove(cell: string, piece: Queen | King | Knight | Bishop | Pawn | Rook) {
+    this.capturingTry(cell);
+
+    piece.element.remove();
+    this.cells[cellNameToCellPosition(cell)].appendChild(piece.element);
+
+    setting.gameSetup.forEach((setup) => { // Update gameSetup
+      if (setup.cell === piece.cell) {
+        setup.cell = cell;
+      }
+    });
+
+    piece.cell = cell;
+    
+    this.allPossibleMoveDetermination();
+  }
+
+  private capturingTry(cell: string) {
+    for (let i = 0; i < this.pieces.length; i++) {
+      if (this.pieces[i].cell === cell) {
+        for (let i = 0; i < setting.gameSetup.length; i++) {
+          if (setting.gameSetup[i].cell === cell) {
+            setting.gameSetup.splice(i, 1);
+          }
+        }
+
+        this.pieces[i].element.remove();
+        this.pieces.splice(i, 1);
+        break;
+      }
+    }
   }
 }

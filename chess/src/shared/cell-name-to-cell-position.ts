@@ -1,5 +1,5 @@
 export function cellNameToCellPosition(name: string): number {
   const nameCharCode = name.charCodeAt(0);
   const nameNumber = Number(name[1]);
-  return (nameNumber - 1) * 8 + Math.abs(nameCharCode - 104);
+  return 63 - ((nameNumber - 1) * 8 + Math.abs(nameCharCode - 104));
 }

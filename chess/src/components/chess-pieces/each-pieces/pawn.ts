@@ -23,11 +23,10 @@ export class Pawn extends BasePiece {
     } else {
       [ this.pawnIncrement, this.startRow ] = this.color === color.white ? [ -1, '7' ] : [ 1, '2' ];
     }
-
-    this.possibleMoveDetermination();
   }
 
   possibleMoveDetermination() {
+    this.possibleMoves = [];
     const cellCoordinates = cellNameToCoordinates(this.cell);
 
     const canMove = this.possibleMoveCheck(cellCoordinates);

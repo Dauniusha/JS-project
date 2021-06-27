@@ -10,10 +10,10 @@ export class Knight extends BasePiece {
     const pieceType = color + 'Knight';
     this.element.setAttribute(setting.classNames.dataPiece, pieceType);
     (<HTMLImageElement> this.element).src = setting.imgNames[<keyof typeof setting.imgNames> pieceType];
-    this.possibleMoveDetermination();
   }
 
   possibleMoveDetermination() {
+    this.possibleMoves = [];
     const cellCoordinates = cellNameToCoordinates(this.cell);
 
     this.possibleMoveCheck(cellCoordinates, 1, 2);
