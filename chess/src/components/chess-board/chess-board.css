@@ -76,6 +76,7 @@ body {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  position: relative;
 }
 
 .chess-board .cell .piece {
@@ -89,5 +90,33 @@ body {
 
 .chess-board .black-cell {
   background: #66a5ad;
+}
+
+.chess-board .possible-clear-ceil::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate3d(-50%, -50%, 0);
+          transform: translate3d(-50%, -50%, 0);
+  width: 25%;
+  height: 25%;
+  border-radius: 50%;
+  border: #000 3px solid;
+  background: #ff936f;
+  -webkit-box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.8);
+          box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.8);
+}
+
+.chess-board .possible-engaged-ceil::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(100% - 12px);
+  height: calc(100% - 12px);
+  border: #ff936f 6px dashed;
+  -webkit-box-shadow: 0 0 1px #000;
+          box-shadow: 0 0 1px #000;
 }
 /*# sourceMappingURL=chess-board.css.map */

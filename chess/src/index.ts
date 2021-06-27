@@ -1,4 +1,4 @@
-import { chessBoard } from "./components/chess-board/chess-board";
+import { Game } from "./components/game/game";
 
-const chess = new chessBoard();
-document.body.appendChild(chess.element);
+const chess = new Game();
+document.body.appendChild(chess.getChessBoard().element);

@@ -25,8 +25,6 @@ export class Pawn extends BasePiece {
     }
 
     this.possibleMoveDetermination();
-
-    console.log(this.possibleMoves);
   }
 
   possibleMoveDetermination() {

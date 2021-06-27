@@ -30,9 +30,11 @@ export class BasePiece extends BaseComponents {
   }
 
   possibleMoveCheck(pieceCoordinates: Coordinates, incrementX: number, incrementY: number) {
-    for (let i = pieceCoordinates.X + incrementX, j = pieceCoordinates.Y + incrementY;
+    for (
+        let i = pieceCoordinates.X + incrementX, j = pieceCoordinates.Y + incrementY;
         i < 8 && i > -1 && j < 8 && j > -1;
-        i += incrementX, j += incrementY) {
+        i += incrementX, j += incrementY
+        ) {
           let incrementCoordinates = { X: i, Y: j };
           const color = BasePiece.piecesCheck(incrementCoordinates);
           if (color) {

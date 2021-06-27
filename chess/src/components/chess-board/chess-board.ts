@@ -9,10 +9,12 @@ import { BaseComponents } from '../models/base-component';
 import { setting } from '../settings/setting';
 import './chess-board.scss';
 
-export class chessBoard extends BaseComponents {
+export class ChessBoard extends BaseComponents {
   private readonly cells: HTMLElement[];
 
   private pieces: (Queen | King | Knight | Bishop | Pawn | Rook)[] = [];
+
+  private allMoves: { cell: string, moves: string[] }[] = [];
 
   constructor() {
     super('div', [setting.classNames.board]);
@@ -23,6 +25,8 @@ export class chessBoard extends BaseComponents {
     this.element.appendChild(this.boardNumerationInit('letter'));
 
     this.newPlacePieces();
+
+    this.allPossibleMoves();
   }
 
   private cellsInit(): HTMLElement[] {
@@ -79,5 +83,25 @@ export class chessBoard extends BaseComponents {
       const positionInArray = 63 - cellNameToCellPosition(piecePosition);
       this.cells[positionInArray].appendChild(piece.element);
     }
+  }
+
+  private allPossibleMoves() {
+    this.allMoves;
+    this.pieces.forEach((piece) => {
+      this.allMoves.push({ cell: piece.cell, moves: piece.possibleMoves });
+    });
+  }
+
+  getAllCells(): HTMLElement[] {
+    return this.cells;
+  }
+
+  selectPiece(cell: string): string[] {
+    for (let i = 0; i < this.pieces.length; i++) {
+      if (this.pieces[i].cell === cell) {
+        return this.pieces[i].possibleMoves;
+      }
+    }
+    return [];
   }
 }

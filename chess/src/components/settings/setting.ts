@@ -18,6 +18,8 @@ export let setting = {
     numberId: 'number',
     piece: 'piece',
     dataPiece: 'piece-type',
+    possibleClearCell: 'possible-clear-ceil',
+    possibleEngagedCell: 'possible-engaged-ceil',
   },
 
   startGame: {
