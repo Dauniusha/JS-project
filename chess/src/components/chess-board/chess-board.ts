@@ -6,6 +6,8 @@ import { Pawn } from '../chess-pieces/each-pieces/pawn';
 import { Queen } from '../chess-pieces/each-pieces/queen';
 import { Rook } from '../chess-pieces/each-pieces/rook';
 import { BaseComponents } from '../models/base-component';
+import { color } from '../models/color-interface';
+import { Setup } from '../models/setup-interface';
 import { setting } from '../settings/setting';
 import './chess-board.scss';
 
@@ -141,5 +143,47 @@ export class ChessBoard extends BaseComponents {
         break;
       }
     }
+  }
+
+  checkValidation() {
+    let copyGameSetup: Setup[] = JSON.parse(JSON.stringify(setting.gameSetup));
+    let whiteKingPosition: string = '', blackKingPosition: string = '';
+    
+    copyGameSetup.forEach((setup) => {
+      if (setup.piece.indexOf('King'))  {
+        if (setup.piece.indexOf(color.white)) {
+          whiteKingPosition = setup.cell;
+        } else {
+          blackKingPosition = setup.cell;
+        }
+      }
+    });
+
+    if (this.possibleWhitesOrBlacksMoves(color.white).indexOf(whiteKingPosition)) {
+
+    }
+  }
+
+  private possibleWhitesOrBlacksMoves(color: string): string[] {
+    const possibleMoves: string[] = [];
+
+    this.pieces.forEach((piece) => {
+      if (piece.color === color) {
+        possibleMoves.push(...piece.possibleMoves);
+      }
+    });
+
+    return possibleMoves;
+  }
+
+  private possibleMoveDeterminationInCheck(color: string, copyGameSetup: Setup[]) {
+    const needPieces: Setup[] = [];
+    copyGameSetup.forEach((copy) => {
+      if (copy.piece.indexOf(color)) {
+        needPieces.push(copy);
+      }
+    });
+
+    const possibleMoves: { cell: string, possibleMoves: string[] }[] = [];
   }
 }

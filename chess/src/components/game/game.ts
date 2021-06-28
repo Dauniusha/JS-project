@@ -80,4 +80,8 @@ export class Game {
       this.removePossibleCells();
     }
   }
+
+  private checkValidation() {
+    
+  }
 }
