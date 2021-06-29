@@ -1,4 +1,5 @@
 import { cellNameToCellPosition } from '../../shared/cell-name-to-cell-position';
+import { BasePiece } from '../chess-pieces/base-piece';
 import { Bishop } from '../chess-pieces/each-pieces/bishop';
 import { King } from '../chess-pieces/each-pieces/king';
 import { Knight } from '../chess-pieces/each-pieces/knight';
@@ -8,6 +9,7 @@ import { Rook } from '../chess-pieces/each-pieces/rook';
 import { BaseComponents } from '../models/base-component';
 import { color } from '../models/color-interface';
 import { Setup } from '../models/setup-interface';
+import { TestCapturedPiece } from '../models/test-capturing-interface';
 import { setting } from '../settings/setting';
 import './chess-board.scss';
 
@@ -148,31 +150,6 @@ export class ChessBoard extends BaseComponents {
 
 
 
-  checkValidation(movedPieceColor: string): boolean {
-    let kingPosition: string = '';
-    
-    setting.gameSetup.forEach((setup) => {
-      if (setup.piece.indexOf('King') !== -1 && !(setup.piece.indexOf(movedPieceColor) !== -1))  {
-        kingPosition = setup.cell;
-        return;
-      }
-    });
-
-    return this.possibleWhitesOrBlacksMoves(movedPieceColor).indexOf(kingPosition) !== -1 ? true : false;
-  }
-
-  private possibleWhitesOrBlacksMoves(movedPieceColor: string): string[] {
-    const possibleMoves: string[] = [];
-
-    this.pieces.forEach((piece) => {
-      if (piece.color === movedPieceColor) {
-        possibleMoves.push(...piece.possibleMoves);
-      }
-    });
-
-    return possibleMoves;
-  }
-
   possibleMoveDeterminationInCheck(kingColor: string, copyGameSetup: Setup[]) {
     const defendingPieces: (Queen | King | Knight | Bishop | Pawn | Rook)[] = [];
     const attakingPieces: (Queen | King | Knight | Bishop | Pawn | Rook)[] = []
@@ -187,13 +164,18 @@ export class ChessBoard extends BaseComponents {
     defendingPieces.forEach((piece) => {
       const truePiecePosition = piece.cell;
 
-
       for (let i = 0 ; i < piece.possibleMoves.length; i++) {
+        const capturedPiece = this.testCapturing(copyGameSetup, piece, attakingPieces, piece.possibleMoves[i]);
         ChessBoard.moveTesting(copyGameSetup, piece, piece.possibleMoves[i]);
 
-        if (this.testCheckValidation(copyGameSetup, attakingPieces, piece.possibleMoves[i])) {
+        if (this.testCheckValidation(copyGameSetup, attakingPieces)) {
           piece.possibleMoves.splice(i, 1);
           i--;
+        }
+
+        if (capturedPiece) {
+          copyGameSetup.push(capturedPiece.capturedPieceSetup);
+          attakingPieces.push(capturedPiece.capturedPiece);
         }
       }
       ChessBoard.moveTesting(copyGameSetup, piece, truePiecePosition);
@@ -204,38 +186,116 @@ export class ChessBoard extends BaseComponents {
 
   private testCheckValidation(
     copyGameSetup: Setup[],
-    attakingPieces: (Queen | King | Knight | Bishop | Pawn | Rook)[],
-    testCell: string): boolean {
+    attakingPieces: (Queen | King | Knight | Bishop | Pawn | Rook)[]
+    ): boolean {
+      const kingColor = attakingPieces[0].color === color.white ? color.black : color.white;
+      const defendingKingPosition = ChessBoard.getKingPosition(copyGameSetup, kingColor);
 
-    let defendingKingPosition: string = '';
-    const kingColor = attakingPieces[0].color === color.white ? color.black : color.white;
-    copyGameSetup.forEach((setup) => {
-      if (setup.piece === kingColor + 'King')  {
-        defendingKingPosition = setup.cell;
-        return;
-      }
-    });
 
-    const possibleAttakingPositions: string[] = [];
-    attakingPieces.forEach((piece) => {
-      if (piece.cell !== testCell) { // When we cuptured
+      const possibleAttakingPositions: string[] = [];
+
+      attakingPieces.forEach((piece) => {
         piece.possibleMoveDetermination(copyGameSetup);
         possibleAttakingPositions.push(...piece.possibleMoves);
         piece.possibleMoveDetermination(setting.gameSetup); // Turn back
-      }
-    });
+      });
 
-    return possibleAttakingPositions.indexOf(defendingKingPosition) !== -1 ? true : false;
+      return possibleAttakingPositions.indexOf(defendingKingPosition) !== -1 ? true : false;
   }
 
   private static moveTesting(copyGameSetup: Setup[], piece: Queen | King | Knight | Bishop | Pawn | Rook, testCell: string) {
-    copyGameSetup.forEach((setup) => {
-      if (setup.cell === piece.cell) {
-        setup.cell = testCell;
-        return;
+    for (let i = 0; i < copyGameSetup.length; i++) {
+      if (copyGameSetup[i].cell === piece.cell && copyGameSetup[i].piece.indexOf(piece.color) !== -1) {
+        copyGameSetup[i].cell = testCell;
+        break;
+      }
+    }
+
+    piece.cell = testCell;
+  }
+
+  private testCapturing(
+    copyGameSetup: Setup[],
+    piece: Queen | King | Knight | Bishop | Pawn | Rook,
+    attakingPieces: (Queen | King | Knight | Bishop | Pawn | Rook)[],
+    testCell: string
+    ): TestCapturedPiece | false {
+      let capturedPieceSetup: Setup | undefined;
+
+      for (let i = 0; i < copyGameSetup.length; i++) { // Take captured piece
+        if (copyGameSetup[i].cell === testCell && copyGameSetup[i].piece.indexOf(piece.color) === -1) {
+          capturedPieceSetup = copyGameSetup[i];
+          copyGameSetup.splice(i, 1);
+          break;
+        }
+      }
+
+      let capturedPiece: Queen | King | Knight | Bishop | Pawn | Rook | undefined;
+
+      for (let i = 0; i < attakingPieces.length; i++) {
+        if (attakingPieces[i].cell === testCell) {
+          capturedPiece = attakingPieces[i];
+          attakingPieces.splice(i, 1);
+          break;
+        }
+      };
+
+      if (capturedPiece && capturedPieceSetup) {
+        return { capturedPieceSetup: capturedPieceSetup, capturedPiece: capturedPiece };
+      } else {
+        return false;
+      }
+  }
+
+
+
+  checkValidation(movedPieceColor: string): boolean {
+    const kingColor = ChessBoard.getReverseColor(movedPieceColor);
+    const kingPosition = ChessBoard.getKingPosition(setting.gameSetup, kingColor);
+
+    return this.possibleWhitesOrBlacksMoves(movedPieceColor).indexOf(kingPosition) !== -1 ? true : false;
+  }
+
+  movePossibilityValidation(movedPieceColor: string): boolean {
+    const defendingColor = ChessBoard.getReverseColor(movedPieceColor);
+
+    return this.possibleWhitesOrBlacksMoves(defendingColor).length ? true : false;
+  }
+
+  private possibleWhitesOrBlacksMoves(movedPieceColor: string): string[] {
+    const possibleMoves: string[] = [];
+
+    this.pieces.forEach((piece) => {
+      if (piece.color === movedPieceColor) {
+        possibleMoves.push(...piece.possibleMoves);
       }
     });
 
-    piece.cell = testCell;
+    return possibleMoves;
+  }
+
+  getCheckPieces(movedPieceColor: string): (Queen | King | Knight | Bishop | Pawn | Rook)[] {
+    const checkPiecesPositions: (Queen | King | Knight | Bishop | Pawn | Rook)[] = [];
+    const kingColor = ChessBoard.getReverseColor(movedPieceColor);
+    const kingPosition = ChessBoard.getKingPosition(setting.gameSetup, kingColor);
+    this.pieces.forEach((piece) => {
+      if (piece.possibleMoves.indexOf(kingPosition) !== -1 || piece.cell === kingPosition) {
+        checkPiecesPositions.push(piece);
+      }
+    });
+    return checkPiecesPositions;
+  }
+
+  private static getKingPosition(gameSetup: Setup[], kingColor: string): string {
+    for (let i = 0; i < gameSetup.length; i++) {
+      if (gameSetup[i].piece === kingColor + 'King') {
+        return gameSetup[i].cell;
+      }
+    }
+    throw Error('King does not exist');
+  }
+
+  private static getReverseColor(movedPieceColor: string): string {
+    return movedPieceColor === color.white ? color.black : color.white;
   }
 }

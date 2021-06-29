@@ -19,6 +19,8 @@ export class Game {
 
   private isWhiteMove: boolean = true;
 
+  private checkPieces?: (Queen | King | Knight | Bishop | Pawn | Rook)[];
+
   constructor() {
     this.chessBoard = new ChessBoard();
 
@@ -34,24 +36,24 @@ export class Game {
       const pieceElem = (<Element>elem.target)?.closest('.' + setting.classNames.piece);
       const activeColor = this.isWhiteMove ? color.white : color.black;
 
-      if (pieceElem /* && pieceElem.getAttribute(setting.classNames.dataPiece)?.indexOf(activeColor) !== -1 */) {
+      if (
+      (<Element>elem.target)?.closest('.' + setting.classNames.possibleClearCell)
+      || (<Element>elem.target)?.closest('.' + setting.classNames.possibleEngagedCell)
+      ) { // Происходит запись хода и всё остальное
         const cell = (<Element>elem.target)?.closest('.' + setting.classNames.cell);
-        if (cell && !(this.pieceActive?.cell === cell.id && this.possibleCells.length !== 0)) {
-          this.selectPiece(cell.id);
-        } else {
-          this.removePossibleCells();
+        if (cell) {
+          this.pieceMove(cell.id);
+          this.isWhiteMove = !this.isWhiteMove;
         }
-      } else if (
-        (<Element>elem.target)?.closest('.' + setting.classNames.possibleClearCell)
-        || (<Element>elem.target)?.closest('.' + setting.classNames.possibleEngagedCell)
-        ) { // Происходит запись хода и всё остальное
+      } else if (pieceElem /* && pieceElem.getAttribute(setting.classNames.dataPiece)?.indexOf(activeColor) !== -1 */) {
           const cell = (<Element>elem.target)?.closest('.' + setting.classNames.cell);
-          if (cell) {
-            this.pieceMove(cell.id);
-            this.isWhiteMove = !this.isWhiteMove;
+          if (cell && !(this.pieceActive?.cell === cell.id && this.possibleCells.length !== 0)) {
+            this.selectPiece(cell.id);
+          } else {
+            this.possibleCellsBacklightRemove();
           }
       } else {
-        this.removePossibleCells();
+        this.possibleCellsBacklightRemove();
       }
     });
   }
@@ -71,6 +73,7 @@ export class Game {
           this.possibleCells.push(cell);
         }
       });
+
     });
   }
 
@@ -111,16 +114,29 @@ export class Game {
     });
   }
 
-  private checkValidation(movedPieceColor: string) {
-    if (this.chessBoard.checkValidation(movedPieceColor)) {
-      // Do some logic for check
-    }
-  }
-
   private removeMovesForСheck(movedPieceColor: string) {
     let copyGameSetup: Setup[] = JSON.parse(JSON.stringify(setting.gameSetup));
     let kingColor = movedPieceColor === color.white ? color.black : color.white;
 
     this.chessBoard.possibleMoveDeterminationInCheck(kingColor, copyGameSetup);
   }
+
+  private checkMateValidation(movedPieceColor: string) {
+    const isCheck = this.chessBoard.checkValidation(movedPieceColor);
+    const defendersCanMove = this.chessBoard.movePossibilityValidation(movedPieceColor);
+
+    if (isCheck && !defendersCanMove) {
+      // Do some logic for check-mate
+      this.checkBacklightAdd();
+      console.log('mate');
+    } else if (isCheck) {
+      // Do some logic for check
+      this.checkBacklightAdd();
+      console.log('check');
+    } else if (!defendersCanMove) {
+      // Do some logic for stalemate
+      console.log('stalemate');
+    }
+  }
+
 }
