@@ -59,10 +59,16 @@ export class Game {
   }
 
   private selectPiece(cellId: string) {
-    this.removePossibleCells();
+    this.possibleCellsBacklightRemove();
     this.pieceActive = this.chessBoard.selectPiece(cellId);
+    this.possibleCellsBacklightAdd();
+  }
+
+  private possibleCellsBacklightAdd() {
     const cells = this.chessBoard.getAllCells();
-    this.pieceActive.possibleMoves.forEach((move) => {
+    this.pieceActive?.element.parentElement?.classList.add(setting.classNames.selectPieceBacklight);
+    this.pieceActive?.possibleMoves.forEach((move) => {
+
       cells.forEach((cell) => {
         if (move === cell.id) {
           if (cell.childElementCount) {
@@ -77,7 +83,8 @@ export class Game {
     });
   }
 
-  private removePossibleCells() {
+  private possibleCellsBacklightRemove() {
+    this.pieceActive?.element.parentElement?.classList.remove(setting.classNames.selectPieceBacklight);
     this.possibleCells.forEach((cell) => {
       cell.classList.remove(setting.classNames.possibleClearCell);
       cell.classList.remove(setting.classNames.possibleEngagedCell);
@@ -87,12 +94,15 @@ export class Game {
 
   private pieceMove(cellId: string) {
     if (this.pieceActive) {
+      this.checkBacklightRemove();
       this.moveBacklightRemove();
+      this.possibleCellsBacklightRemove();
+
       this.moveBacklightAdd(cellId);
       this.chessBoard.pieceMove(cellId, this.pieceActive);
-      this.removePossibleCells();
+
       this.removeMovesForСheck(this.pieceActive.color);
-      this.checkValidation(this.pieceActive.color);
+      this.checkMateValidation(this.pieceActive.color);
     }
   }
 
@@ -139,4 +149,20 @@ export class Game {
     }
   }
 
+  private checkBacklightAdd() {
+    if (this.pieceActive) {
+      this.checkPieces = this.chessBoard.getCheckPieces(this.pieceActive.color);
+      this.checkPieces.forEach((piece) => {
+        piece.element.parentElement?.classList.add(setting.classNames.checkBacklight);
+      });
+    }
+  }
+
+  private checkBacklightRemove() {
+    if (this.checkPieces) {
+      this.checkPieces.forEach((piece) => {
+        piece.element.parentElement?.classList.remove(setting.classNames.checkBacklight);
+      });
+    }
+  }
 }

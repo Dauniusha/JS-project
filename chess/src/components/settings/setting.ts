@@ -21,6 +21,8 @@ export let setting = {
     possibleClearCell: 'possible-clear-ceil',
     possibleEngagedCell: 'possible-engaged-ceil',
     moveBacklight: 'move-backlight',
+    checkBacklight: 'check-backlight',
+    selectPieceBacklight: 'select-piece-backlight',
   },
 
   gameSetup: [
