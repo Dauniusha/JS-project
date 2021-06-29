@@ -57,6 +57,7 @@ body {
     .piece {
       width: 90%;
       height: 90%;
+      z-index: 100;
     }
   }
 
@@ -91,5 +92,15 @@ body {
     height: calc(100% - 12px);
     border: #ff936f 6px dashed;
     box-shadow: 0 0 1px #000;
+  }
+
+  .move-backlight::after {
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(179, 255, 212, 0.7);
   }
 }

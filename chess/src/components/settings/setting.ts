@@ -20,6 +20,7 @@ export let setting = {
     dataPiece: 'piece-type',
     possibleClearCell: 'possible-clear-ceil',
     possibleEngagedCell: 'possible-engaged-ceil',
+    moveBacklight: 'move-backlight',
   },
 
   gameSetup: [

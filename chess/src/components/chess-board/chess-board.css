@@ -82,6 +82,7 @@ body {
 .chess-board .cell .piece {
   width: 90%;
   height: 90%;
+  z-index: 100;
 }
 
 .chess-board .white-cell {
@@ -118,5 +119,15 @@ body {
   border: #ff936f 6px dashed;
   -webkit-box-shadow: 0 0 1px #000;
           box-shadow: 0 0 1px #000;
+}
+
+.chess-board .move-backlight::after {
+  position: absolute;
+  content: '';
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(179, 255, 212, 0.7);
 }
 /*# sourceMappingURL=chess-board.css.map */

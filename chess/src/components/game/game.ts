@@ -84,11 +84,31 @@ export class Game {
 
   private pieceMove(cellId: string) {
     if (this.pieceActive) {
+      this.moveBacklightRemove();
+      this.moveBacklightAdd(cellId);
       this.chessBoard.pieceMove(cellId, this.pieceActive);
       this.removePossibleCells();
       this.removeMovesForСheck(this.pieceActive.color);
       this.checkValidation(this.pieceActive.color);
     }
+  }
+
+  private moveBacklightAdd(newCell: string) {
+    const cells = this.chessBoard.getAllCells();
+    cells.forEach((cell) => {
+      if (this.pieceActive?.cell === cell.id || newCell === cell.id) {
+        cell.classList.add(setting.classNames.moveBacklight);
+      } 
+    });
+  }
+
+  private moveBacklightRemove() {
+    const cells = this.chessBoard.getAllCells();
+    cells.forEach((cell) => {
+      if (cell.classList.contains(setting.classNames.moveBacklight)) {
+        cell.classList.remove(setting.classNames.moveBacklight);
+      } 
+    });
   }
 
   private checkValidation(movedPieceColor: string) {
