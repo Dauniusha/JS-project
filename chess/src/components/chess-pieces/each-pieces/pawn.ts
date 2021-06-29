@@ -2,6 +2,7 @@ import { cellCoordinatesToName } from "../../../shared/cell-coordinates-to-cell-
 import { cellNameToCoordinates } from "../../../shared/cell-name-to-coordinates";
 import { color } from "../../models/color-interface";
 import { Coordinates } from "../../models/coordinates-interface";
+import { Setup } from "../../models/setup-interface";
 import { setting } from "../../settings/setting";
 import { BasePiece } from "../base-piece";
 
@@ -25,23 +26,23 @@ export class Pawn extends BasePiece {
     }
   }
 
-  possibleMoveDetermination() {
+  possibleMoveDetermination(gameSetup: Setup[]) {
     this.possibleMoves = [];
     const cellCoordinates = cellNameToCoordinates(this.cell);
 
-    const canMove = this.possibleMoveCheck(cellCoordinates);
+    const canMove = this.possiblePawnMoveCheck(cellCoordinates, gameSetup);
 
     if (canMove && this.cell[1] === this.startRow) {
-      this.possibleMoveCheck({ X: cellCoordinates.X, Y: cellCoordinates.Y + this.pawnIncrement });
+      this.possiblePawnMoveCheck({ X: cellCoordinates.X, Y: cellCoordinates.Y + this.pawnIncrement }, gameSetup);
     }
 
-    this.possibleCaptureCheck(cellCoordinates, -1);
-    this.possibleCaptureCheck(cellCoordinates, 1);
+    this.possibleCaptureCheck(cellCoordinates, -1, gameSetup);
+    this.possibleCaptureCheck(cellCoordinates, 1, gameSetup);
   }
 
-  possibleMoveCheck(pieceCoordinates: Coordinates): boolean {
+  possiblePawnMoveCheck(pieceCoordinates: Coordinates, gameSetup: Setup[]): boolean {
     const newPosition = pieceCoordinates.Y + this.pawnIncrement;
-    if (newPosition < 8 && newPosition > -1 && !BasePiece.piecesCheck({ X: pieceCoordinates.X, Y: newPosition })) {
+    if (newPosition < 8 && newPosition > -1 && !BasePiece.piecesCheck({ X: pieceCoordinates.X, Y: newPosition }, gameSetup)) {
       this.possibleMoves.push(cellCoordinatesToName({ X: pieceCoordinates.X, Y: newPosition }));
       return true;
     } else {
@@ -49,14 +50,14 @@ export class Pawn extends BasePiece {
     }
   }
 
-  possibleCaptureCheck(pieceCoordinates: Coordinates, incrementX: number) {
+  possibleCaptureCheck(pieceCoordinates: Coordinates, incrementX: number, gameSetup: Setup[]) {
     const newCoordinateX = pieceCoordinates.X + incrementX;
     const newCoordinateY = pieceCoordinates.Y + this.pawnIncrement;
     if (
       newCoordinateX < 8 && newCoordinateX > -1
       && newCoordinateY < 8 && newCoordinateY > -1
-      && BasePiece.piecesCheck({ X: newCoordinateX, Y: newCoordinateY })
-      && BasePiece.piecesCheck({ X: newCoordinateX, Y: newCoordinateY }) !== this.color
+      && BasePiece.piecesCheck({ X: newCoordinateX, Y: newCoordinateY }, gameSetup)
+      && BasePiece.piecesCheck({ X: newCoordinateX, Y: newCoordinateY }, gameSetup) !== this.color
       ) {
         this.possibleMoves.push(cellCoordinatesToName({ X: newCoordinateX, Y: newCoordinateY }));
     }

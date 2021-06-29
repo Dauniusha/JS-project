@@ -2,6 +2,7 @@ import { cellCoordinatesToName } from "../../shared/cell-coordinates-to-cell-nam
 import { BaseComponents } from "../models/base-component";
 import { color } from "../models/color-interface";
 import { Coordinates } from "../models/coordinates-interface";
+import { Setup } from "../models/setup-interface";
 import { setting } from "../settings/setting";
 
 export class BasePiece extends BaseComponents {
@@ -17,10 +18,10 @@ export class BasePiece extends BaseComponents {
     this.color = color;
   }
 
-  static piecesCheck(coordinates: Coordinates): string | void {
+  static piecesCheck(coordinates: Coordinates, gameSetup: Setup[]): string | void {
     const name = cellCoordinatesToName({ X: coordinates.X, Y: coordinates.Y });
     let piece: string = ''; // Clear
-    setting.gameSetup.forEach((setup) => {
+    gameSetup.forEach((setup) => {
       if (setup.cell === name) {
         piece = setup.piece;
         return;
@@ -35,14 +36,14 @@ export class BasePiece extends BaseComponents {
     }
   }
 
-  possibleMoveCheck(pieceCoordinates: Coordinates, incrementX: number, incrementY: number) {
+  possibleMoveCheck(pieceCoordinates: Coordinates, incrementX: number, incrementY: number, gameSetup: Setup[]) {
     for (
         let i = pieceCoordinates.X + incrementX, j = pieceCoordinates.Y + incrementY;
         i < 8 && i > -1 && j < 8 && j > -1;
         i += incrementX, j += incrementY
         ) {
           let incrementCoordinates = { X: i, Y: j };
-          const color = BasePiece.piecesCheck(incrementCoordinates);
+          const color = BasePiece.piecesCheck(incrementCoordinates, gameSetup);
           if (color) {
             if (color !== this.color) {
               this.possibleMoves.push(cellCoordinatesToName(incrementCoordinates));

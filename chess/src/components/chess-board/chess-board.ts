@@ -87,7 +87,7 @@ export class ChessBoard extends BaseComponents {
 
   private allPossibleMoveDetermination() {
     this.pieces.forEach((piece) => {
-      piece.possibleMoveDetermination();
+      piece.possibleMoveDetermination(setting.gameSetup);
     });
     this.updateAllPossibleMoves();
   }
@@ -145,30 +145,27 @@ export class ChessBoard extends BaseComponents {
     }
   }
 
-  checkValidation() {
-    let copyGameSetup: Setup[] = JSON.parse(JSON.stringify(setting.gameSetup));
-    let whiteKingPosition: string = '', blackKingPosition: string = '';
+
+
+
+  checkValidation(movedPieceColor: string): boolean {
+    let kingPosition: string = '';
     
-    copyGameSetup.forEach((setup) => {
-      if (setup.piece.indexOf('King'))  {
-        if (setup.piece.indexOf(color.white)) {
-          whiteKingPosition = setup.cell;
-        } else {
-          blackKingPosition = setup.cell;
-        }
+    setting.gameSetup.forEach((setup) => {
+      if (setup.piece.indexOf('King') !== -1 && !(setup.piece.indexOf(movedPieceColor) !== -1))  {
+        kingPosition = setup.cell;
+        return;
       }
     });
 
-    if (this.possibleWhitesOrBlacksMoves(color.white).indexOf(whiteKingPosition)) {
-
-    }
+    return this.possibleWhitesOrBlacksMoves(movedPieceColor).indexOf(kingPosition) !== -1 ? true : false;
   }
 
-  private possibleWhitesOrBlacksMoves(color: string): string[] {
+  private possibleWhitesOrBlacksMoves(movedPieceColor: string): string[] {
     const possibleMoves: string[] = [];
 
     this.pieces.forEach((piece) => {
-      if (piece.color === color) {
+      if (piece.color === movedPieceColor) {
         possibleMoves.push(...piece.possibleMoves);
       }
     });
@@ -176,14 +173,69 @@ export class ChessBoard extends BaseComponents {
     return possibleMoves;
   }
 
-  private possibleMoveDeterminationInCheck(color: string, copyGameSetup: Setup[]) {
-    const needPieces: Setup[] = [];
-    copyGameSetup.forEach((copy) => {
-      if (copy.piece.indexOf(color)) {
-        needPieces.push(copy);
+  possibleMoveDeterminationInCheck(kingColor: string, copyGameSetup: Setup[]) {
+    const defendingPieces: (Queen | King | Knight | Bishop | Pawn | Rook)[] = [];
+    const attakingPieces: (Queen | King | Knight | Bishop | Pawn | Rook)[] = []
+    this.pieces.forEach((piece) => {
+      if (piece.color === kingColor) {
+        defendingPieces.push(piece);
+      } else {
+        attakingPieces.push(piece);
       }
     });
 
-    const possibleMoves: { cell: string, possibleMoves: string[] }[] = [];
+    defendingPieces.forEach((piece) => {
+      const truePiecePosition = piece.cell;
+
+
+      for (let i = 0 ; i < piece.possibleMoves.length; i++) {
+        ChessBoard.moveTesting(copyGameSetup, piece, piece.possibleMoves[i]);
+
+        if (this.testCheckValidation(copyGameSetup, attakingPieces, piece.possibleMoves[i])) {
+          piece.possibleMoves.splice(i, 1);
+          i--;
+        }
+      }
+      ChessBoard.moveTesting(copyGameSetup, piece, truePiecePosition);
+    });
+    
+    this.updateAllPossibleMoves();
+  }
+
+  private testCheckValidation(
+    copyGameSetup: Setup[],
+    attakingPieces: (Queen | King | Knight | Bishop | Pawn | Rook)[],
+    testCell: string): boolean {
+
+    let defendingKingPosition: string = '';
+    const kingColor = attakingPieces[0].color === color.white ? color.black : color.white;
+    copyGameSetup.forEach((setup) => {
+      if (setup.piece === kingColor + 'King')  {
+        defendingKingPosition = setup.cell;
+        return;
+      }
+    });
+
+    const possibleAttakingPositions: string[] = [];
+    attakingPieces.forEach((piece) => {
+      if (piece.cell !== testCell) { // When we cuptured
+        piece.possibleMoveDetermination(copyGameSetup);
+        possibleAttakingPositions.push(...piece.possibleMoves);
+        piece.possibleMoveDetermination(setting.gameSetup); // Turn back
+      }
+    });
+
+    return possibleAttakingPositions.indexOf(defendingKingPosition) !== -1 ? true : false;
+  }
+
+  private static moveTesting(copyGameSetup: Setup[], piece: Queen | King | Knight | Bishop | Pawn | Rook, testCell: string) {
+    copyGameSetup.forEach((setup) => {
+      if (setup.cell === piece.cell) {
+        setup.cell = testCell;
+        return;
+      }
+    });
+
+    piece.cell = testCell;
   }
 }

@@ -5,6 +5,8 @@ import { Knight } from '../chess-pieces/each-pieces/knight';
 import { Pawn } from '../chess-pieces/each-pieces/pawn';
 import { Queen } from '../chess-pieces/each-pieces/queen';
 import { Rook } from '../chess-pieces/each-pieces/rook';
+import { color } from '../models/color-interface';
+import { Setup } from '../models/setup-interface';
 import { setting } from '../settings/setting';
 // import './game.css';
 
@@ -14,6 +16,8 @@ export class Game {
   private possibleCells: HTMLElement[] = [];
 
   private pieceActive?: Queen | King | Knight | Bishop | Pawn | Rook;
+
+  private isWhiteMove: boolean = true;
 
   constructor() {
     this.chessBoard = new ChessBoard();
@@ -27,7 +31,10 @@ export class Game {
 
   private chessBoardListnersInit() {
     this.chessBoard.element.addEventListener('click', (elem) => {
-      if ((<Element>elem.target)?.closest('.' + setting.classNames.piece)) {
+      const pieceElem = (<Element>elem.target)?.closest('.' + setting.classNames.piece);
+      const activeColor = this.isWhiteMove ? color.white : color.black;
+
+      if (pieceElem /* && pieceElem.getAttribute(setting.classNames.dataPiece)?.indexOf(activeColor) !== -1 */) {
         const cell = (<Element>elem.target)?.closest('.' + setting.classNames.cell);
         if (cell && !(this.pieceActive?.cell === cell.id && this.possibleCells.length !== 0)) {
           this.selectPiece(cell.id);
@@ -41,6 +48,7 @@ export class Game {
           const cell = (<Element>elem.target)?.closest('.' + setting.classNames.cell);
           if (cell) {
             this.pieceMove(cell.id);
+            this.isWhiteMove = !this.isWhiteMove;
           }
       } else {
         this.removePossibleCells();
@@ -78,10 +86,21 @@ export class Game {
     if (this.pieceActive) {
       this.chessBoard.pieceMove(cellId, this.pieceActive);
       this.removePossibleCells();
+      this.removeMovesForСheck(this.pieceActive.color);
+      this.checkValidation(this.pieceActive.color);
     }
   }
 
-  private checkValidation() {
-    
+  private checkValidation(movedPieceColor: string) {
+    if (this.chessBoard.checkValidation(movedPieceColor)) {
+      // Do some logic for check
+    }
+  }
+
+  private removeMovesForСheck(movedPieceColor: string) {
+    let copyGameSetup: Setup[] = JSON.parse(JSON.stringify(setting.gameSetup));
+    let kingColor = movedPieceColor === color.white ? color.black : color.white;
+
+    this.chessBoard.possibleMoveDeterminationInCheck(kingColor, copyGameSetup);
   }
 }
