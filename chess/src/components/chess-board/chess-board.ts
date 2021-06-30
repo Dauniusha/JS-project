@@ -16,7 +16,7 @@ import './chess-board.scss';
 export class ChessBoard extends BaseComponents {
   private readonly cells: HTMLElement[];
 
-  private pieces: (Queen | King | Knight | Bishop | Pawn | Rook)[] = [];
+  private pieces: (Queen | King | Knight | Bishop | Pawn | Rook)[] = []; // TODO: Не понимаю, как сделать через полиморфизм, все компоненты наследуются от одного родителя и все имеют одинаковый перегруженный метод
 
   private allMoves: { cell: string, moves: string[] }[] = [];
 
@@ -105,7 +105,7 @@ export class ChessBoard extends BaseComponents {
     return this.cells;
   }
 
-  selectPiece(cell: string): Queen | King | Knight | Bishop | Pawn | Rook {
+  selectPiece(cell: string): Queen | King | Knight | Bishop | Pawn | Rook { // TODO: Приходится тащить 6 типов
     for (let i = 0; i < this.pieces.length; i++) {
       if (this.pieces[i].cell === cell) {
         return this.pieces[i];
@@ -114,7 +114,7 @@ export class ChessBoard extends BaseComponents {
     throw Error();
   }
 
-  pieceMove(cell: string, piece: Queen | King | Knight | Bishop | Pawn | Rook) {
+  pieceMove(cell: string, piece: Queen | King | Knight | Bishop | Pawn | Rook) { // TODO: Приходится тащить 6 типов
     this.capturingTry(cell);
 
     piece.element.remove();
@@ -147,8 +147,7 @@ export class ChessBoard extends BaseComponents {
     }
   }
 
-
-
+  /////////////////////////
 
   possibleMoveDeterminationInCheck(kingColor: string, copyGameSetup: Setup[]) {
     const defendingPieces: (Queen | King | Knight | Bishop | Pawn | Rook)[] = [];
@@ -186,7 +185,7 @@ export class ChessBoard extends BaseComponents {
 
   private testCheckValidation(
     copyGameSetup: Setup[],
-    attakingPieces: (Queen | King | Knight | Bishop | Pawn | Rook)[]
+    attakingPieces: (Queen | King | Knight | Bishop | Pawn | Rook)[] // TODO: Приходится тащить 6 типов
     ): boolean {
       const kingColor = attakingPieces[0].color === color.white ? color.black : color.white;
       const defendingKingPosition = ChessBoard.getKingPosition(copyGameSetup, kingColor);
@@ -247,7 +246,7 @@ export class ChessBoard extends BaseComponents {
       }
   }
 
-
+  ////////////////////////////
 
   checkValidation(movedPieceColor: string): boolean {
     const kingColor = ChessBoard.getReverseColor(movedPieceColor);
