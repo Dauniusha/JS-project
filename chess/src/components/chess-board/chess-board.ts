@@ -1,4 +1,6 @@
+import { cellCoordinatesToName } from '../../shared/cell-coordinates-to-cell-name';
 import { cellNameToCellPosition } from '../../shared/cell-name-to-cell-position';
+import { cellNameToCoordinates } from '../../shared/cell-name-to-coordinates';
 import { BasePiece } from '../chess-pieces/base-piece';
 import { Bishop } from '../chess-pieces/each-pieces/bishop';
 import { King } from '../chess-pieces/each-pieces/king';
@@ -101,6 +103,30 @@ export class ChessBoard extends BaseComponents {
     });
   }
 
+  private castlingValidationInDirection(piece: King, directionIncrement: number): boolean {
+    if (piece.isFirstMove) {
+      const lastCellName = String.fromCharCode(piece.cell.charCodeAt(0) + directionIncrement * 2);
+      const lastCell = lastCellName + piece.cell[1];
+
+      const cellsBeforeRook = [];
+      const kingPosition = cellNameToCoordinates(piece.cell);
+      for (let i = kingPosition.X; i < 8 && i > -1; i += directionIncrement) {
+        cellsBeforeRook.push(cellCoordinatesToName({ X: i, Y: kingPosition.Y }));
+
+      }
+      const expectRookPosition: string;
+    }
+  }
+
+  private kingSearcher(color: string): King {
+    for (let i = 0; i < this.pieces.length; i++) {
+      if (this.pieces[i] instanceof King && this.pieces[i].color === color) {
+        return <King> this.pieces[i]; // TODO: Не понимаю, почему после instanceof всё ещё ругается компилятор
+      }
+    }
+    throw Error('King does not exist!');
+  }
+
   getAllCells(): HTMLElement[] {
     return this.cells;
   }
@@ -120,7 +146,7 @@ export class ChessBoard extends BaseComponents {
     piece.element.remove();
     this.cells[cellNameToCellPosition(cell)].appendChild(piece.element);
 
-    setting.gameSetup.forEach((setup) => { // Update gameSetup
+    setting.gameSetup.forEach((setup) => { // Update gameSetup TODO: Сделать черз for с break
       if (setup.cell === piece.cell) {
         setup.cell = cell;
       }
@@ -129,6 +155,8 @@ export class ChessBoard extends BaseComponents {
     piece.cell = cell;
     
     this.allPossibleMoveDetermination();
+
+    this.removeMovesForСheck(piece.color);
   }
 
   private capturingTry(cell: string) {
@@ -149,9 +177,16 @@ export class ChessBoard extends BaseComponents {
 
   /////////////////////////
 
-  possibleMoveDeterminationInCheck(kingColor: string, copyGameSetup: Setup[]) {
+  private removeMovesForСheck(movedPieceColor: string) {
+    const copyGameSetup: Setup[] = JSON.parse(JSON.stringify(setting.gameSetup));
+    const kingColor = ChessBoard.getReverseColor(movedPieceColor);
+
+    this.possibleMoveDeterminationInCheck(kingColor, copyGameSetup);
+  }
+
+  private possibleMoveDeterminationInCheck(kingColor: string, copyGameSetup: Setup[]) {
     const defendingPieces: (Queen | King | Knight | Bishop | Pawn | Rook)[] = [];
-    const attakingPieces: (Queen | King | Knight | Bishop | Pawn | Rook)[] = []
+    const attakingPieces: (Queen | King | Knight | Bishop | Pawn | Rook)[] = [];
     this.pieces.forEach((piece) => {
       if (piece.color === kingColor) {
         defendingPieces.push(piece);
@@ -294,7 +329,7 @@ export class ChessBoard extends BaseComponents {
     throw Error('King does not exist');
   }
 
-  private static getReverseColor(movedPieceColor: string): string {
+  private static getReverseColor(movedPieceColor: string): string { // TODO: Вынести в shered
     return movedPieceColor === color.white ? color.black : color.white;
   }
 }

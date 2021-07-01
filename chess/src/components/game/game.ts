@@ -101,7 +101,6 @@ export class Game {
       this.moveBacklightAdd(cellId);
       this.chessBoard.pieceMove(cellId, this.pieceActive);
 
-      this.removeMovesForСheck(this.pieceActive.color);
       this.checkMateValidation(this.pieceActive.color);
     }
   }
@@ -122,13 +121,6 @@ export class Game {
         cell.classList.remove(setting.classNames.moveBacklight);
       } 
     });
-  }
-
-  private removeMovesForСheck(movedPieceColor: string) {
-    let copyGameSetup: Setup[] = JSON.parse(JSON.stringify(setting.gameSetup));
-    let kingColor = movedPieceColor === color.white ? color.black : color.white;
-
-    this.chessBoard.possibleMoveDeterminationInCheck(kingColor, copyGameSetup);
   }
 
   private checkMateValidation(movedPieceColor: string) {

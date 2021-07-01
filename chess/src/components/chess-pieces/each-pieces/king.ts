@@ -5,6 +5,8 @@ import { setting } from "../../settings/setting";
 import { BasePiece } from "../base-piece";
 
 export class King extends BasePiece {
+  isFirstMove = true;
+
   constructor(position: string, color: string) {
     super(position, color);
     const pieceType = color + 'King';
