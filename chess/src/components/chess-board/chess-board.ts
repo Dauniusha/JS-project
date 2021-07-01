@@ -93,6 +93,7 @@ export class ChessBoard extends BaseComponents {
     this.pieces.forEach((piece) => {
       piece.possibleMoveDetermination(setting.gameSetup);
     });
+    // this.castlingDetermination();
     this.updateAllPossibleMoves();
   }
 
@@ -103,18 +104,21 @@ export class ChessBoard extends BaseComponents {
     });
   }
 
-  private castlingValidationInDirection(piece: King, directionIncrement: number): boolean {
-    if (piece.isFirstMove) {
-      const lastCellName = String.fromCharCode(piece.cell.charCodeAt(0) + directionIncrement * 2);
-      const lastCell = lastCellName + piece.cell[1];
+  private castlingDetermination() {
+    this.castlingForEachPiece(color.white);
+    this.castlingForEachPiece(color.black);
+  }
 
-      const cellsBeforeRook = [];
-      const kingPosition = cellNameToCoordinates(piece.cell);
-      for (let i = kingPosition.X; i < 8 && i > -1; i += directionIncrement) {
-        cellsBeforeRook.push(cellCoordinatesToName({ X: i, Y: kingPosition.Y }));
+  private castlingForEachPiece(color: string) {
+    const king = this.kingSearcher(color);
+    const kingCoordinates = cellNameToCoordinates(king.cell);
 
-      }
-      const expectRookPosition: string;
+    console.log(this.castlingValidationInDirection(king, 1));
+    if (this.castlingValidationInDirection(king, 1)) {
+      king.possibleMoves.push(cellCoordinatesToName({ X: kingCoordinates.X + 2, Y: kingCoordinates.Y }));
+    }
+    if (this.castlingValidationInDirection(king, -1)) {
+      king.possibleMoves.push(cellCoordinatesToName({ X: kingCoordinates.X - 2, Y: kingCoordinates.Y }));
     }
   }
 
@@ -125,6 +129,57 @@ export class ChessBoard extends BaseComponents {
       }
     }
     throw Error('King does not exist!');
+  }
+
+  private castlingValidationInDirection(piece: King, directionIncrement: number): boolean {
+    if (piece.isFirstMove) {
+      const kingPosition = cellNameToCoordinates(piece.cell);
+      const attakingColor = ChessBoard.getReverseColor(piece.color);
+      let rook: Rook | undefined;
+
+      for (let i = kingPosition.X + directionIncrement; i < 8 && i > -1; i += directionIncrement) {
+        if (i === 7 || i === 0) {
+          console.log(cellCoordinatesToName({ X: i, Y: kingPosition.Y }));
+          for(let j = 0; j < this.pieces.length; j++) {
+            if (this.pieces[i].cell === cellCoordinatesToName({ X: i, Y: kingPosition.Y })
+                && this.pieces[i] instanceof Rook) {
+              rook = <Rook> this.pieces[i];
+              break;
+            }
+          }
+          console.log(rook);
+          if (!rook?.isFirstMove) {
+            return false;
+          } else {
+            break;
+          }
+        }
+
+        const cell = cellCoordinatesToName({ X: i, Y: kingPosition.Y });
+        console.log(cell);
+        for (let j = 0; j < setting.gameSetup.length; j++) {
+          if (setting.gameSetup[i].cell === cell) {
+            return false;
+          }
+        }
+      }
+
+      const possibleAttakingPositions = this.possibleWhitesOrBlacksMoves(attakingColor);
+
+      for (
+        let i = kingPosition.X;
+        i < kingPosition.X + directionIncrement * 2 && i > kingPosition.X + directionIncrement * 2;
+        i += directionIncrement) {
+          const cell = cellCoordinatesToName({ X: i, Y: kingPosition.Y });
+          if (possibleAttakingPositions.indexOf(cell) !== -1) {
+            return false;
+          }
+      }
+
+      return true;
+    } else {
+      return false;
+    }
   }
 
   getAllCells(): HTMLElement[] {
@@ -156,7 +211,8 @@ export class ChessBoard extends BaseComponents {
     
     this.allPossibleMoveDetermination();
 
-    this.removeMovesForСheck(piece.color);
+    this.removeMovesForСheck(color.white);
+    this.removeMovesForСheck(color.black);
   }
 
   private capturingTry(cell: string) {
@@ -222,6 +278,9 @@ export class ChessBoard extends BaseComponents {
     copyGameSetup: Setup[],
     attakingPieces: (Queen | King | Knight | Bishop | Pawn | Rook)[] // TODO: Приходится тащить 6 типов
     ): boolean {
+      if (!attakingPieces.length) { // capture attaking king
+        return false;
+      }
       const kingColor = attakingPieces[0].color === color.white ? color.black : color.white;
       const defendingKingPosition = ChessBoard.getKingPosition(copyGameSetup, kingColor);
 
@@ -229,8 +288,9 @@ export class ChessBoard extends BaseComponents {
       const possibleAttakingPositions: string[] = [];
 
       attakingPieces.forEach((piece) => {
-        piece.possibleMoveDetermination(copyGameSetup);
-        possibleAttakingPositions.push(...piece.possibleMoves);
+        const copy = Object.assign( Object.create( Object.getPrototypeOf(piece)), piece);
+        copy.possibleMoveDetermination(copyGameSetup);
+        possibleAttakingPositions.push(...copy.possibleMoves);
         piece.possibleMoveDetermination(setting.gameSetup); // Turn back
       });
 
