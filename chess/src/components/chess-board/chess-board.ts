@@ -284,14 +284,12 @@ export class ChessBoard extends BaseComponents {
       const kingColor = attakingPieces[0].color === color.white ? color.black : color.white;
       const defendingKingPosition = ChessBoard.getKingPosition(copyGameSetup, kingColor);
 
-
       const possibleAttakingPositions: string[] = [];
 
       attakingPieces.forEach((piece) => {
-        const copy = Object.assign( Object.create( Object.getPrototypeOf(piece)), piece);
+        const copy = Object.assign(Object.create( Object.getPrototypeOf(piece)), piece); // Cloning object with needed prototype
         copy.possibleMoveDetermination(copyGameSetup);
         possibleAttakingPositions.push(...copy.possibleMoves);
-        // piece.possibleMoveDetermination(setting.gameSetup); // Turn back
       });
 
       return possibleAttakingPositions.indexOf(defendingKingPosition) !== -1 ? true : false;
