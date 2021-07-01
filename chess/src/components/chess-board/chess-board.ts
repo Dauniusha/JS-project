@@ -291,7 +291,7 @@ export class ChessBoard extends BaseComponents {
         const copy = Object.assign( Object.create( Object.getPrototypeOf(piece)), piece);
         copy.possibleMoveDetermination(copyGameSetup);
         possibleAttakingPositions.push(...copy.possibleMoves);
-        piece.possibleMoveDetermination(setting.gameSetup); // Turn back
+        // piece.possibleMoveDetermination(setting.gameSetup); // Turn back
       });
 
       return possibleAttakingPositions.indexOf(defendingKingPosition) !== -1 ? true : false;
