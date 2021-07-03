@@ -135,49 +135,57 @@ export class ChessBoard extends BaseComponents {
     if (piece.isFirstMove) {
       const kingPosition = cellNameToCoordinates(piece.cell);
       const attakingColor = ChessBoard.getReverseColor(piece.color);
-      let rook: Rook | undefined;
+      
+      return this.clearCellAndRookValidation(kingPosition, directionIncrement)
+        || this.castlingCellInCheckValidation(attakingColor, kingPosition, directionIncrement) 
+        ? false : true;
+    } else {
+      return false;
+    }
+  }
 
-      for (let i = kingPosition.X + directionIncrement; i < 8 && i > -1; i += directionIncrement) {
-        if (i === 7 || i === 0) {
-          for(let j = 0; j < this.pieces.length; j++) {
-            if (this.pieces[j].cell === cellCoordinatesToName({ X: i, Y: kingPosition.Y })
-                && this.pieces[j] instanceof Rook) {
-              rook = <Rook> this.pieces[j];
-              break;
-            }
-          }
+  private clearCellAndRookValidation(kingPosition: Coordinates, directionIncrement: number): boolean {
+    let rook: Rook | undefined;
 
-          if (!rook?.isFirstMove) {
-            return false;
-          } else {
+    for (let i = kingPosition.X + directionIncrement; i < 8 && i > -1; i += directionIncrement) {
+      if (i === 7 || i === 0) {
+        for(let j = 0; j < this.pieces.length; j++) {
+          if (this.pieces[j].cell === cellCoordinatesToName({ X: i, Y: kingPosition.Y })
+              && this.pieces[j] instanceof Rook) {
+            rook = <Rook> this.pieces[j];
             break;
           }
         }
 
-        const cell = cellCoordinatesToName({ X: i, Y: kingPosition.Y });
-        for (let j = 0; j < setting.gameSetup.length; j++) {
-          if (setting.gameSetup[j].cell === cell) {
-            return false;
-          }
+        return !rook?.isFirstMove ? true : false;
+      }
+
+      const cell = cellCoordinatesToName({ X: i, Y: kingPosition.Y });
+      for (let j = 0; j < setting.gameSetup.length; j++) {
+        if (setting.gameSetup[j].cell === cell) {
+          return true;
         }
       }
-
-      const possibleAttakingPositions = this.possibleWhitesOrBlacksMoves(attakingColor);
-      
-      for (
-        let i = kingPosition.X;
-        i < kingPosition.X + directionIncrement * 2 && i > kingPosition.X + directionIncrement * 2;
-        i += directionIncrement) {
-          const cell = cellCoordinatesToName({ X: i, Y: kingPosition.Y });
-          if (possibleAttakingPositions.indexOf(cell) !== -1) {
-            return false;
-          }
-      }
-
-      return true;
-    } else {
-      return false;
     }
+
+    throw Error('Breaking bad!');
+  }
+
+  private castlingCellInCheckValidation(color: string, kingPosition: Coordinates, directionIncrement: number): boolean {
+    const possibleAttakingPositions = this.possibleWhitesOrBlacksMoves(color);
+    const barrierUnit = Math.abs(directionIncrement * 2);
+
+    for (
+      let i = kingPosition.X;
+      i > kingPosition.X - barrierUnit && i < kingPosition.X + barrierUnit; 
+      i += directionIncrement) {
+        const cell = cellCoordinatesToName({ X: i, Y: kingPosition.Y });
+        if (possibleAttakingPositions.indexOf(cell) !== -1) {
+          return true;
+        }
+    }
+
+    return false;
   }
 
   getAllCells(): HTMLElement[] {
