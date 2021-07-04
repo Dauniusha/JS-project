@@ -1,7 +1,6 @@
 import { cellCoordinatesToName } from '../../shared/cell-coordinates-to-cell-name';
 import { cellNameToCellPosition } from '../../shared/cell-name-to-cell-position';
 import { cellNameToCoordinates } from '../../shared/cell-name-to-coordinates';
-import { BasePiece } from '../chess-pieces/base-piece';
 import { Bishop } from '../chess-pieces/each-pieces/bishop';
 import { King } from '../chess-pieces/each-pieces/king';
 import { Knight } from '../chess-pieces/each-pieces/knight';
@@ -93,6 +92,7 @@ export class ChessBoard extends BaseComponents {
   private allPossibleMoveDetermination() {
     this.pieces.forEach((piece) => {
       piece.possibleMoveDetermination(setting.gameSetup);
+      this.capturingEnPassantValidation(piece);
     });
     this.castlingDetermination();
     this.updateAllPossibleMoves();
@@ -206,6 +206,9 @@ export class ChessBoard extends BaseComponents {
       this.castlingMove(cell, piece);
       piece.isFirstMove = false;
     }
+
+    this.longPawnMoveReset();
+    ChessBoard.longPawnMoveValidation(cell, piece);
     
     this.capturingTry(cell);
 
@@ -220,6 +223,24 @@ export class ChessBoard extends BaseComponents {
 
     this.removeMovesForСheck(color.white);
     this.removeMovesForСheck(color.black);
+  }
+
+  private longPawnMoveReset() {
+    for (let i = 0; i < this.pieces.length; i++) {
+      const piece = this.pieces[i];
+      if (piece instanceof Pawn) {
+        piece.canBeCapturedEnPassant = false;
+      }
+    }
+  }
+
+  private static longPawnMoveValidation(cell: string, piece: Queen | King | Knight | Bishop | Pawn | Rook) {
+    const cellPosition = cellNameToCoordinates(cell);
+    const pieceCellPosition = cellNameToCoordinates(piece.cell);
+
+    if (piece instanceof Pawn) {
+      piece.canBeCapturedEnPassant = Math.abs(cellPosition.Y - pieceCellPosition.Y) === 2 ? true : false;
+    }
   }
 
   private static updateGameSetup(cell: string, piece: Queen | King | Knight | Bishop | Pawn | Rook) {
@@ -279,6 +300,43 @@ export class ChessBoard extends BaseComponents {
 
         rook.cell = newRookCell;
     }
+  }
+
+  //////////////
+  private capturingEnPassantValidation(piece: Queen | King | Knight | Bishop | Pawn | Rook) {
+    if (piece instanceof Pawn) {
+      const pawnPosition = cellNameToCoordinates(piece.cell);
+      const needY = piece.getPawnIncrement() > 0 ? setting.passantCell.positiveIncrement : setting.passantCell.negativeIncrement;
+      const needPosition: Coordinates = { X: pawnPosition.X, Y: needY };
+
+      if (JSON.stringify(pawnPosition) === JSON.stringify(needPosition)) {
+        this.passantInDirection(piece, 1);
+        this.passantInDirection(piece, -1);
+      }
+    }
+  }
+
+  private passantInDirection(piece: Pawn, directionIncrement: number) {
+    const pawnPosition = cellNameToCoordinates(piece.cell);
+    const newCoordinates = { X: pawnPosition.X + directionIncrement, Y: pawnPosition.Y + piece.getPawnIncrement()};
+    const cell = cellCoordinatesToName(newCoordinates);
+
+    const enemyPawnCoordinates = { X: pawnPosition.X + directionIncrement, Y: pawnPosition.Y };
+    const enemyPawnCell = cellCoordinatesToName(enemyPawnCoordinates);
+
+    if (this.passantPiecesValidation(enemyPawnCell)) {
+      piece.possibleMoves.push(cell);
+    }
+  }
+
+  private passantPiecesValidation(cell: string): boolean {
+    for (let i = 0; i < this.pieces.length; i++) {
+      const piece = this.pieces[i];
+      if (piece.cell === cell && piece instanceof Pawn && piece.canBeCapturedEnPassant) {
+        return true;
+      }
+    }
+    return false;
   }
 
   /////////////////////////

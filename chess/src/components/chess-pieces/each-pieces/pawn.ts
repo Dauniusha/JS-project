@@ -11,7 +11,7 @@ export class Pawn extends BasePiece {
 
   private startRow: string;
   
-  // canBeCapturedEnPassant: boolean = false;
+  canBeCapturedEnPassant: boolean = false;
 
   constructor(position: string, pieceColor: string) {
     super(position, pieceColor);
@@ -62,5 +62,9 @@ export class Pawn extends BasePiece {
         this.possibleMoves.push(cellCoordinatesToName({ X: newCoordinateX, Y: newCoordinateY }));
     }
     // ... capturing realization
+  }
+
+  getPawnIncrement(): number {
+    return this.pawnIncrement;
   }
 }

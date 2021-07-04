@@ -94,4 +94,9 @@ export let setting = {
   },
 
   isWhiteFromBelow: true,
+
+  passantCell: {
+    positiveIncrement: 4,
+    negativeIncrement: 3,
+  },
 }
