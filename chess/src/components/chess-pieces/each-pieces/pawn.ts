@@ -61,7 +61,6 @@ export class Pawn extends BasePiece {
       ) {
         this.possibleMoves.push(cellCoordinatesToName({ X: newCoordinateX, Y: newCoordinateY }));
     }
-    // ... capturing realization
   }
 
   getPawnIncrement(): number {

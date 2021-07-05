@@ -105,6 +105,43 @@ export class ChessBoard extends BaseComponents {
     });
   }
 
+  private capturingEnPassantValidation(piece: Queen | King | Knight | Bishop | Pawn | Rook) {
+    if (piece instanceof Pawn) {
+      const pawnPosition = cellNameToCoordinates(piece.cell);
+      const needY = piece.getPawnIncrement() > 0 ? setting.passantCell.positiveIncrement : setting.passantCell.negativeIncrement;
+      const needPosition: Coordinates = { X: pawnPosition.X, Y: needY };
+
+      if (JSON.stringify(pawnPosition) === JSON.stringify(needPosition)) {
+        this.passantInDirection(piece, 1);
+        this.passantInDirection(piece, -1);
+      }
+    }
+  }
+
+  private passantInDirection(piece: Pawn, directionIncrement: number) {
+    const pawnPosition = cellNameToCoordinates(piece.cell);
+    const newCoordinates = { X: pawnPosition.X + directionIncrement, Y: pawnPosition.Y + piece.getPawnIncrement()};
+    const cell = cellCoordinatesToName(newCoordinates);
+
+    const enemyPawnCoordinates = { X: pawnPosition.X + directionIncrement, Y: pawnPosition.Y };
+    const enemyPawnCell = cellCoordinatesToName(enemyPawnCoordinates);
+
+    if (this.passantPiecesValidation(enemyPawnCell)) {
+      piece.possibleMoves.push(cell);
+    }
+  }
+
+  private passantPiecesValidation(cell: string): boolean {
+    for (let i = 0; i < this.pieces.length; i++) {
+      const piece = this.pieces[i];
+      if (piece.cell === cell && piece instanceof Pawn && piece.canBeCapturedEnPassant) {
+        return true;
+      }
+    }
+    return false;
+  }
+  
+
   private castlingDetermination() {
     this.castlingForEachPiece(color.white);
     this.castlingForEachPiece(color.black);
@@ -124,8 +161,9 @@ export class ChessBoard extends BaseComponents {
 
   private kingSearcher(color: string): King {
     for (let i = 0; i < this.pieces.length; i++) {
-      if (this.pieces[i] instanceof King && this.pieces[i].color === color) {
-        return <King> this.pieces[i]; // TODO: Не понимаю, почему после instanceof всё ещё ругается компилятор
+      const piece = this.pieces[i];
+      if (piece instanceof King && piece.color === color) {
+        return piece;
       }
     }
     throw Error('King does not exist!');
@@ -207,6 +245,7 @@ export class ChessBoard extends BaseComponents {
       piece.isFirstMove = false;
     }
 
+    this.capturingEnPassantTry(cell, piece);
     this.longPawnMoveReset();
     ChessBoard.longPawnMoveValidation(cell, piece);
     
@@ -240,6 +279,35 @@ export class ChessBoard extends BaseComponents {
 
     if (piece instanceof Pawn) {
       piece.canBeCapturedEnPassant = Math.abs(cellPosition.Y - pieceCellPosition.Y) === 2 ? true : false;
+    }
+  }
+
+  private capturingEnPassantTry(cell: string, piece: Queen | King | Knight | Bishop | Pawn | Rook) {
+    if (piece instanceof Pawn) {
+      const cellCoordinates = cellNameToCoordinates(cell);
+      const pawnCoordinates = cellNameToCoordinates(piece.cell);
+      const increment = cellCoordinates.X - pawnCoordinates.X;
+
+      if (increment) {
+        const needCell = cellCoordinatesToName({ X: pawnCoordinates.X + increment, Y: pawnCoordinates.Y });
+
+        for (let i = 0; i < this.pieces.length; i++) {
+          const piece = this.pieces[i];
+
+          if (piece instanceof Pawn && piece.cell === needCell && piece.canBeCapturedEnPassant) {
+            for (let j = 0; j < setting.gameSetup.length; j++) {
+              if (setting.gameSetup[j].cell === needCell) {
+                setting.gameSetup.splice(j, 1);
+                break;
+              }
+            }
+            
+            piece.element.remove();
+            this.pieces.splice(i, 1);
+            break;
+          }
+        }
+      }
     }
   }
 
@@ -302,43 +370,6 @@ export class ChessBoard extends BaseComponents {
     }
   }
 
-  //////////////
-  private capturingEnPassantValidation(piece: Queen | King | Knight | Bishop | Pawn | Rook) {
-    if (piece instanceof Pawn) {
-      const pawnPosition = cellNameToCoordinates(piece.cell);
-      const needY = piece.getPawnIncrement() > 0 ? setting.passantCell.positiveIncrement : setting.passantCell.negativeIncrement;
-      const needPosition: Coordinates = { X: pawnPosition.X, Y: needY };
-
-      if (JSON.stringify(pawnPosition) === JSON.stringify(needPosition)) {
-        this.passantInDirection(piece, 1);
-        this.passantInDirection(piece, -1);
-      }
-    }
-  }
-
-  private passantInDirection(piece: Pawn, directionIncrement: number) {
-    const pawnPosition = cellNameToCoordinates(piece.cell);
-    const newCoordinates = { X: pawnPosition.X + directionIncrement, Y: pawnPosition.Y + piece.getPawnIncrement()};
-    const cell = cellCoordinatesToName(newCoordinates);
-
-    const enemyPawnCoordinates = { X: pawnPosition.X + directionIncrement, Y: pawnPosition.Y };
-    const enemyPawnCell = cellCoordinatesToName(enemyPawnCoordinates);
-
-    if (this.passantPiecesValidation(enemyPawnCell)) {
-      piece.possibleMoves.push(cell);
-    }
-  }
-
-  private passantPiecesValidation(cell: string): boolean {
-    for (let i = 0; i < this.pieces.length; i++) {
-      const piece = this.pieces[i];
-      if (piece.cell === cell && piece instanceof Pawn && piece.canBeCapturedEnPassant) {
-        return true;
-      }
-    }
-    return false;
-  }
-
   /////////////////////////
 
   private removeMovesForСheck(movedPieceColor: string) {
@@ -363,7 +394,7 @@ export class ChessBoard extends BaseComponents {
       const truePiecePosition = piece.cell;
 
       for (let i = 0 ; i < piece.possibleMoves.length; i++) {
-        const capturedPiece = this.testCapturing(copyGameSetup, piece, attakingPieces, piece.possibleMoves[i]);
+        let capturedPiece = this.testCapturing(copyGameSetup, piece, attakingPieces, piece.possibleMoves[i]);
         ChessBoard.moveTesting(copyGameSetup, piece, piece.possibleMoves[i]);
 
         if (this.testCheckValidation(copyGameSetup, attakingPieces)) {
@@ -419,7 +450,7 @@ export class ChessBoard extends BaseComponents {
     piece: Queen | King | Knight | Bishop | Pawn | Rook,
     attakingPieces: (Queen | King | Knight | Bishop | Pawn | Rook)[],
     testCell: string
-    ): TestCapturedPiece | false {
+    ): TestCapturedPiece | undefined {
       let capturedPieceSetup: Setup | undefined;
 
       for (let i = 0; i < copyGameSetup.length; i++) { // Take captured piece
@@ -440,11 +471,42 @@ export class ChessBoard extends BaseComponents {
         }
       };
 
+      this.testCapturingEnPassant(capturedPieceSetup, capturedPiece, testCell, copyGameSetup, piece, attakingPieces);
       if (capturedPiece && capturedPieceSetup) {
         return { capturedPieceSetup: capturedPieceSetup, capturedPiece: capturedPiece };
-      } else {
-        return false;
       }
+  }
+
+  private testCapturingEnPassant(
+    capturedPieceSetup: Setup | undefined,
+    capturedPiece: Queen | King | Knight | Bishop | Pawn | Rook | undefined,
+    testCell: string,
+    copyGameSetup: Setup[],
+    piece: Queen | King | Knight | Bishop | Pawn | Rook,
+    attakingPieces: (Queen | King | Knight | Bishop | Pawn | Rook)[],
+  ) {
+    if (piece instanceof Pawn) {
+      const cellCoordinates = cellNameToCoordinates(testCell);
+      const needCell = cellCoordinatesToName({ X: cellCoordinates.X, Y: cellCoordinates.Y - piece.getPawnIncrement()});
+
+      for (let i = 0; i < attakingPieces.length; i++) {
+        const piece = attakingPieces[i];
+
+        if (piece instanceof Pawn && piece.cell === needCell && piece.canBeCapturedEnPassant) {
+          for (let j = 0; j < copyGameSetup.length; j++) {
+            if (copyGameSetup[j].cell === needCell) {
+              capturedPieceSetup = copyGameSetup[j];
+              copyGameSetup.splice(j, 1);
+              break;
+            }
+          }
+          
+          capturedPiece = piece;
+          attakingPieces.splice(i, 1);
+          break;
+        }
+      }
+    }
   }
 
   ////////////////////////////
