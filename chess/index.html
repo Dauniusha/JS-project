@@ -22,7 +22,39 @@
     </div>
   </nav>
 
-  <section class="game">
+  <section class="lobby">
+    <div class="lobby__container">
+      <div class="player-menu">
+
+        <div class="player">
+          <input type="file" class="player__avatar">
+
+          <input type="text" value="Player 1" class="player__name">
+        </div>
+
+        <div class="menu menu-replay">View replays</div>
+      </div>
+
+      <div class="menu menu-start">
+        <h2 class="menu-start__text">Start</h2>
+        <div class="menu game-mode game-mode_offline">
+          <div class="game-mode__text" id="online">Online</div>
+          <div class="game-mode__text" id="offline">Offline</div>
+        </div>
+      </div>
+
+      <div class="player-menu">
+        <div class="player">
+          <input type="file" class="player__avatar">
+          <input type="text" value="Player 2" class="player__name">
+        </div>
+
+        <div class="menu menu-setting">Setting</div>
+      </div>
+    </div>
+  </section>
+
+  <!--<section class="game">
     <div class="player-game">
       <div class="player-game__avatar">
 
@@ -39,101 +71,7 @@
     </div>
 
     
-      <div class="chess-board">
-        <div class="cell-numeration" id="number">
-          <div class="cell-nnumeration__each">8</div>
-          <div class="cell-nnumeration__each">7</div>
-          <div class="cell-nnumeration__each">6</div>
-          <div class="cell-nnumeration__each">5</div>
-          <div class="cell-nnumeration__each">4</div>
-          <div class="cell-nnumeration__each">3</div>
-          <div class="cell-nnumeration__each">2</div>
-          <div class="cell-nnumeration__each">1</div>
-        </div>
-
-        <div class="cell-numeration" id="letter">
-          <div class="cell-nnumeration__each">a</div>
-          <div class="cell-nnumeration__each">b</div>
-          <div class="cell-nnumeration__each">c</div>
-          <div class="cell-nnumeration__each">d</div>
-          <div class="cell-nnumeration__each">e</div>
-          <div class="cell-nnumeration__each">f</div>
-          <div class="cell-nnumeration__each">g</div>
-          <div class="cell-nnumeration__each">h</div>
-        </div>
-
-        <div id="a1" class="cell white-cell"></div>
-        <div id="b1" class="cell black-cell"></div>
-        <div id="c1" class="cell white-cell"></div>
-        <div id="h1" class="cell black-cell"></div>
-        <div id="h1" class="cell white-cell"></div>
-        <div id="h1" class="cell black-cell"></div>
-        <div id="h1" class="cell white-cell"></div>
-        <div id="h1" class="cell black-cell"></div>
-
-        <div id="b1" class="cell black-cell"></div>
-        <div id="c1" class="cell white-cell"></div>
-        <div id="h1" class="cell black-cell"></div>
-        <div id="h1" class="cell white-cell"></div>
-        <div id="h1" class="cell black-cell"></div>
-        <div id="h1" class="cell white-cell"></div>
-        <div id="h1" class="cell black-cell"></div>
-        <div id="a1" class="cell white-cell"></div>
-
-        <div id="a1" class="cell white-cell"></div>
-        <div id="b1" class="cell black-cell"></div>
-        <div id="c1" class="cell white-cell"></div>
-        <div id="h1" class="cell black-cell"></div>
-        <div id="h1" class="cell white-cell"></div>
-        <div id="h1" class="cell black-cell"></div>
-        <div id="h1" class="cell white-cell"></div>
-        <div id="h1" class="cell black-cell"></div>
-
-        <div id="b1" class="cell black-cell"></div>
-        <div id="c1" class="cell white-cell"></div>
-        <div id="h1" class="cell black-cell"></div>
-        <div id="h1" class="cell white-cell"></div>
-        <div id="h1" class="cell black-cell"></div>
-        <div id="h1" class="cell white-cell"></div>
-        <div id="h1" class="cell black-cell"></div>
-        <div id="a1" class="cell white-cell"></div>
-
-        <div id="a1" class="cell white-cell"></div>
-        <div id="b1" class="cell black-cell"></div>
-        <div id="c1" class="cell white-cell"></div>
-        <div id="h1" class="cell black-cell"></div>
-        <div id="h1" class="cell white-cell"></div>
-        <div id="h1" class="cell black-cell"></div>
-        <div id="h1" class="cell white-cell"></div>
-        <div id="h1" class="cell black-cell"></div>
-
-        <div id="b1" class="cell black-cell"></div>
-        <div id="c1" class="cell white-cell"></div>
-        <div id="h1" class="cell black-cell"></div>
-        <div id="h1" class="cell white-cell"></div>
-        <div id="h1" class="cell black-cell"></div>
-        <div id="h1" class="cell white-cell"></div>
-        <div id="h1" class="cell black-cell"></div>
-        <div id="a1" class="cell white-cell"></div>
-
-        <div id="a1" class="cell white-cell"></div>
-        <div id="b1" class="cell black-cell"></div>
-        <div id="c1" class="cell white-cell"></div>
-        <div id="h1" class="cell black-cell"></div>
-        <div id="h1" class="cell white-cell"></div>
-        <div id="h1" class="cell black-cell"></div>
-        <div id="h1" class="cell white-cell"></div>
-        <div id="h1" class="cell black-cell"></div>
-
-        <div id="b1" class="cell black-cell"></div>
-        <div id="c1" class="cell white-cell"></div>
-        <div id="h1" class="cell black-cell"></div>
-        <div id="h1" class="cell white-cell"></div>
-        <div id="h1" class="cell black-cell"></div>
-        <div id="h1" class="cell white-cell"></div>
-        <div id="h1" class="cell black-cell"></div>
-        <div id="a1" class="cell white-cell"></div>
-      </div>
+      
 
     <div class="player-game">
       <div class="player-game__avatar">
@@ -149,7 +87,7 @@
         
       </div>
     </div>
-  </section>
+  </section> !-->
 
   <footer class="footer">
     <div class="footer__container">

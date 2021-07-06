@@ -179,4 +179,226 @@ body {
 .chess-board .black-cell {
   background: #66a5ad;
 }
+
+.lobby {
+  height: 84vh;
+  width: 100%;
+}
+
+.lobby__container {
+  width: 95%;
+  height: 100%;
+  margin: 0 auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.lobby .player-menu {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 80%;
+}
+
+.lobby .player-menu .player {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.lobby .player-menu .player__avatar {
+  width: 16vh;
+  height: 16vh;
+  border-radius: 16vh;
+  background: url(./public/avatar/Unknown.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  text-indent: -1000em;
+  cursor: pointer;
+  border: #ff936f 3px solid;
+}
+
+.lobby .player-menu .player__name {
+  margin-top: 2vh;
+  width: 24vh;
+  height: 3vh;
+  font-size: 2.3vh;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-align: center;
+  color: #fff;
+  background: #66a5ad;
+  border: #07575B 3px solid;
+  border-radius: 5px;
+}
+
+.lobby .player-menu .menu-replay {
+  width: 14vh;
+  height: 14vh;
+  border-radius: 14vh;
+  font-size: 2.5vh;
+  line-height: 3vh;
+  letter-spacing: 1.5px;
+  border-width: 3px;
+}
+
+.lobby .player-menu .menu-setting {
+  width: 8vh;
+  height: 8vh;
+  border-radius: 8vh;
+  font-size: 2vh;
+  letter-spacing: 1.5px;
+  border-width: 2px;
+}
+
+.lobby .menu {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background: #66a5ad;
+  border: #ff936f solid;
+  text-align: center;
+  cursor: pointer;
+}
+
+.lobby .menu-start {
+  width: 45vh;
+  height: 45vh;
+  border-radius: 45vh;
+  position: relative;
+  border-width: 3px;
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+  -webkit-animation: Game-mode 5s linear;
+          animation: Game-mode 5s linear;
+}
+
+@-webkit-keyframes Game-mode {
+  from {
+    -webkit-transform: rotate(45deg);
+            transform: rotate(45deg);
+  }
+  to {
+    -webkit-transform: rotate(225deg);
+            transform: rotate(225deg);
+  }
+}
+
+@keyframes Game-mode {
+  from {
+    -webkit-transform: rotate(45deg);
+            transform: rotate(45deg);
+  }
+  to {
+    -webkit-transform: rotate(225deg);
+            transform: rotate(225deg);
+  }
+}
+
+@-webkit-keyframes Text-animation {
+  from {
+    -webkit-transform: rotate(-45deg);
+            transform: rotate(-45deg);
+  }
+  to {
+    -webkit-transform: rotate(-225deg);
+            transform: rotate(-225deg);
+  }
+}
+
+@keyframes Text-animation {
+  from {
+    -webkit-transform: rotate(-45deg);
+            transform: rotate(-45deg);
+  }
+  to {
+    -webkit-transform: rotate(-225deg);
+            transform: rotate(-225deg);
+  }
+}
+
+.lobby .menu-start__text {
+  position: absolute;
+  font-style: normal;
+  font-size: 15vh;
+  -webkit-transform: rotate(-45deg);
+          transform: rotate(-45deg);
+  -webkit-animation: Text-animation 5s linear;
+          animation: Text-animation 5s linear;
+}
+
+.lobby .game-mode {
+  position: absolute;
+  width: 10vh;
+  height: 10vh;
+  border-radius: 10vh;
+  top: -5vh;
+  -webkit-transform: rotate(-45deg);
+          transform: rotate(-45deg);
+  -webkit-animation: Text-animation 5s linear;
+          animation: Text-animation 5s linear;
+}
+
+.lobby .game-mode__text {
+  font-size: 3vh;
+}
+
+.lobby .game-mode_online {
+  -webkit-transform: rotate(-45deg);
+          transform: rotate(-45deg);
+  background: #66a5ad;
+}
+
+.lobby .game-mode_online #online {
+  display: block;
+}
+
+.lobby .game-mode_online #offline {
+  display: none;
+}
+
+.lobby .game-mode_offline {
+  -webkit-transform: rotate(-45deg);
+          transform: rotate(-45deg);
+  background: #8c3650;
+}
+
+.lobby .game-mode_offline #online {
+  display: none;
+}
+
+.lobby .game-mode_offline #offline {
+  display: block;
+}
 /*# sourceMappingURL=style.css.map */
