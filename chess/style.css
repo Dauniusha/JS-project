@@ -6,14 +6,14 @@ body {
   color: #fff;
 }
 
-.nav {
+.header {
   width: 100%;
   background: #66a5ad;
   -webkit-box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.6);
           box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.6);
 }
 
-.nav__container {
+.header__container {
   margin: 0 auto;
   width: 95%;
   height: 8vh;
@@ -25,17 +25,17 @@ body {
           align-items: center;
 }
 
-.nav-logo {
+.header-logo {
   position: relative;
   width: 15%;
 }
 
-.nav-logo__img {
+.header-logo__img {
   width: 25%;
   height: auto;
 }
 
-.nav-logo__text {
+.header-logo__text {
   position: absolute;
   left: 13%;
   bottom: 1vh;
@@ -185,6 +185,11 @@ body {
   width: 100%;
 }
 
+.lobby a {
+  text-decoration: none;
+  color: #fff;
+}
+
 .lobby__container {
   width: 95%;
   height: 100%;
@@ -261,10 +266,44 @@ body {
   width: 14vh;
   height: 14vh;
   border-radius: 14vh;
+  border-width: 3px;
+  position: relative;
+  -webkit-transform-style: preserve-3d;
+          transform-style: preserve-3d;
+  -webkit-transition: -webkit-transform 1s ease;
+  transition: -webkit-transform 1s ease;
+  transition: transform 1s ease;
+  transition: transform 1s ease, -webkit-transform 1s ease;
+}
+
+.lobby .player-menu .menu-replay__text {
   font-size: 2.5vh;
   line-height: 3vh;
   letter-spacing: 1.5px;
-  border-width: 3px;
+  -webkit-transition: inherit;
+  transition: inherit;
+}
+
+.lobby .player-menu .menu-replay__img {
+  width: 10vh;
+  height: 10vh;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate3d(-50%, -50%, 0) scale(0);
+          transform: translate3d(-50%, -50%, 0) scale(0);
+  -webkit-transition: inherit;
+  transition: inherit;
+}
+
+.lobby .player-menu .menu-replay:hover .menu-replay__text {
+  -webkit-transform: scale(0) rotate(720deg);
+          transform: scale(0) rotate(720deg);
+}
+
+.lobby .player-menu .menu-replay:hover .menu-replay__img {
+  -webkit-transform: translate3d(-50%, -50%, 0) scale(1) rotate(720deg);
+          transform: translate3d(-50%, -50%, 0) scale(1) rotate(720deg);
 }
 
 .lobby .player-menu .menu-setting {
@@ -274,6 +313,20 @@ body {
   font-size: 2vh;
   letter-spacing: 1.5px;
   border-width: 2px;
+}
+
+.lobby .player-menu .menu-setting__inner {
+  height: 7vh;
+  width: 7vh;
+  -webkit-transition: -webkit-transform 2s ease;
+  transition: -webkit-transform 2s ease;
+  transition: transform 2s ease;
+  transition: transform 2s ease, -webkit-transform 2s ease;
+}
+
+.lobby .player-menu .menu-setting__inner:hover {
+  -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
 }
 
 .lobby .menu {

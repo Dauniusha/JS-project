@@ -23,6 +23,28 @@ export let setting = {
     moveBacklight: 'move-backlight',
     checkBacklight: 'check-backlight',
     selectPieceBacklight: 'select-piece-backlight',
+    headers: {
+      header: 'header',
+      container: 'header__constainer',
+      logo: 'header__logo',
+      logoImg: 'header-logo__img',
+      logoText: 'header-logo__text',
+    },
+    lobby: {
+      lobby: 'lobby',
+      container: 'lobby__container',
+      menu: {
+        menu: 'menu',
+        replay: 'menu-replay',
+        replayText: 'menu-replay__text',
+        replayImg: 'menu-replay__img',
+      }
+    },
+    player: {
+      player: 'player',
+      avatar: 'player__avatar',
+      name: 'player__name',
+    }
   },
 
   gameSetup: [

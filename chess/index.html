@@ -10,17 +10,17 @@
   <title>Chess</title>
 </head>
 <body>
-  <nav class="nav">
-    <div class="nav__container">
-      <div class="nav-logo">
-        <img class="nav-logo__img" src="./public/logo/logo.svg">
-        <span class="nav-logo__text">Chess</span>
+  <header class="header">
+    <div class="header__container">
+      <div class="header-logo">
+        <img class="header-logo__img" src="./public/logo/logo.svg">
+        <span class="header-logo__text">Chess</span>
       </div>
       <div class="logo__btns">
 
       </div>
     </div>
-  </nav>
+  </header>
 
   <section class="lobby">
     <div class="lobby__container">
@@ -32,7 +32,10 @@
           <input type="text" value="Player 1" class="player__name">
         </div>
 
-        <div class="menu menu-replay">View replays</div>
+        <a class="menu menu-replay" href="#">
+          <p class="menu-replay__text">View replays</p>
+          <img class="menu-replay__img" src="./public/lobby/replays/play-button.svg" alt="play">
+        </a>
       </div>
 
       <div class="menu menu-start">
@@ -49,7 +52,9 @@
           <input type="text" value="Player 2" class="player__name">
         </div>
 
-        <div class="menu menu-setting">Setting</div>
+        <div class="menu menu-setting">
+          <img class="menu-setting__inner" src="./public/lobby/setting/settings.svg" alt="setting">
+        </div>
       </div>
     </div>
   </section>
