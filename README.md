@@ -7,3 +7,4 @@ Shedule:
 05.07.2021: End capturing en passant. TODO: routing and start do lobby.
 06.07.2021: Start do lobby. TODO: End lobby and do routing.
 07.07.2021: Start do ts lobby, header, footer. TODO: End ts lobby and do routing.
+08.07.2021: Done visual ts lobby, header, footer. TODO: End animation ts lobby and do routing.

@@ -194,7 +194,7 @@ body {
         width: 16vh;
         height: 16vh;
         border-radius: 16vh;
-        background: url(./public/avatar/Unknown.png);
+        // background: url(./avatar/Unknown.png);
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center;
@@ -339,7 +339,7 @@ body {
     font-size: 3vh;
   }
 
-  .game-mode_online {
+  [data-mode='online'] {
     transform: rotate(-45deg);
     background: #66a5ad;
 
@@ -352,7 +352,7 @@ body {
     }
   }
 
-  .game-mode_offline {
+  [data-mode='offline'] {
     transform: rotate(-45deg);
     background: #8c3650;
 

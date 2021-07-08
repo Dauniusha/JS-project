@@ -25,8 +25,8 @@ export let setting = {
     selectPieceBacklight: 'select-piece-backlight',
     headers: {
       header: 'header',
-      container: 'header__constainer',
-      logo: 'header__logo',
+      container: 'header__container',
+      logo: 'header-logo',
       logoImg: 'header-logo__img',
       logoText: 'header-logo__text',
     },
@@ -38,6 +38,11 @@ export let setting = {
         replay: 'menu-replay',
         replayText: 'menu-replay__text',
         replayImg: 'menu-replay__img',
+        setting: 'menu-setting',
+        settingImg: 'menu-setting__inner',
+        start: 'menu-start',
+        startText: 'menu-start__text',
+        gameMode: 'game-mode',
       }
     },
     player: {

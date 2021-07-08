@@ -13,12 +13,17 @@ export class Header extends BaseComponents {
 
     this.element.appendChild(this.container);
 
+    this.addLogo();
+  }
+
+  private addLogo() {
     const logoElement = document.createElement('div');
     logoElement.classList.add(setting.classNames.headers.logo);
     logoElement.innerHTML = `
-      <img class="${setting.classNames.headers.logoImg}" src="./public/logo/logo.svg">
+      <img class="${setting.classNames.headers.logoImg}" src="../../../logo/logo.svg">
       <span class="${setting.classNames.headers.logoText}">Chess</span>
     `;
+    this.container.appendChild(logoElement);
   }
 
 }
