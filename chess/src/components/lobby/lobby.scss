@@ -130,35 +130,15 @@
     position: relative;
     border-width: 3px;
     transform: rotate(45deg);
+    transition: transform 3s ease;
     
-    animation: Game-mode 5s linear;
-
-    @keyframes Game-mode {
-      from {
-        transform: rotate(45deg);
-      }
-  
-      to {
-        transform: rotate(225deg);
-      }
-    }
-
-    @keyframes Text-animation {
-      from {
-        transform: rotate(-45deg);
-      }
-      to {
-        transform: rotate(-225deg);
-      }
-    }
 
     &__text {
       position: absolute;
       font-style: normal;
       font-size: 15vh;
       transform: rotate(-45deg);
-
-      animation: Text-animation 5s linear;
+      transition: transform 3s ease;
     }
   }
 
@@ -169,12 +149,23 @@
     border-radius: 10vh;
     top: -5vh;
     transform: rotate(-45deg);
-
-    animation: Text-animation 5s linear;
+    transition: transform 3s ease;
   }
 
   .game-mode__text {
     font-size: 3vh;
+  }
+
+  [data-mode='start-offline'] {
+    transform: rotate(225deg);
+    
+    .game-mode {
+      transform: rotate(-225deg);
+    }
+
+    .menu-start__text {
+      transform: rotate(-225deg);
+    }
   }
 
   [data-mode='online'] {

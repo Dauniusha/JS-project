@@ -5,12 +5,12 @@ import { Knight } from '../chess-pieces/each-pieces/knight';
 import { Pawn } from '../chess-pieces/each-pieces/pawn';
 import { Queen } from '../chess-pieces/each-pieces/queen';
 import { Rook } from '../chess-pieces/each-pieces/rook';
-import { color } from '../models/color-interface';
-import { Setup } from '../models/setup-interface';
+import { BaseComponents } from '../models/base-component';
+import { color } from '../models/game/color-interface';
 import { setting } from '../settings/setting';
-// import './game.css';
+import './game.css';
 
-export class Game {
+export class Game extends BaseComponents {
   private readonly chessBoard: ChessBoard;
 
   private possibleCells: HTMLElement[] = [];
@@ -22,7 +22,10 @@ export class Game {
   private checkPieces?: (Queen | King | Knight | Bishop | Pawn | Rook)[];
 
   constructor() {
+    super('section', ['game']);
+
     this.chessBoard = new ChessBoard();
+    this.element.appendChild(this.chessBoard.element);
 
     this.chessBoardListnersInit();
   }
@@ -47,10 +50,11 @@ export class Game {
         }
       } else if (pieceElem /* && pieceElem.getAttribute(setting.classNames.dataPiece)?.indexOf(activeColor) !== -1 */) {
           const cell = (<Element>elem.target)?.closest('.' + setting.classNames.cell);
-          if (cell && !(this.pieceActive?.cell === cell.id && this.possibleCells.length !== 0)) {
+          if (cell && !(this.pieceActive?.cell === cell.id)) {
             this.selectPiece(cell.id);
           } else {
             this.possibleCellsBacklightRemove();
+            this.pieceActive = undefined;
           }
       } else {
         this.possibleCellsBacklightRemove();
@@ -102,6 +106,7 @@ export class Game {
       this.chessBoard.pieceMove(cellId, this.pieceActive);
 
       this.checkMateValidation(this.pieceActive.color);
+      this.pieceActive = undefined;
     }
   }
 

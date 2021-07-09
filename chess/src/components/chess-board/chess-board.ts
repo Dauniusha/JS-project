@@ -8,10 +8,10 @@ import { Pawn } from '../chess-pieces/each-pieces/pawn';
 import { Queen } from '../chess-pieces/each-pieces/queen';
 import { Rook } from '../chess-pieces/each-pieces/rook';
 import { BaseComponents } from '../models/base-component';
-import { color } from '../models/color-interface';
-import { Coordinates } from '../models/coordinates-interface';
+import { color } from '../models/game/color-interface';
+import { Coordinates } from '../models/game/coordinates-interface';
 import { Setup } from '../models/setup-interface';
-import { TestCapturedPiece } from '../models/test-capturing-interface';
+import { TestCapturedPiece } from '../models/game/test-capturing-interface';
 import { setting } from '../settings/setting';
 import './chess-board.scss';
 

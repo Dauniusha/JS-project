@@ -51,7 +51,7 @@ export class Lobby extends BaseComponents {
   private static replaysBtnInit(): HTMLAnchorElement {
     const btn = document.createElement('a');
     btn.classList.add(setting.classNames.lobby.menu.menu, setting.classNames.lobby.menu.replay);
-    btn.href = '#'; // TODO: Нормальная ссылка
+    btn.href = '#/Replays';
     btn.innerHTML = `
       <p class="${setting.classNames.lobby.menu.replayText}">View replays</p>
       <img class="${setting.classNames.lobby.menu.replayImg}" src="./lobby/replays/play-button.svg" alt="play">
@@ -61,6 +61,7 @@ export class Lobby extends BaseComponents {
 
   private static settingBtnInit(): HTMLAnchorElement {
     const btn = document.createElement('a');
+    btn.href = '#/Setting';
     btn.classList.add(setting.classNames.lobby.menu.menu, setting.classNames.lobby.menu.setting);
     btn.innerHTML = `
       <img class="${setting.classNames.lobby.menu.settingImg}" src="./lobby/setting/settings.svg" alt="setting">
@@ -70,6 +71,7 @@ export class Lobby extends BaseComponents {
 
   private static startBtnAndSwicherInit(): [ HTMLAnchorElement, HTMLElement ] { // TODO: Выгрузка режима из БД
     const startBtn = document.createElement('a');
+    startBtn.href = '#/Game';
     startBtn.classList.add(setting.classNames.lobby.menu.menu, setting.classNames.lobby.menu.start);
     startBtn.innerHTML = `
       <h2 class="${setting.classNames.lobby.menu.startText}">Start</h2>

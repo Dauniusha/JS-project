@@ -4,7 +4,7 @@ import { Knight } from "../chess-pieces/each-pieces/knight";
 import { Pawn } from "../chess-pieces/each-pieces/pawn";
 import { Queen } from "../chess-pieces/each-pieces/queen";
 import { Rook } from "../chess-pieces/each-pieces/rook";
-import { color } from "../models/color-interface";
+import { color } from "../models/game/color-interface";
 
 export let setting = {
   classNames: {
@@ -126,4 +126,6 @@ export let setting = {
     positiveIncrement: 4,
     negativeIncrement: 3,
   },
+
+  startPage: '#/Lobby',
 }

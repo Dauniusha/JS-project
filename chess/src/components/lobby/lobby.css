@@ -171,52 +171,10 @@
   border-width: 3px;
   -webkit-transform: rotate(45deg);
           transform: rotate(45deg);
-  -webkit-animation: Game-mode 5s linear;
-          animation: Game-mode 5s linear;
-}
-
-@-webkit-keyframes Game-mode {
-  from {
-    -webkit-transform: rotate(45deg);
-            transform: rotate(45deg);
-  }
-  to {
-    -webkit-transform: rotate(225deg);
-            transform: rotate(225deg);
-  }
-}
-
-@keyframes Game-mode {
-  from {
-    -webkit-transform: rotate(45deg);
-            transform: rotate(45deg);
-  }
-  to {
-    -webkit-transform: rotate(225deg);
-            transform: rotate(225deg);
-  }
-}
-
-@-webkit-keyframes Text-animation {
-  from {
-    -webkit-transform: rotate(-45deg);
-            transform: rotate(-45deg);
-  }
-  to {
-    -webkit-transform: rotate(-225deg);
-            transform: rotate(-225deg);
-  }
-}
-
-@keyframes Text-animation {
-  from {
-    -webkit-transform: rotate(-45deg);
-            transform: rotate(-45deg);
-  }
-  to {
-    -webkit-transform: rotate(-225deg);
-            transform: rotate(-225deg);
-  }
+  -webkit-transition: -webkit-transform 3s ease;
+  transition: -webkit-transform 3s ease;
+  transition: transform 3s ease;
+  transition: transform 3s ease, -webkit-transform 3s ease;
 }
 
 .lobby .menu-start__text {
@@ -225,8 +183,10 @@
   font-size: 15vh;
   -webkit-transform: rotate(-45deg);
           transform: rotate(-45deg);
-  -webkit-animation: Text-animation 5s linear;
-          animation: Text-animation 5s linear;
+  -webkit-transition: -webkit-transform 3s ease;
+  transition: -webkit-transform 3s ease;
+  transition: transform 3s ease;
+  transition: transform 3s ease, -webkit-transform 3s ease;
 }
 
 .lobby .game-mode {
@@ -237,12 +197,29 @@
   top: -5vh;
   -webkit-transform: rotate(-45deg);
           transform: rotate(-45deg);
-  -webkit-animation: Text-animation 5s linear;
-          animation: Text-animation 5s linear;
+  -webkit-transition: -webkit-transform 3s ease;
+  transition: -webkit-transform 3s ease;
+  transition: transform 3s ease;
+  transition: transform 3s ease, -webkit-transform 3s ease;
 }
 
 .lobby .game-mode__text {
   font-size: 3vh;
+}
+
+.lobby [data-mode='start-offline'] {
+  -webkit-transform: rotate(225deg);
+          transform: rotate(225deg);
+}
+
+.lobby [data-mode='start-offline'] .game-mode {
+  -webkit-transform: rotate(-225deg);
+          transform: rotate(-225deg);
+}
+
+.lobby [data-mode='start-offline'] .menu-start__text {
+  -webkit-transform: rotate(-225deg);
+          transform: rotate(-225deg);
 }
 
 .lobby [data-mode='online'] {

@@ -1,6 +1,6 @@
 import { cellCoordinatesToName } from "../../../shared/cell-coordinates-to-cell-name";
 import { cellNameToCoordinates } from "../../../shared/cell-name-to-coordinates";
-import { Coordinates } from "../../models/coordinates-interface";
+import { Coordinates } from "../../models/game/coordinates-interface";
 import { Setup } from "../../models/setup-interface";
 import { setting } from "../../settings/setting";
 import { BasePiece } from "../base-piece";
