@@ -28,6 +28,7 @@
 .footer__link, .footer__text {
   font-weight: bold;
   font-size: 2.25vh;
+  text-shadow: #000 0.1vh 0.05vh, #000 0.1vh 0.1vh,  #000 0.05vh 0.1vh, #000 -0.1vh 0.1vh, #000 -0.1vh 0.05vh, #000 -0.1vh -0.1vh, #000 0.05vh -0.1vh, #000 0.1vh -0.1vh;
 }
 
 .footer__link {
@@ -52,10 +53,12 @@
   background: #fff;
   -webkit-transition: all 0.4s ease-in-out;
   transition: all 0.4s ease-in-out;
+  border: #ff936f 0.5px solid;
 }
 
 .footer__link:hover::before {
   width: 100%;
   left: 0;
+  border-color: #000;
 }
 /*# sourceMappingURL=footer.css.map */

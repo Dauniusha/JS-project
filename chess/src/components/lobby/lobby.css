@@ -53,7 +53,7 @@
           align-items: center;
 }
 
-.lobby .player-menu .player__avatar {
+.lobby .player-menu .player__avatar, .lobby .player-menu .player__game-avatar {
   width: 16vh;
   height: 16vh;
   border-radius: 16vh;
@@ -61,9 +61,12 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  text-indent: -1000em;
   cursor: pointer;
   border: #ff936f 3px solid;
+}
+
+.lobby .player-menu .player__avatar {
+  text-indent: -1000em;
 }
 
 .lobby .player-menu .player__name {
@@ -78,6 +81,7 @@
   background: #66a5ad;
   border: #07575B 3px solid;
   border-radius: 5px;
+  text-shadow: #000 0.1vh 0.05vh, #000 0.1vh 0.1vh,  #000 0.05vh 0.1vh, #000 -0.1vh 0.1vh, #000 -0.1vh 0.05vh, #000 -0.1vh -0.1vh, #000 0.05vh -0.1vh, #000 0.1vh -0.1vh;
 }
 
 .lobby .player-menu .menu-replay {
@@ -100,6 +104,7 @@
   letter-spacing: 1.5px;
   -webkit-transition: inherit;
   transition: inherit;
+  text-shadow: #000 0.1vh 0.05vh, #000 0.1vh 0.1vh,  #fff 0.05vh 0.1vh, #000 -0.1vh 0.1vh, #000 -0.1vh 0.05vh, #000 -0.1vh -0.1vh, #000 0.05vh -0.1vh, #000 0.1vh -0.1vh;
 }
 
 .lobby .player-menu .menu-replay__img {
@@ -136,10 +141,10 @@
 .lobby .player-menu .menu-setting__inner {
   height: 7vh;
   width: 7vh;
-  -webkit-transition: -webkit-transform 2s ease;
-  transition: -webkit-transform 2s ease;
-  transition: transform 2s ease;
-  transition: transform 2s ease, -webkit-transform 2s ease;
+  -webkit-transition: -webkit-transform 1s ease;
+  transition: -webkit-transform 1s ease;
+  transition: transform 1s ease;
+  transition: transform 1s ease, -webkit-transform 1s ease;
 }
 
 .lobby .player-menu .menu-setting__inner:hover {
@@ -171,10 +176,10 @@
   border-width: 3px;
   -webkit-transform: rotate(45deg);
           transform: rotate(45deg);
-  -webkit-transition: -webkit-transform 3s ease;
-  transition: -webkit-transform 3s ease;
-  transition: transform 3s ease;
-  transition: transform 3s ease, -webkit-transform 3s ease;
+  -webkit-transition: -webkit-transform 1s ease;
+  transition: -webkit-transform 1s ease;
+  transition: transform 1s ease;
+  transition: transform 1s ease, -webkit-transform 1s ease;
 }
 
 .lobby .menu-start__text {
@@ -183,10 +188,12 @@
   font-size: 15vh;
   -webkit-transform: rotate(-45deg);
           transform: rotate(-45deg);
-  -webkit-transition: -webkit-transform 3s ease;
-  transition: -webkit-transform 3s ease;
-  transition: transform 3s ease;
-  transition: transform 3s ease, -webkit-transform 3s ease;
+  -webkit-transition: -webkit-transform 1s ease;
+  transition: -webkit-transform 1s ease;
+  transition: transform 1s ease;
+  transition: transform 1s ease, -webkit-transform 1s ease;
+  letter-spacing: 1vh;
+  text-shadow: #000 0.36vh 0.21vh, #000 0.36vh 0.36vh,  #fff 0.21vh 0.36vh, #000 -0.36vh 0.36vh, #000 -0.36vh 0.21vh, #000 -0.36vh -0.36vh, #000 0.21vh -0.36vh, #000 0.36vh -0.36vh;
 }
 
 .lobby .game-mode {
@@ -197,14 +204,14 @@
   top: -5vh;
   -webkit-transform: rotate(-45deg);
           transform: rotate(-45deg);
-  -webkit-transition: -webkit-transform 3s ease;
-  transition: -webkit-transform 3s ease;
-  transition: transform 3s ease;
-  transition: transform 3s ease, -webkit-transform 3s ease;
+  -webkit-transition: all 1s ease;
+  transition: all 1s ease;
 }
 
 .lobby .game-mode__text {
   font-size: 3vh;
+  letter-spacing: 1px;
+  text-shadow: #000 0.12vh 0.07vh, #000 0.12vh 0.12vh,  #000 0.07vh 0.12vh, #000 -0.12vh 0.12vh, #000 -0.12vh 0.07vh, #000 -0.12vh -0.12vh, #000 0.07vh -0.12vh, #000 0.12vh -0.12vh;
 }
 
 .lobby [data-mode='start-offline'] {

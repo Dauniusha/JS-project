@@ -28,7 +28,8 @@
       flex-direction: column;
       align-items: center;
   
-      &__avatar {
+      &__avatar,
+      &__game-avatar {
         width: 16vh;
         height: 16vh;
         border-radius: 16vh;
@@ -36,9 +37,12 @@
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center;
-        text-indent: -1000em;
         cursor: pointer;
         border: #ff936f 3px solid;
+      }
+
+      &__avatar {
+        text-indent: -1000em;
       }
   
       &__name {
@@ -53,6 +57,14 @@
         background: #66a5ad;
         border: #07575B 3px solid;
         border-radius: 5px;
+        text-shadow: #000 0.1vh 0.05vh,
+        #000 0.1vh 0.1vh, 
+        #000 0.05vh 0.1vh,
+        #000 -0.1vh 0.1vh,
+        #000 -0.1vh 0.05vh,
+        #000 -0.1vh -0.1vh,
+        #000 0.05vh -0.1vh,
+        #000 0.1vh -0.1vh;
       }
     }
 
@@ -70,6 +82,14 @@
         line-height: 3vh;
         letter-spacing: 1.5px;
         transition: inherit;
+        text-shadow: #000 0.1vh 0.05vh,
+        #000 0.1vh 0.1vh, 
+        #fff 0.05vh 0.1vh,
+        #000 -0.1vh 0.1vh,
+        #000 -0.1vh 0.05vh,
+        #000 -0.1vh -0.1vh,
+        #000 0.05vh -0.1vh,
+        #000 0.1vh -0.1vh;
       }
 
       &__img {
@@ -104,7 +124,7 @@
       &__inner {
         height: 7vh;
         width: 7vh;
-        transition: transform 2s ease;
+        transition: transform 1s ease;
 
         &:hover {
           transform: rotate(360deg);
@@ -130,7 +150,7 @@
     position: relative;
     border-width: 3px;
     transform: rotate(45deg);
-    transition: transform 3s ease;
+    transition: transform 1s ease;
     
 
     &__text {
@@ -138,7 +158,16 @@
       font-style: normal;
       font-size: 15vh;
       transform: rotate(-45deg);
-      transition: transform 3s ease;
+      transition: transform 1s ease;
+      letter-spacing: 1vh;
+      text-shadow: #000 0.36vh 0.21vh,
+        #000 0.36vh 0.36vh, 
+        #fff 0.21vh 0.36vh,
+        #000 -0.36vh 0.36vh,
+        #000 -0.36vh 0.21vh,
+        #000 -0.36vh -0.36vh,
+        #000 0.21vh -0.36vh,
+        #000 0.36vh -0.36vh;
     }
   }
 
@@ -149,11 +178,20 @@
     border-radius: 10vh;
     top: -5vh;
     transform: rotate(-45deg);
-    transition: transform 3s ease;
+    transition: all 1s ease;
   }
 
   .game-mode__text {
     font-size: 3vh;
+    letter-spacing: 1px;
+    text-shadow: #000 0.12vh 0.07vh,
+        #000 0.12vh 0.12vh, 
+        #000 0.07vh 0.12vh,
+        #000 -0.12vh 0.12vh,
+        #000 -0.12vh 0.07vh,
+        #000 -0.12vh -0.12vh,
+        #000 0.07vh -0.12vh,
+        #000 0.12vh -0.12vh;
   }
 
   [data-mode='start-offline'] {

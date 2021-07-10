@@ -26,16 +26,17 @@ export class Lobby extends BaseComponents {
     this.element.appendChild(this.container);
 
     const firstContainer = this.playerBlockInit();
-    this.playerFirst = new Player('Player 1');
+    this.playerFirst = new Player('Player 1', true);
     this.replaysBtn = Lobby.replaysBtnInit();
     firstContainer.appendChild(this.playerFirst.element);
     firstContainer.appendChild(this.replaysBtn);
 
     [ this.startGameBtn, this.gameSwitcherBtn ] = Lobby.startBtnAndSwicherInit();
     this.container.appendChild(this.startGameBtn);
+    this.initToogleListner();
 
     const secondContainer = this.playerBlockInit();
-    this.playerSecond = new Player('Player 2');
+    this.playerSecond = new Player('Player 2', true);
     this.settingBtn = Lobby.settingBtnInit();
     secondContainer.appendChild(this.playerSecond.element);
     secondContainer.appendChild(this.settingBtn);
@@ -88,5 +89,18 @@ export class Lobby extends BaseComponents {
     startBtn.appendChild(gameModeBtn);
     
     return [ startBtn, gameModeBtn ];
+  }
+
+  private initToogleListner() {
+    this.gameSwitcherBtn.addEventListener('click', (event) => {
+      event.preventDefault();
+      let needDatasetName = 'online';
+      if (this.gameSwitcherBtn.dataset.mode === 'online') {
+        needDatasetName = 'offline';
+      }
+
+      this.startGameBtn.dataset.mode = 'start-' + needDatasetName;
+      this.gameSwitcherBtn.dataset.mode = needDatasetName;
+    });
   }
 }

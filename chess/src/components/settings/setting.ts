@@ -48,7 +48,16 @@ export let setting = {
     player: {
       player: 'player',
       avatar: 'player__avatar',
+      gameAvatar: 'player__game-avatar',
       name: 'player__name',
+    },
+    game: {
+      playerStatistics: 'player-statistics',
+      playerMoveTable: 'player-statistics__table',
+      playerMoveTableEach: 'player-statistics__table-each',
+      playerMoveTableImg: 'player-statistics__table-img',
+      playerMoveTableCells: 'player-statistics__table-cells',
+      playerMoveTableTime: 'player-statistics__table-time',
     }
   },
 
