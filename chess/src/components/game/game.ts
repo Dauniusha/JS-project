@@ -9,6 +9,7 @@ import { Rook } from '../chess-pieces/each-pieces/rook';
 import { BaseComponents } from '../models/base-component';
 import { color } from '../models/game/color-interface';
 import { PlayerStatistics } from '../player-statistics/player-statistics';
+import { Popup } from '../popup/popup';
 import { setting } from '../settings/setting';
 import './game.css';
 
@@ -26,6 +27,8 @@ export class Game extends BaseComponents {
   private firstPlayer?: PlayerStatistics;
 
   private secondPlayer?: PlayerStatistics;
+
+  private activePlayer?: PlayerStatistics;
 
   constructor() {
     super('section', ['game']);
@@ -125,7 +128,7 @@ export class Game extends BaseComponents {
       this.possibleCellsBacklightRemove();
 
       this.moveBacklightAdd(cellId);
-      this.takeActiveplayer(cellId);
+      this.takeActivePlayer(cellId);
       this.chessBoard.pieceMove(cellId, this.pieceActive);
 
       this.checkMateValidation(this.pieceActive.color);
@@ -133,10 +136,14 @@ export class Game extends BaseComponents {
     }
   }
 
-  private takeActiveplayer(newCell: string) {
+  private takeActivePlayer(newCell: string) {
     if (this.pieceActive) {
-      const activePlayer = this.pieceActive.color === this.firstPlayer?.getColor() ? this.firstPlayer : this.secondPlayer;
-      activePlayer?.moveTable.addMove(this.pieceActive.constructor.name, activePlayer.getColor(), this.pieceActive.cell, newCell);
+      this.activePlayer = this.pieceActive.color === this.firstPlayer?.getColor() ? this.firstPlayer : this.secondPlayer;
+      this.activePlayer?.moveTable.addMove(
+        this.pieceActive.constructor.name,
+        this.activePlayer.getColor(),
+        this.pieceActive.cell,
+        newCell);
     } else {
       throw new Error('pieceActive does not exist!');
     }
@@ -167,15 +174,35 @@ export class Game extends BaseComponents {
     if (isCheck && !defendersCanMove) {
       // Do some logic for check-mate
       this.checkBacklightAdd();
-      console.log('mate');
+      this.createWinPopup();
     } else if (isCheck) {
       // Do some logic for check
       this.checkBacklightAdd();
       console.log('check');
     } else if (!defendersCanMove) {
       // Do some logic for stalemate
-      console.log('stalemate');
+      this.createDrawPopup()
     }
+  }
+
+  private createWinPopup() {
+    const winnerName = this.activePlayer?.getName();
+    this.createPopup(`${winnerName} won!`);
+  }
+
+  private createDrawPopup() {
+    this.createPopup('Draw!');
+  }
+
+  private createPopup(text: string) {
+    const popup = new Popup();
+    popup.text.innerHTML = text;
+    this.element.appendChild(popup.element);
+    popup.showPopup();
+    popup.element.addEventListener('click', async () => {
+      await popup.closePopup();
+      popup.element.remove();
+    }, { once: true });
   }
 
   private checkBacklightAdd() {

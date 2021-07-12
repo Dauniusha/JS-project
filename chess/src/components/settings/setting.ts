@@ -58,6 +58,12 @@ export let setting = {
       playerMoveTableImg: 'player-statistics__table-img',
       playerMoveTableCells: 'player-statistics__table-cells',
       playerMoveTableTime: 'player-statistics__table-time',
+    },
+    popups: {
+      closeClass: 'popup_close',
+      popupReplaysBtn: 'popup__replays-btn',
+      popupLobbyBtn: 'popup__lobby-btn',
+      popupText: 'popup__text',
     }
   },
 

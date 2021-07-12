@@ -26,4 +26,8 @@ export class PlayerStatistics extends BaseComponents {
   getColor(): string {
     return this.color;
   }
+
+  getName() {
+    return this.player.getName();
+  }
 }

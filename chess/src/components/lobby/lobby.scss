@@ -202,11 +202,11 @@
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    cursor: pointer;
     border: #ff936f 3px solid;
   }
 
   &__avatar {
+    cursor: pointer;
     text-indent: -1000em;
   }
 

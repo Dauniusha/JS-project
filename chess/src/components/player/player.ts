@@ -6,6 +6,8 @@ export class Player extends BaseComponents {
 
   private readonly name: HTMLInputElement;
 
+  private avatarURL?: string;
+
   constructor(initValue: string, writable: boolean) {
     super('div', [setting.classNames.player.player]);
 
@@ -25,15 +27,37 @@ export class Player extends BaseComponents {
 
   private avatarInit(): HTMLInputElement { // TODO: загрузку картинки с DB
     const avatar = document.createElement('input');
+    avatar.type = 'file';
     avatar.classList.add(setting.classNames.player.avatar);
     this.element.appendChild(avatar);
+    this.upload(avatar);
     return avatar
   }
 
   private avatarImg(): HTMLElement {
     const avatar = document.createElement('div');
-    avatar.classList.add(setting.classNames.player.avatar);
+    avatar.classList.add(setting.classNames.player.gameAvatar);
     this.element.appendChild(avatar);
     return avatar;
+  }
+
+  private upload(avatarElement: HTMLInputElement) {
+    avatarElement.addEventListener('change', () => {
+      const reader = new FileReader();;
+      if (!avatarElement.files) {
+        throw Error('Files for avatar does not exist!');
+      }
+      const file = avatarElement.files[0];
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        this.avatarURL = <string>reader.result;
+        avatarElement.style.background = `url(${<string>reader.result}) center no-repeat`;
+        avatarElement.style.backgroundSize = 'cover';
+      };
+    });
+  }
+
+  getName(): string {
+    return this.name.value;
   }
 }

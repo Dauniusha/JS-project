@@ -1,0 +1,86 @@
+.popup{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.75);
+  opacity: 1;
+  transition: all 0.15s linear;
+  z-index: 100;
+  text-align: center;
+  font-size: 15vh;
+  font-weight: 700;
+  color: #e5e5e5;
+  text-shadow: 2px 2px 10px #66a5ad,
+              -2px 2px 10px #ff936f,
+              #000 0.3vh 0.15vh, #000 0.3vh 0.3vh,
+              #000 0.15vh 0.3vh, #000 -0.3vh 0.3vh,
+              #000 -0.3vh 0.15vh, #000 -0.3vh -0.3vh,
+              #000 0.15vh -0.3vh, #000 0.3vh -0.3vh;
+
+  &_close {
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  &__container {
+    display: flex;
+    align-items: center;
+    position: relative;
+    justify-content: center;
+  }
+
+  &__text {
+    margin: 0;
+  }
+
+  &__lobby-btn,
+  &__replays-btn {
+    cursor: pointer;
+    text-decoration: none;
+    color: #66a5ad;
+
+    text-shadow: #000 0.16vh 0.08vh, #000 0.16vh 0.16vh,
+    #000 0.08vh 0.16vh, #000 -0.16vh 0.16vh,
+    #000 -0.16vh 0.08vh, #000 -0.16vh -0.16vh,
+    #000 0.08vh -0.16vh, #000 0.16vh -0.16vh;
+
+    &::before {
+      position: absolute;
+      content: "";
+      bottom: -8px;
+      left: 50%;
+      width: 0;
+      height: 3px;
+      background: #66a5ad;
+      transition: all 0.2s ease-in-out;
+    }
+
+    &:hover::before {
+      width: 100%;
+      left: 0;
+      border: #000 1px solid;
+    }
+  }
+
+  &__lobby-btn {
+    font-size: 4vh;
+
+    position: absolute;
+    bottom: -9vh;
+    left: -2vh;
+  }
+
+  &__replays-btn {
+    font-size: 4vh;
+
+    position: absolute;
+    bottom: -9vh;
+    right: -1vh;
+  }
+
+}

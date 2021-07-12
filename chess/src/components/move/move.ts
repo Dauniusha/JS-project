@@ -8,7 +8,6 @@ export class Move extends BaseComponents {
   constructor(private fullName: string, private startCell: string, private endCell: string, private time: string = '1:30') {
     super('div', [setting.classNames.game.playerMoveTableEach]);
 
-    console.log(this.fullName);
     const pieceImg = createElement([setting.classNames.game.playerMoveTableImg]);
     pieceImg.style.backgroundImage = `url(${setting.imgNames[<keyof typeof setting.imgNames> this.fullName]})`;
     
