@@ -40,50 +40,6 @@
   height: 80%;
 }
 
-.lobby .player-menu .player {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-
-.lobby .player-menu .player__avatar, .lobby .player-menu .player__game-avatar {
-  width: 16vh;
-  height: 16vh;
-  border-radius: 16vh;
-  background: url(../../../public/avatar/Unknown.png);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  cursor: pointer;
-  border: #ff936f 3px solid;
-}
-
-.lobby .player-menu .player__avatar {
-  text-indent: -1000em;
-}
-
-.lobby .player-menu .player__name {
-  margin-top: 2vh;
-  width: 24vh;
-  height: 3vh;
-  font-size: 2.3vh;
-  font-weight: 700;
-  letter-spacing: 1.2px;
-  text-align: center;
-  color: #fff;
-  background: #66a5ad;
-  border: #07575B 3px solid;
-  border-radius: 5px;
-  text-shadow: #000 0.1vh 0.05vh, #000 0.1vh 0.1vh,  #000 0.05vh 0.1vh, #000 -0.1vh 0.1vh, #000 -0.1vh 0.05vh, #000 -0.1vh -0.1vh, #000 0.05vh -0.1vh, #000 0.1vh -0.1vh;
-}
-
 .lobby .player-menu .menu-replay {
   width: 14vh;
   height: 14vh;
@@ -255,5 +211,49 @@
 
 .lobby [data-mode='offline'] #offline {
   display: block;
+}
+
+.player {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.player__avatar, .player__game-avatar {
+  width: 16vh;
+  height: 16vh;
+  border-radius: 16vh;
+  background: url(../../../public/avatar/Unknown.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+  border: #ff936f 3px solid;
+}
+
+.player__avatar {
+  text-indent: -1000em;
+}
+
+.player__name {
+  margin-top: 2vh;
+  width: 24vh;
+  height: 3vh;
+  font-size: 2.3vh;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-align: center;
+  color: #fff;
+  background: #66a5ad;
+  border: #07575B 3px solid;
+  border-radius: 5px;
+  text-shadow: #000 0.1vh 0.05vh, #000 0.1vh 0.1vh,  #000 0.05vh 0.1vh, #000 -0.1vh 0.1vh, #000 -0.1vh 0.05vh, #000 -0.1vh -0.1vh, #000 0.05vh -0.1vh, #000 0.1vh -0.1vh;
 }
 /*# sourceMappingURL=lobby.css.map */

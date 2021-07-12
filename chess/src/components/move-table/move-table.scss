@@ -1,0 +1,24 @@
+.player-statistics__table {
+  margin: 2vh 0;
+  width: 26vh;
+  max-width: 26vh;
+  height: 40vh;
+  overflow-y: scroll;
+  background: #66a5ad;
+  border: #07575b 3px solid;
+  border-radius: 5px;
+  text-shadow:#000 0.1vh 0.05vh, #000 0.1vh 0.1vh,
+  #000 0.05vh 0.1vh, #000 -0.1vh 0.1vh,
+  #000 -0.1vh 0.05vh, #000 -0.1vh -0.1vh,
+  #000 0.05vh -0.1vh, #000 0.1vh -0.1vh;
+
+  &::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: #07575bbf;
+  }
+}

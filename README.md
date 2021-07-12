@@ -10,3 +10,4 @@ Shedule:
 08.07.2021: Done visual ts lobby, header, footer. TODO: End animation ts lobby and do routing.
 09.07.2021: Done styles for lobby, animations, routing. TODO: Start do moves table.
 10.07.2021: Start do moves table. TODO: Do move recording and full game cycle.
+11.07.2021: Do statistics and add it in the game. TODO: Full game cycle.

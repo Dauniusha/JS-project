@@ -14,6 +14,7 @@ import { Setup } from '../models/setup-interface';
 import { TestCapturedPiece } from '../models/game/test-capturing-interface';
 import { setting } from '../settings/setting';
 import './chess-board.scss';
+import { colorFunctions } from '../../shared/color';
 
 export class ChessBoard extends BaseComponents {
   private readonly cells: HTMLElement[];
@@ -172,7 +173,7 @@ export class ChessBoard extends BaseComponents {
   private castlingValidationInDirection(piece: King, directionIncrement: number): boolean {
     if (piece.isFirstMove) {
       const kingPosition = cellNameToCoordinates(piece.cell);
-      const attakingColor = ChessBoard.getReverseColor(piece.color);
+      const attakingColor = colorFunctions.getReverseColor(piece.color);
       
       return this.clearCellAndRookValidation(kingPosition, directionIncrement)
         || this.castlingCellInCheckValidation(attakingColor, kingPosition, directionIncrement) 
@@ -374,7 +375,7 @@ export class ChessBoard extends BaseComponents {
 
   private removeMovesForСheck(movedPieceColor: string) {
     const copyGameSetup: Setup[] = JSON.parse(JSON.stringify(setting.gameSetup));
-    const kingColor = ChessBoard.getReverseColor(movedPieceColor);
+    const kingColor = colorFunctions.getReverseColor(movedPieceColor);
 
     this.possibleMoveDeterminationInCheck(kingColor, copyGameSetup);
   }
@@ -512,14 +513,14 @@ export class ChessBoard extends BaseComponents {
   ////////////////////////////
 
   checkValidation(movedPieceColor: string): boolean {
-    const kingColor = ChessBoard.getReverseColor(movedPieceColor);
+    const kingColor = colorFunctions.getReverseColor(movedPieceColor);
     const kingPosition = ChessBoard.getKingPosition(setting.gameSetup, kingColor);
 
     return this.possibleWhitesOrBlacksMoves(movedPieceColor).indexOf(kingPosition) !== -1 ? true : false;
   }
 
   movePossibilityValidation(movedPieceColor: string): boolean {
-    const defendingColor = ChessBoard.getReverseColor(movedPieceColor);
+    const defendingColor = colorFunctions.getReverseColor(movedPieceColor);
 
     return this.possibleWhitesOrBlacksMoves(defendingColor).length ? true : false;
   }
@@ -538,7 +539,7 @@ export class ChessBoard extends BaseComponents {
 
   getCheckPieces(movedPieceColor: string): (Queen | King | Knight | Bishop | Pawn | Rook)[] {
     const checkPiecesPositions: (Queen | King | Knight | Bishop | Pawn | Rook)[] = [];
-    const kingColor = ChessBoard.getReverseColor(movedPieceColor);
+    const kingColor = colorFunctions.getReverseColor(movedPieceColor);
     const kingPosition = ChessBoard.getKingPosition(setting.gameSetup, kingColor);
     this.pieces.forEach((piece) => {
       if (piece.possibleMoves.indexOf(kingPosition) !== -1 || piece.cell === kingPosition) {
@@ -555,9 +556,5 @@ export class ChessBoard extends BaseComponents {
       }
     }
     throw Error('King does not exist');
-  }
-
-  private static getReverseColor(movedPieceColor: string): string { // TODO: Вынести в shered
-    return movedPieceColor === color.white ? color.black : color.white;
   }
 }

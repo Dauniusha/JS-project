@@ -23,51 +23,6 @@
     align-items: center;
     height: 80%;
 
-    .player {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-  
-      &__avatar,
-      &__game-avatar {
-        width: 16vh;
-        height: 16vh;
-        border-radius: 16vh;
-        background: url(../../../public/avatar/Unknown.png);
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center;
-        cursor: pointer;
-        border: #ff936f 3px solid;
-      }
-
-      &__avatar {
-        text-indent: -1000em;
-      }
-  
-      &__name {
-        margin-top: 2vh;
-        width: 24vh;
-        height: 3vh;
-        font-size: 2.3vh;
-        font-weight: 700;
-        letter-spacing: 1.2px;
-        text-align: center;
-        color: #fff;
-        background: #66a5ad;
-        border: #07575B 3px solid;
-        border-radius: 5px;
-        text-shadow: #000 0.1vh 0.05vh,
-        #000 0.1vh 0.1vh, 
-        #000 0.05vh 0.1vh,
-        #000 -0.1vh 0.1vh,
-        #000 -0.1vh 0.05vh,
-        #000 -0.1vh -0.1vh,
-        #000 0.05vh -0.1vh,
-        #000 0.1vh -0.1vh;
-      }
-    }
-
     .menu-replay {
       width: 14vh;
       height: 14vh;
@@ -230,5 +185,50 @@
     #offline {
       display: block;
     }
+  }
+}
+
+.player {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__avatar,
+  &__game-avatar {
+    width: 16vh;
+    height: 16vh;
+    border-radius: 16vh;
+    background: url(../../../public/avatar/Unknown.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+    border: #ff936f 3px solid;
+  }
+
+  &__avatar {
+    text-indent: -1000em;
+  }
+
+  &__name {
+    margin-top: 2vh;
+    width: 24vh;
+    height: 3vh;
+    font-size: 2.3vh;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-align: center;
+    color: #fff;
+    background: #66a5ad;
+    border: #07575B 3px solid;
+    border-radius: 5px;
+    text-shadow: #000 0.1vh 0.05vh,
+    #000 0.1vh 0.1vh, 
+    #000 0.05vh 0.1vh,
+    #000 -0.1vh 0.1vh,
+    #000 -0.1vh 0.05vh,
+    #000 -0.1vh -0.1vh,
+    #000 0.05vh -0.1vh,
+    #000 0.1vh -0.1vh;
   }
 }

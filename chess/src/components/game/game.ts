@@ -1,3 +1,4 @@
+import { colorFunctions } from '../../shared/color';
 import { ChessBoard } from '../chess-board/chess-board';
 import { Bishop } from '../chess-pieces/each-pieces/bishop';
 import { King } from '../chess-pieces/each-pieces/king';
@@ -7,6 +8,7 @@ import { Queen } from '../chess-pieces/each-pieces/queen';
 import { Rook } from '../chess-pieces/each-pieces/rook';
 import { BaseComponents } from '../models/base-component';
 import { color } from '../models/game/color-interface';
+import { PlayerStatistics } from '../player-statistics/player-statistics';
 import { setting } from '../settings/setting';
 import './game.css';
 
@@ -21,13 +23,33 @@ export class Game extends BaseComponents {
 
   private checkPieces?: (Queen | King | Knight | Bishop | Pawn | Rook)[];
 
+  private firstPlayer?: PlayerStatistics;
+
+  private secondPlayer?: PlayerStatistics;
+
   constructor() {
     super('section', ['game']);
 
+    [ this.firstPlayer, this.secondPlayer ] = this.playerInit();
+
     this.chessBoard = new ChessBoard();
-    this.element.appendChild(this.chessBoard.element);
+    this.element.insertBefore(this.chessBoard.element, this.secondPlayer.element);
 
     this.chessBoardListnersInit();
+  }
+
+  private playerInit(color?: string): PlayerStatistics[] {
+    if (!color) {
+      color = colorFunctions.getRandomColor();
+    }
+    const firstPlayer = new PlayerStatistics('Danik', color);
+    this.element.appendChild(firstPlayer.element);
+
+    const otherColor = colorFunctions.getReverseColor(color);
+    const secondPlayer = new PlayerStatistics('Player 2', otherColor);
+    this.element.appendChild(secondPlayer.element);
+
+    return [ firstPlayer, secondPlayer ];
   }
 
   getChessBoard(): ChessBoard {
@@ -103,10 +125,20 @@ export class Game extends BaseComponents {
       this.possibleCellsBacklightRemove();
 
       this.moveBacklightAdd(cellId);
+      this.takeActiveplayer(cellId);
       this.chessBoard.pieceMove(cellId, this.pieceActive);
 
       this.checkMateValidation(this.pieceActive.color);
       this.pieceActive = undefined;
+    }
+  }
+
+  private takeActiveplayer(newCell: string) {
+    if (this.pieceActive) {
+      const activePlayer = this.pieceActive.color === this.firstPlayer?.getColor() ? this.firstPlayer : this.secondPlayer;
+      activePlayer?.moveTable.addMove(this.pieceActive.constructor.name, activePlayer.getColor(), this.pieceActive.cell, newCell);
+    } else {
+      throw new Error('pieceActive does not exist!');
     }
   }
 

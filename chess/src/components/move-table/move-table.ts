@@ -1,6 +1,7 @@
 import { BaseComponents } from "../models/base-component";
 import { Move } from "../move/move";
 import { setting } from "../settings/setting";
+import './move-table.css';
 
 export class MoveTable extends BaseComponents {
   private fullPieceName: Move[] = [];
