@@ -1,4 +1,5 @@
 import { createElement } from '../../shared/create-element';
+import { storage } from '../data-base/data-base-element';
 import { BaseComponents } from '../models/base-component';
 import { Player } from '../player/player';
 import { setting } from '../settings/setting';
@@ -26,17 +27,18 @@ export class Lobby extends BaseComponents {
     this.element.appendChild(this.container);
 
     const firstContainer = this.playerBlockInit();
-    this.playerFirst = new Player('Player 1', true);
+    this.playerFirst = new Player(true, 0);
     this.replaysBtn = Lobby.replaysBtnInit();
     firstContainer.appendChild(this.playerFirst.element);
     firstContainer.appendChild(this.replaysBtn);
 
     [ this.startGameBtn, this.gameSwitcherBtn ] = Lobby.startBtnAndSwicherInit();
     this.container.appendChild(this.startGameBtn);
+    this.initStartListner();
     this.initToogleListner();
 
     const secondContainer = this.playerBlockInit();
-    this.playerSecond = new Player('Player 2', true);
+    this.playerSecond = new Player(true, 1);
     this.settingBtn = Lobby.settingBtnInit();
     secondContainer.appendChild(this.playerSecond.element);
     secondContainer.appendChild(this.settingBtn);
@@ -101,6 +103,14 @@ export class Lobby extends BaseComponents {
 
       this.startGameBtn.dataset.mode = 'start-' + needDatasetName;
       this.gameSwitcherBtn.dataset.mode = needDatasetName;
+    });
+  }
+
+  private initStartListner() {
+    this.startGameBtn.addEventListener('click', () => {
+      storage.addPlayer(this.playerFirst.getNameWithAvatar(), 0);
+      storage.addPlayer(this.playerSecond.getNameWithAvatar(), 1);
+      /// 
     });
   }
 }

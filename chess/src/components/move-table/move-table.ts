@@ -1,4 +1,5 @@
 import { BaseComponents } from "../models/base-component";
+import { ClearMove } from "../models/clear-move";
 import { Move } from "../move/move";
 import { setting } from "../settings/setting";
 import './move-table.css';
@@ -23,5 +24,13 @@ export class MoveTable extends BaseComponents {
 
   takeMove(i: number): Move {
     return this.fullPieceName[i];
+  }
+
+  getAllMoves(): ClearMove[] {
+    const clearMoves: ClearMove[] = [];
+    this.fullPieceName.forEach((move) => {
+      clearMoves.push(move.getClearMove());
+    });
+    return clearMoves;
   }
  }

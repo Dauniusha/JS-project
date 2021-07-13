@@ -1,4 +1,5 @@
 import { BaseComponents } from "../models/base-component";
+import { PlayerWithMove } from "../models/data-base/data-base-player-move";
 import { MoveTable } from "../move-table/move-table";
 import { Player } from "../player/player";
 import { setting } from "../settings/setting";
@@ -9,25 +10,29 @@ export class PlayerStatistics extends BaseComponents {
 
   moveTable: MoveTable;
 
-  constructor(name: string, private color: string) {
+  constructor(private color: string, counter: number) {
     super('div', [setting.classNames.game.playerStatistics]);
-    this.player = this.initPlayer(name);
+
+    this.player = new Player(false, counter);
+    this.element.appendChild(this.player.element);
 
     this.moveTable = new MoveTable();
     this.element.appendChild(this.moveTable.element);
-  }
-
-  private initPlayer(name: string) {
-    const player = new Player(name, false);
-    this.element.appendChild(player.element);
-    return player;
   }
 
   getColor(): string {
     return this.color;
   }
 
-  getName() {
+  getName(): string {
     return this.player.getName();
+  }
+
+  getPlayer(): Player {
+    return this.player;
+  }
+
+  getPlayerWithMoves(): PlayerWithMove {
+    return { player: this.player.getNameWithAvatar(), moves: this.moveTable.getAllMoves() };
   }
 }

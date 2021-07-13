@@ -1,5 +1,6 @@
 import { createElement } from "../../shared/create-element";
 import { BaseComponents } from "../models/base-component";
+import { ClearMove } from "../models/clear-move";
 import { setting } from "../settings/setting";
 import './move.css';
 
@@ -21,4 +22,13 @@ export class Move extends BaseComponents {
     this.element.appendChild(pieceCells);
     this.element.appendChild(timeElement);
   }
+
+   getClearMove(): ClearMove {
+     return {
+       fullName: this.fullName,
+       startCell: this.startCell,
+       endCell: this.endCell,
+       time: this.time,
+     };
+   }
 }

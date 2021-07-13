@@ -12,4 +12,4 @@ Shedule:
 10.07.2021: Start do moves table. TODO: Do move recording and full game cycle.
 11.07.2021: Do statistics and add it in the game. TODO: Full game cycle.
 12.07.2021: Do popups and full game cycle. TODO: Data base.
-13.07.2021: 
+13.07.2021: Do data base, board animation and moves flag. TODO: Replays.

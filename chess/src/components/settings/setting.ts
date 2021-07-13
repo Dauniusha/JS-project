@@ -60,6 +60,7 @@ export let setting = {
       playerMoveTableTime: 'player-statistics__table-time',
       rotate: 'rotating',
       noRotate: 'rotated',
+      playerActive: 'player-active',
     },
     popups: {
       closeClass: 'popup_close',
@@ -139,10 +140,23 @@ export let setting = {
 
   isWhiteFromBelow: true,
 
+  isTwoPlayersOffline: true,
+
   passantCell: {
     positiveIncrement: 4,
     negativeIncrement: 3,
   },
 
   startPage: '#/Lobby',
+
+  dataBase: {
+    version: 1,
+    storeUserName: 'user',
+    storeGamesName: 'replays',
+  },
+
+  playersInitStates: {
+    players: [ 'Player 1', 'Player 2' ],
+    playerImgURL: '../../../avatar/Unknown.png',
+  }
 }

@@ -149,7 +149,7 @@
   transition: transform 1s ease;
   transition: transform 1s ease, -webkit-transform 1s ease;
   letter-spacing: 1vh;
-  text-shadow: #000 0.36vh 0.21vh, #000 0.36vh 0.36vh,  #fff 0.21vh 0.36vh, #000 -0.36vh 0.36vh, #000 -0.36vh 0.21vh, #000 -0.36vh -0.36vh, #000 0.21vh -0.36vh, #000 0.36vh -0.36vh;
+  text-shadow: #000 0.36vh 0.21vh, #000 0.36vh 0.36vh,  #000 0.21vh 0.36vh, #000 -0.36vh 0.36vh, #000 -0.36vh 0.21vh, #000 -0.36vh -0.36vh, #000 0.21vh -0.36vh, #000 0.36vh -0.36vh;
 }
 
 .lobby .game-mode {
@@ -230,11 +230,27 @@
   width: 16vh;
   height: 16vh;
   border-radius: 16vh;
-  background: url(../../../public/avatar/Unknown.png);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
   border: #ff936f 3px solid;
+  color: #66a5ad;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  font-size: 12vh;
+  font-weight: 700;
+  text-shadow: #000 0.24vh 0.14vh, #000 0.24vh 0.24vh,  #000 0.14vh 0.24vh, #000 -0.24vh 0.24vh, #000 -0.24vh 0.14vh, #000 -0.24vh -0.24vh, #000 0.14vh -0.24vh, #000 0.24vh -0.24vh, #000 2px 2px 10px;
+}
+
+.player__game-avatar {
+  position: relative;
 }
 
 .player__avatar {

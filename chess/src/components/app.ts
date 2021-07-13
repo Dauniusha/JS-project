@@ -1,3 +1,4 @@
+import { storage } from "./data-base/data-base-element";
 import { Footer } from "./footer/footer";
 import { Game } from "./game/game";
 import { Header } from "./header/header";
@@ -19,6 +20,8 @@ export class App {
   private activePage?: Lobby | Game;
 
   constructor(private readonly rootElement: HTMLElement) {
+    this.initDB();
+
     this.header = new Header();
     this.rootElement.appendChild(this.header.element);
 
@@ -26,6 +29,11 @@ export class App {
     this.rootElement.appendChild(this.footer.element);
 
     this.router = new Router();
+    // this.initRoute();
+  }
+
+  private async initDB() {
+    await storage.createDataBase();
     this.initRoute();
   }
 
@@ -70,9 +78,7 @@ export class App {
 
   private startGamePage() {
     this.clearWindow();
-    if (!this.game) {
-      this.game = new Game(true);
-    }
+    this.game = new Game();
     this.activePage = this.game;
     this.rootElement.insertBefore(this.game.element, this.footer.element);
   }

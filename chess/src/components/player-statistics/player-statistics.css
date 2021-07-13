@@ -10,4 +10,18 @@
       -ms-flex-direction: column;
           flex-direction: column;
 }
+
+.player-active::before {
+  position: absolute;
+  content: '';
+  top: 0;
+  right: 0;
+  background: url("../../../public/flags/move-flag.svg") center no-repeat;
+  background-size: cover;
+  background-color: #ccc;
+  width: 3vh;
+  height: 3vh;
+  border-radius: 3vh;
+  border: #ff936f 3px solid;
+}
 /*# sourceMappingURL=player-statistics.css.map */

@@ -1,49 +1,68 @@
+import { storage } from "../data-base/data-base-element";
 import { BaseComponents } from "../models/base-component";
+import { PlayerDBObject } from "../models/data-base/data-base-player-object";
 import { setting } from "../settings/setting";
 
 export class Player extends BaseComponents {
-  private readonly avatar: HTMLInputElement | HTMLElement;
+  private avatar: HTMLInputElement | HTMLElement | undefined;
 
-  private readonly name: HTMLInputElement;
+  private avatarURL: string | undefined;
 
-  private avatarURL?: string;
+  private name: string | undefined;
 
-  constructor(initValue: string, writable: boolean) {
+  constructor(writable: boolean, counter: number) {
     super('div', [setting.classNames.player.player]);
 
-    this.avatar = writable ? this.avatarInit() : this.avatarImg();
-
-    this.name = this.nameInit(initValue);
+    writable ? this.playerInit(counter) : this.getPlayer(counter);
   }
 
-  private nameInit(initValue: string): HTMLInputElement { // TODO: загрузку имени с DB
-    const name = document.createElement('input');
-    name.classList.add(setting.classNames.player.name);
-    name.type = 'text';
-    name.value = initValue;
-    this.element.appendChild(name);
-    return name;
-  }
-
-  private avatarInit(): HTMLInputElement { // TODO: загрузку картинки с DB
+  private async playerInit(counter: number) {
+    const players = await storage.getPlayers();
+    [ this.avatarURL, this.name ] = players[counter] ? 
+    [ players[counter].avatarURL, players[counter].name ] : 
+    [ setting.playersInitStates.playerImgURL, setting.playersInitStates.players[counter] ];
+    
     const avatar = document.createElement('input');
     avatar.type = 'file';
     avatar.classList.add(setting.classNames.player.avatar);
+    avatar.style.backgroundImage = `url(${this.avatarURL})`;
+    this.avatar = avatar;
     this.element.appendChild(avatar);
     this.upload(avatar);
-    return avatar
+
+    const nameElement = document.createElement('input');
+    nameElement.classList.add(setting.classNames.player.name);
+    nameElement.type = 'text';
+    nameElement.value = this.name;
+    this.element.appendChild(nameElement);
+    this.input(nameElement);
   }
 
-  private avatarImg(): HTMLElement {
+  private async getPlayer(counter: number) {
+    const players = await storage.getPlayers();
+    [ this.avatarURL, this.name ] = players[counter] ? 
+    [ players[counter].avatarURL, players[counter].name ] : 
+    [ setting.playersInitStates.playerImgURL, setting.playersInitStates.players[counter] ];
+
     const avatar = document.createElement('div');
     avatar.classList.add(setting.classNames.player.gameAvatar);
+    if (this.avatarURL !== setting.playersInitStates.playerImgURL) {
+      avatar.style.backgroundImage = `url(${this.avatarURL})`;
+    } else {
+      avatar.innerHTML = this.name[0];
+    }
+    this.avatar = avatar;
     this.element.appendChild(avatar);
-    return avatar;
+
+    const nameElement = document.createElement('div');
+    nameElement.classList.add(setting.classNames.player.name);
+    nameElement.innerHTML = this.name;
+    this.element.appendChild(nameElement);
   }
 
   private upload(avatarElement: HTMLInputElement) {
     avatarElement.addEventListener('change', () => {
-      const reader = new FileReader();;
+      const reader = new FileReader();
       if (!avatarElement.files) {
         throw Error('Files for avatar does not exist!');
       }
@@ -57,7 +76,32 @@ export class Player extends BaseComponents {
     });
   }
 
+  private input(nameElement: HTMLInputElement) {
+    nameElement.addEventListener('input', () => {
+      this.name = nameElement.value;
+    });
+  }
+
   getName(): string {
-    return this.name.value;
+    if (this.name) {
+      return this.name;
+    } else {
+      throw new Error('Name does not exist!');
+    }
+  }
+
+  getNameWithAvatar(): PlayerDBObject {
+    if (this.avatarURL && this.name) {
+      return { avatarURL: this.avatarURL, name: this.name };
+    } else {
+      throw new Error('Name or avatar does not exist!');
+    }
+  }
+
+  getAvatar(): HTMLInputElement | HTMLElement {
+    if (this.avatar) {
+      return this.avatar;
+    }
+    throw new Error('Avatar does not exist!');
   }
 }

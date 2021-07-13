@@ -6,6 +6,7 @@ import { Knight } from '../chess-pieces/each-pieces/knight';
 import { Pawn } from '../chess-pieces/each-pieces/pawn';
 import { Queen } from '../chess-pieces/each-pieces/queen';
 import { Rook } from '../chess-pieces/each-pieces/rook';
+import { storage } from '../data-base/data-base-element';
 import { BaseComponents } from '../models/base-component';
 import { color } from '../models/game/color-interface';
 import { PlayerStatistics } from '../player-statistics/player-statistics';
@@ -30,10 +31,13 @@ export class Game extends BaseComponents {
 
   private activePlayer?: PlayerStatistics;
 
-  constructor(private twoPlayersOffline: boolean) {
+  constructor() {
     super('section', ['game']);
 
     [ this.firstPlayer, this.secondPlayer ] = this.playerInit();
+    setTimeout(() => { // TODO: Не понимаю, почему он перед async функциями выполняется
+      this.addMoveHolder();
+    }, 200);
 
     this.chessBoard = new ChessBoard();
     this.element.insertBefore(this.chessBoard.element, this.secondPlayer.element);
@@ -45,11 +49,12 @@ export class Game extends BaseComponents {
     if (!color) {
       color = colorFunctions.getRandomColor();
     }
-    const firstPlayer = new PlayerStatistics('Danik', color);
+    
+    const firstPlayer = new PlayerStatistics(color, 0);
     this.element.appendChild(firstPlayer.element);
 
     const otherColor = colorFunctions.getReverseColor(color);
-    const secondPlayer = new PlayerStatistics('Player 2', otherColor);
+    const secondPlayer = new PlayerStatistics(otherColor, 1);
     this.element.appendChild(secondPlayer.element);
 
     return [ firstPlayer, secondPlayer ];
@@ -67,13 +72,14 @@ export class Game extends BaseComponents {
       if (
       (<Element>elem.target)?.closest('.' + setting.classNames.possibleClearCell)
       || (<Element>elem.target)?.closest('.' + setting.classNames.possibleEngagedCell)
-      ) { // Происходит запись хода и всё остальное
+      ) {
         const cell = (<Element>elem.target)?.closest('.' + setting.classNames.cell);
         if (cell) {
           this.pieceMove(cell.id);
           this.isWhiteMove = !this.isWhiteMove;
+          this.addMoveHolder();
         }
-      } else if (pieceElem && pieceElem.getAttribute(setting.classNames.dataPiece)?.indexOf(activeColor) !== -1) {
+      } else if (pieceElem /* && pieceElem.getAttribute(setting.classNames.dataPiece)?.indexOf(activeColor) !== -1 */) {
           const cell = (<Element>elem.target)?.closest('.' + setting.classNames.cell);
           if (cell && !(this.pieceActive?.cell === cell.id)) {
             this.selectPiece(cell.id);
@@ -132,7 +138,7 @@ export class Game extends BaseComponents {
       this.chessBoard.pieceMove(cellId, this.pieceActive);
 
       this.checkMateValidation(this.pieceActive.color);
-      this.rotateChesseBoard();
+      // this.rotateChesseBoard();
       this.pieceActive = undefined;
     }
   }
@@ -176,13 +182,25 @@ export class Game extends BaseComponents {
       // Do some logic for check-mate
       this.checkBacklightAdd();
       this.createWinPopup();
+      this.createReplay();
     } else if (isCheck) {
       // Do some logic for check
       this.checkBacklightAdd();
       console.log('check');
     } else if (!defendersCanMove) {
       // Do some logic for stalemate
-      this.createDrawPopup()
+      this.createDrawPopup();
+      this.createReplay();
+    }
+  }
+
+  private createReplay() {
+    if (this.firstPlayer && this.secondPlayer && this.activePlayer) {
+      const firstPlayerWithMove = this.firstPlayer?.getPlayerWithMoves();
+      const secondPlayerWithMove = this.secondPlayer?.getPlayerWithMoves();
+      const winner = this.activePlayer?.getPlayer().getNameWithAvatar();
+  
+      storage.addReplay(firstPlayerWithMove, secondPlayerWithMove, winner);
     }
   }
 
@@ -224,7 +242,7 @@ export class Game extends BaseComponents {
   }
 
   private rotateChesseBoard() {
-    if (this.twoPlayersOffline) {
+    if (setting.isTwoPlayersOffline) {
       if (this.chessBoard.element.classList.contains(setting.classNames.game.rotate)) {
         this.chessBoard.element.classList.remove(setting.classNames.game.rotate);
         this.chessBoard.element.classList.add(setting.classNames.game.noRotate);
@@ -232,6 +250,19 @@ export class Game extends BaseComponents {
         this.chessBoard.element.classList.add(setting.classNames.game.rotate);
         this.chessBoard.element.classList.remove(setting.classNames.game.noRotate);
       }
+    }
+  }
+
+  private addMoveHolder() {
+    const whitePlayer = this.firstPlayer?.getColor() === color.white ? this.firstPlayer : this.secondPlayer;
+    const blackPlayer = this.firstPlayer?.getColor() === color.black ? this.firstPlayer : this.secondPlayer;
+
+    if (this.isWhiteMove) {
+      whitePlayer?.getPlayer().getAvatar().classList.add(setting.classNames.game.playerActive);
+      blackPlayer?.getPlayer().getAvatar().classList.remove(setting.classNames.game.playerActive)
+    } else {
+      whitePlayer?.getPlayer().getAvatar().classList.remove(setting.classNames.game.playerActive);
+      blackPlayer?.getPlayer().getAvatar().classList.add(setting.classNames.game.playerActive);
     }
   }
 }
