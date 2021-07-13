@@ -58,6 +58,8 @@ export let setting = {
       playerMoveTableImg: 'player-statistics__table-img',
       playerMoveTableCells: 'player-statistics__table-cells',
       playerMoveTableTime: 'player-statistics__table-time',
+      rotate: 'rotating',
+      noRotate: 'rotated',
     },
     popups: {
       closeClass: 'popup_close',

@@ -1,3 +1,7 @@
+body {
+  overflow: hidden;
+}
+
 .chess-board {
   position: relative;
   width: 70vh;
@@ -110,5 +114,73 @@
   .select-piece-backlight::before {
     background: rgba(157, 234, 253, 0.55);
     border: 0;
+  }
+}
+
+.rotating {
+  animation: 3s ease Rotate;
+  transform: rotate(180deg);
+
+  img {
+    transform: rotate(-180deg);
+  }
+
+  .cell-nnumeration__each {
+    transform: rotate(180deg);
+  }
+}
+
+@keyframes Rotate {
+  from {
+    transform: rotate(0);
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.8);
+  }
+
+  20% {
+    transform: translateZ(65px) rotate(0);
+    box-shadow: 5px 5px 50px rgba(0, 0, 0, 1);
+  }
+
+  80% {
+    transform: translateZ(65px) rotate(180deg);
+  }
+
+  to {
+    transform: rotate(180deg);
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.8);
+  }
+}
+
+.rotated {
+  animation: 3s ease Rotate-reverse;
+  transform: rotate(0);
+  
+  img {
+    transform: rotate(0);
+  }
+
+  .cell-nnumeration__each {
+    transform: rotate(0);
+  }
+}
+
+@keyframes Rotate-reverse {
+  from {
+    transform: rotate(180deg);
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.8);
+  }
+
+  20% {
+    transform: translateZ(65px) rotate(180deg);
+    box-shadow: 5px 5px 50px rgba(0, 0, 0, 1);
+  }
+
+  80% {
+    transform: translateZ(65px) rotate(0);
+  }
+
+  to {
+    transform: rotate(0);
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.8);
   }
 }

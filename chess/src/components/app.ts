@@ -71,7 +71,7 @@ export class App {
   private startGamePage() {
     this.clearWindow();
     if (!this.game) {
-      this.game = new Game();
+      this.game = new Game(true);
     }
     this.activePage = this.game;
     this.rootElement.insertBefore(this.game.element, this.footer.element);

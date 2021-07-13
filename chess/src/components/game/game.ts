@@ -30,7 +30,7 @@ export class Game extends BaseComponents {
 
   private activePlayer?: PlayerStatistics;
 
-  constructor() {
+  constructor(private twoPlayersOffline: boolean) {
     super('section', ['game']);
 
     [ this.firstPlayer, this.secondPlayer ] = this.playerInit();
@@ -73,7 +73,7 @@ export class Game extends BaseComponents {
           this.pieceMove(cell.id);
           this.isWhiteMove = !this.isWhiteMove;
         }
-      } else if (pieceElem /* && pieceElem.getAttribute(setting.classNames.dataPiece)?.indexOf(activeColor) !== -1 */) {
+      } else if (pieceElem && pieceElem.getAttribute(setting.classNames.dataPiece)?.indexOf(activeColor) !== -1) {
           const cell = (<Element>elem.target)?.closest('.' + setting.classNames.cell);
           if (cell && !(this.pieceActive?.cell === cell.id)) {
             this.selectPiece(cell.id);
@@ -132,6 +132,7 @@ export class Game extends BaseComponents {
       this.chessBoard.pieceMove(cellId, this.pieceActive);
 
       this.checkMateValidation(this.pieceActive.color);
+      this.rotateChesseBoard();
       this.pieceActive = undefined;
     }
   }
@@ -219,6 +220,18 @@ export class Game extends BaseComponents {
       this.checkPieces.forEach((piece) => {
         piece.element.parentElement?.classList.remove(setting.classNames.checkBacklight);
       });
+    }
+  }
+
+  private rotateChesseBoard() {
+    if (this.twoPlayersOffline) {
+      if (this.chessBoard.element.classList.contains(setting.classNames.game.rotate)) {
+        this.chessBoard.element.classList.remove(setting.classNames.game.rotate);
+        this.chessBoard.element.classList.add(setting.classNames.game.noRotate);
+      } else {
+        this.chessBoard.element.classList.add(setting.classNames.game.rotate);
+        this.chessBoard.element.classList.remove(setting.classNames.game.noRotate);
+      }
     }
   }
 }

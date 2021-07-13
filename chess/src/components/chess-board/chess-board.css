@@ -1,3 +1,7 @@
+body {
+  overflow: hidden;
+}
+
 .chess-board {
   position: relative;
   width: 70vh;
@@ -131,5 +135,139 @@
 .chess-board .select-piece-backlight::before {
   background: rgba(157, 234, 253, 0.55);
   border: 0;
+}
+
+.rotating {
+  -webkit-animation: 3s ease Rotate;
+          animation: 3s ease Rotate;
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+}
+
+.rotating img {
+  -webkit-transform: rotate(-180deg);
+          transform: rotate(-180deg);
+}
+
+.rotating .cell-nnumeration__each {
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+}
+
+@-webkit-keyframes Rotate {
+  from {
+    -webkit-transform: rotate(0);
+            transform: rotate(0);
+    -webkit-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.8);
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.8);
+  }
+  20% {
+    -webkit-transform: translateZ(65px) rotate(0);
+            transform: translateZ(65px) rotate(0);
+    -webkit-box-shadow: 5px 5px 50px black;
+            box-shadow: 5px 5px 50px black;
+  }
+  80% {
+    -webkit-transform: translateZ(65px) rotate(180deg);
+            transform: translateZ(65px) rotate(180deg);
+  }
+  to {
+    -webkit-transform: rotate(180deg);
+            transform: rotate(180deg);
+    -webkit-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.8);
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.8);
+  }
+}
+
+@keyframes Rotate {
+  from {
+    -webkit-transform: rotate(0);
+            transform: rotate(0);
+    -webkit-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.8);
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.8);
+  }
+  20% {
+    -webkit-transform: translateZ(65px) rotate(0);
+            transform: translateZ(65px) rotate(0);
+    -webkit-box-shadow: 5px 5px 50px black;
+            box-shadow: 5px 5px 50px black;
+  }
+  80% {
+    -webkit-transform: translateZ(65px) rotate(180deg);
+            transform: translateZ(65px) rotate(180deg);
+  }
+  to {
+    -webkit-transform: rotate(180deg);
+            transform: rotate(180deg);
+    -webkit-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.8);
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.8);
+  }
+}
+
+.rotated {
+  -webkit-animation: 3s ease Rotate-reverse;
+          animation: 3s ease Rotate-reverse;
+  -webkit-transform: rotate(0);
+          transform: rotate(0);
+}
+
+.rotated img {
+  -webkit-transform: rotate(0);
+          transform: rotate(0);
+}
+
+.rotated .cell-nnumeration__each {
+  -webkit-transform: rotate(0);
+          transform: rotate(0);
+}
+
+@-webkit-keyframes Rotate-reverse {
+  from {
+    -webkit-transform: rotate(180deg);
+            transform: rotate(180deg);
+    -webkit-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.8);
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.8);
+  }
+  20% {
+    -webkit-transform: translateZ(65px) rotate(180deg);
+            transform: translateZ(65px) rotate(180deg);
+    -webkit-box-shadow: 5px 5px 50px black;
+            box-shadow: 5px 5px 50px black;
+  }
+  80% {
+    -webkit-transform: translateZ(65px) rotate(0);
+            transform: translateZ(65px) rotate(0);
+  }
+  to {
+    -webkit-transform: rotate(0);
+            transform: rotate(0);
+    -webkit-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.8);
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.8);
+  }
+}
+
+@keyframes Rotate-reverse {
+  from {
+    -webkit-transform: rotate(180deg);
+            transform: rotate(180deg);
+    -webkit-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.8);
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.8);
+  }
+  20% {
+    -webkit-transform: translateZ(65px) rotate(180deg);
+            transform: translateZ(65px) rotate(180deg);
+    -webkit-box-shadow: 5px 5px 50px black;
+            box-shadow: 5px 5px 50px black;
+  }
+  80% {
+    -webkit-transform: translateZ(65px) rotate(0);
+            transform: translateZ(65px) rotate(0);
+  }
+  to {
+    -webkit-transform: rotate(0);
+            transform: rotate(0);
+    -webkit-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.8);
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.8);
+  }
 }
 /*# sourceMappingURL=chess-board.css.map */

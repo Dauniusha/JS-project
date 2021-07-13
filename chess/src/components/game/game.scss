@@ -4,4 +4,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 2.5%;
+
+  transform-style: preserve-3d;
+  transform: perspective(1000px);
 }

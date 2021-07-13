@@ -10,5 +10,9 @@
       -ms-flex-pack: justify;
           justify-content: space-between;
   padding: 0 2.5%;
+  -webkit-transform-style: preserve-3d;
+          transform-style: preserve-3d;
+  -webkit-transform: perspective(1000px);
+          transform: perspective(1000px);
 }
 /*# sourceMappingURL=game.css.map */
