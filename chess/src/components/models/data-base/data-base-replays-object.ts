@@ -7,4 +7,6 @@ export interface ReplaysDBObject {
   secondPlayer: PlayerWithMove;
 
   winner: PlayerDBObject;
+
+  time: string;
 }

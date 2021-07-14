@@ -23,7 +23,7 @@ export class ChessBoard extends BaseComponents {
 
   private allMoves: { cell: string, moves: string[] }[] = [];
 
-  constructor() {
+  constructor(gameSetup: Setup[]) {
     super('div', [setting.classNames.board]);
 
     this.cells = this.cellsInit();
@@ -31,7 +31,7 @@ export class ChessBoard extends BaseComponents {
     this.element.appendChild(this.boardNumerationInit('number'));
     this.element.appendChild(this.boardNumerationInit('letter'));
 
-    this.newPlacePieces();
+    this.newPlacePieces(gameSetup);
 
     this.allPossibleMoveDetermination();
   }
@@ -80,8 +80,8 @@ export class ChessBoard extends BaseComponents {
     return mainComponent;
   }
 
-  private newPlacePieces() {
-    setting.gameSetup.forEach((setup) => {
+  private newPlacePieces(setups: Setup[]) {
+    setups.forEach((setup) => {
       const pieceType = setup.piece;
       const piece = setting.createFunctions[<keyof typeof setting.createFunctions> pieceType](setup.cell);
       this.pieces.push(piece);

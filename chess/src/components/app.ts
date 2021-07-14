@@ -3,6 +3,7 @@ import { Footer } from "./footer/footer";
 import { Game } from "./game/game";
 import { Header } from "./header/header";
 import { Lobby } from "./lobby/lobby";
+import { Replays } from "./replays/replays";
 import { Router } from "./route/route";
 import { setting } from "./settings/setting";
 
@@ -15,9 +16,11 @@ export class App {
 
   private game?: Game;
 
+  private replays?: Replays;
+
   readonly router: Router;
 
-  private activePage?: Lobby | Game;
+  private activePage?: Lobby | Game | Replays;
 
   constructor(private readonly rootElement: HTMLElement) {
     this.initDB();
@@ -84,7 +87,10 @@ export class App {
   }
 
   private startReplaysPage() {
-
+    this.clearWindow();
+    this.replays = new Replays();
+    this.activePage = this.replays;
+    this.rootElement.insertBefore(this.replays.element, this.footer.element);
   }
 
   private clearWindow() {

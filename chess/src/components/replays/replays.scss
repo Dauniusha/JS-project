@@ -1,0 +1,28 @@
+.replays {
+  height: 84vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__container {
+    height: 90%;
+    width: 50%;
+    background-color: #66a5ad;
+    border: #07575B 5px solid;
+    border-radius: 10px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    box-shadow: 2px 2px 20px #000;
+
+    &::-webkit-scrollbar {
+      -webkit-appearance: none;
+      width: 2vh;
+    }
+  
+    &::-webkit-scrollbar-thumb {
+      border-radius: 5px;
+      background-color: #07575bbf;
+    }
+  }
+}

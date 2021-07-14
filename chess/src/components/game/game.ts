@@ -39,7 +39,7 @@ export class Game extends BaseComponents {
       this.addMoveHolder();
     }, 200);
 
-    this.chessBoard = new ChessBoard();
+    this.chessBoard = new ChessBoard(setting.initialGameSetup);
     this.element.insertBefore(this.chessBoard.element, this.secondPlayer.element);
 
     this.chessBoardListnersInit();
@@ -200,7 +200,7 @@ export class Game extends BaseComponents {
       const secondPlayerWithMove = this.secondPlayer?.getPlayerWithMoves();
       const winner = this.activePlayer?.getPlayer().getNameWithAvatar();
   
-      storage.addReplay(firstPlayerWithMove, secondPlayerWithMove, winner);
+      storage.addReplay(firstPlayerWithMove, secondPlayerWithMove, winner, '1:30'); // TODO: Сделать таймер и переделать
     }
   }
 

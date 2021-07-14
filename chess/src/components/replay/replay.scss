@@ -1,0 +1,88 @@
+.replays__each {
+  display: flex;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+
+  width: 95%;
+  height: 8vh;
+  margin: 0 auto;
+  margin-bottom: 2vh;
+  text-shadow:#000 0.1vh 0.05vh, #000 0.1vh 0.1vh,
+  #000 0.05vh 0.1vh, #000 -0.1vh 0.1vh,
+  #000 -0.1vh 0.05vh, #000 -0.1vh -0.1vh,
+  #000 0.05vh -0.1vh, #000 0.1vh -0.1vh;
+
+  border-radius: 20px;
+  border-bottom: #333 3px solid;
+
+  &-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+
+  .replays__piece-prototype {
+    width: 6vh;
+    height: 6vh;
+    border-radius: 6vh;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin-right: 0.5vh;
+  }
+
+  .replays__player-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .replays__avatar {
+    width: 6vh;
+    height: 6vh;
+    min-width: 6vh;
+    border-radius: 6vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #fff;
+    border: #ff936f 3px solid;
+    color: #66a5ad;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5.5vh;
+    margin-right: 5%;
+  }
+
+  .replays__name {
+    font-size: 3vh;
+    white-space: nowrap;
+  }
+
+  .replays__time {
+    font-size: 5vh;
+    position: absolute;
+    right: 0;
+  }
+
+  .replays__crown {
+    width: 4vh;
+    height: 3vh;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: absolute;
+    left: 11vh;
+    top: -0.5vh;
+  }
+
+  .replays__cross {
+    width: 4vh;
+    height: 4vh;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-left: 1.5vh;
+  }
+}

@@ -77,7 +77,7 @@ export class DataBase {
     });
   }
 
-  addReplay(firstPlayer: PlayerWithMove, secondPlayer: PlayerWithMove, winner: PlayerDBObject) {
+  addReplay(firstPlayer: PlayerWithMove, secondPlayer: PlayerWithMove, winner: PlayerDBObject, time: string) {
     const transaction = this.dataBase?.transaction([ setting.dataBase.storeGamesName ], 'readwrite');
     if (!transaction) {
       throw Error('Data base not exist!');
@@ -88,6 +88,7 @@ export class DataBase {
       firstPlayer,
       secondPlayer,
       winner,
+      time,
     }
     store.put(replay);
 
@@ -113,7 +114,7 @@ export class DataBase {
       request.onsuccess = () => {
         const cursor = request.result;
         if (cursor) {
-          replays.push(cursor.value.player);
+          replays.push(cursor.value);
           cursor.continue();
         } else {
           resolve(replays);

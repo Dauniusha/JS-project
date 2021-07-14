@@ -33,6 +33,6 @@ export class PlayerStatistics extends BaseComponents {
   }
 
   getPlayerWithMoves(): PlayerWithMove {
-    return { player: this.player.getNameWithAvatar(), moves: this.moveTable.getAllMoves() };
+    return { player: this.player.getNameWithAvatar(), moves: this.moveTable.getAllMoves(), color: this.color };
   }
 }
