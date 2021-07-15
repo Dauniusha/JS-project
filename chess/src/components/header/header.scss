@@ -46,4 +46,20 @@ body {
         #000 0.12vh -0.12vh;
     }
   }
+
+  &-btns {
+    display: flex;
+    align-items: center;
+    width: 5vh;
+    justify-content: space-between;
+    
+    &__each {
+      width: 2vh;
+      height: 4vh;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      cursor: pointer;
+    }
+  }
 }

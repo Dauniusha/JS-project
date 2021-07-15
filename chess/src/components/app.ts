@@ -3,9 +3,11 @@ import { Footer } from "./footer/footer";
 import { Game } from "./game/game";
 import { Header } from "./header/header";
 import { Lobby } from "./lobby/lobby";
+import { ReplaysDBObject } from "./models/data-base/data-base-replays-object";
 import { Replays } from "./replays/replays";
 import { Router } from "./route/route";
 import { setting } from "./settings/setting";
+import { WatchReplay } from "./watch-replays/replays-watch";
 
 export class App {
   private header: Header;
@@ -18,9 +20,11 @@ export class App {
 
   private replays?: Replays;
 
+  private watchReplay?: WatchReplay;
+
   readonly router: Router;
 
-  private activePage?: Lobby | Game | Replays;
+  private activePage?: Lobby | Game | Replays | WatchReplay;
 
   constructor(private readonly rootElement: HTMLElement) {
     this.initDB();
@@ -41,6 +45,12 @@ export class App {
   }
 
   private initRoute() {
+    this.router.add({
+      pageName: 'watch-replays',
+      hash: 'Watch-replay',
+      needFoo: () => this.startWatchReplay(),
+    });
+
     this.router.add({
       pageName: 'lobby',
       hash: '#/Lobby',
@@ -91,6 +101,37 @@ export class App {
     this.replays = new Replays();
     this.activePage = this.replays;
     this.rootElement.insertBefore(this.replays.element, this.footer.element);
+  }
+
+  private async startWatchReplay() {
+    this.clearWindow();
+    const replay = await App.getReplay();
+    const btns = this.header.createReplayBtns();
+    this.initReplayBtnsListners(btns.previousBtn, btns.nextBtn);
+    this.watchReplay = new WatchReplay(replay);
+    this.activePage = this.watchReplay;
+    this.rootElement.insertBefore(this.watchReplay.element, this.footer.element);
+  }
+
+  private static async getReplay(): Promise<ReplaysDBObject> {
+    return new Promise( async (resolve) => {
+      const location = window.location.hash;
+      const locationToken = location.split('/');
+      const replayPosition = locationToken[ locationToken.length - 1 ];
+  
+      const allReplays = await storage.getReplays();
+      const replay = allReplays[Number(replayPosition)];
+      resolve(replay);
+    }); 
+  }
+
+  private initReplayBtnsListners(previousBtn: HTMLElement, nextBtn: HTMLElement) {
+    previousBtn.addEventListener('click', () => {
+      this.watchReplay?.makeMove(false);
+    });
+    nextBtn.addEventListener('click', () => {
+      this.watchReplay?.makeMove(true);
+    });
   }
 
   private clearWindow() {

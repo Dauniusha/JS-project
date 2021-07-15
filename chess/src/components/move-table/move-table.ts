@@ -18,8 +18,12 @@ export class MoveTable extends BaseComponents {
     this.element.appendChild(move.element);
   }
 
-  DBinit() {
-    ///
+  moveInit(moves: ClearMove[]) {
+    moves.forEach((move) => {
+      const moveRecord = new Move(move.fullName, move.startCell, move.endCell);
+      this.fullPieceName.push(moveRecord);
+      this.element.appendChild(moveRecord.element);
+    });
   }
 
   takeMove(i: number): Move {
@@ -33,4 +37,8 @@ export class MoveTable extends BaseComponents {
     });
     return clearMoves;
   }
+
+  getAllMovesElement(): Move[] {
+    return this.fullPieceName;
+  } 
  }

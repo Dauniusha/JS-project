@@ -10,7 +10,7 @@
     width: 50%;
     background-color: #66a5ad;
     border: #07575B 5px solid;
-    border-radius: 10px;
+    border-radius: 2vh;
     overflow-y: scroll;
     overflow-x: hidden;
     box-shadow: 2px 2px 20px #000;
@@ -21,7 +21,7 @@
     }
   
     &::-webkit-scrollbar-thumb {
-      border-radius: 5px;
+      border-radius: 2vh;
       background-color: #07575bbf;
     }
   }

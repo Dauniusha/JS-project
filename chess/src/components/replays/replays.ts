@@ -21,8 +21,10 @@ export class Replays extends BaseComponents {
 
   private async replaysInit() {
     const replaysData = await storage.getReplays();
-    this.replays = replaysData.map((data) => new Replay(data));
-    this.replays.forEach((replay) => {
+    let counter = 0;
+    replaysData.forEach((data) => {
+      const replay = new Replay(data, counter++);
+      this.replays.push(replay);
       this.container.appendChild(replay.element);
     });
   }

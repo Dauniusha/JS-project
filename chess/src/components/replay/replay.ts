@@ -6,8 +6,9 @@ import { setting } from "../settings/setting";
 import './replay.css';
 
 export class Replay extends BaseComponents {
-  constructor(data: ReplaysDBObject) {
-    super('div', [ setting.classNames.replays.replaysEach ]);
+  constructor(data: ReplaysDBObject, counter: number) {
+    super('a', [ setting.classNames.replays.replaysEach ]);
+    (<HTMLAnchorElement>this.element).href = `#/Replays/Watch-replay/${counter}`;
     this.element.title = 'Watch replay';
     
     const firstPlayerElement = Replay.createReplayPieceElement(data.firstPlayer);
@@ -69,7 +70,7 @@ export class Replay extends BaseComponents {
 
     const winnerElement = JSON.stringify(data.firstPlayer.player) === JSON.stringify(data.winner)
     ? firstPlayerElement : secondPlayerElement;
-    
+
     winnerElement.appendChild(crownElement);
   }
 

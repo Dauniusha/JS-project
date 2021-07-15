@@ -10,10 +10,14 @@ export class Player extends BaseComponents {
 
   private name: string | undefined;
 
-  constructor(writable: boolean, counter: number) {
+  constructor( casual?: { writable: boolean, counter: number }, replay?: { avatarURL: string, name: string }) {
     super('div', [setting.classNames.player.player]);
 
-    writable ? this.playerInit(counter) : this.getPlayer(counter);
+    if (casual) {
+      casual.writable ? this.playerInit(casual.counter) : this.getPlayer(casual.counter);
+    } else if (replay) {
+      this.createClearPlayer(replay.avatarURL, replay.name);
+    }
   }
 
   private async playerInit(counter: number) {
@@ -44,19 +48,23 @@ export class Player extends BaseComponents {
     [ players[counter].avatarURL, players[counter].name ] : 
     [ setting.playersInitStates.playerImgURL, setting.playersInitStates.players[counter] ];
 
+    this.createClearPlayer(this.avatarURL, this.name);
+  }
+
+  private createClearPlayer(avatarURL: string, name: string) {
     const avatar = document.createElement('div');
     avatar.classList.add(setting.classNames.player.gameAvatar);
-    if (this.avatarURL !== setting.playersInitStates.playerImgURL) {
-      avatar.style.backgroundImage = `url(${this.avatarURL})`;
+    if (avatarURL !== setting.playersInitStates.playerImgURL) {
+      avatar.style.backgroundImage = `url(${avatarURL})`;
     } else {
-      avatar.innerHTML = this.name[0];
+      avatar.innerHTML = name[0];
     }
     this.avatar = avatar;
     this.element.appendChild(avatar);
 
     const nameElement = document.createElement('div');
     nameElement.classList.add(setting.classNames.player.name);
-    nameElement.innerHTML = this.name;
+    nameElement.innerHTML = name;
     this.element.appendChild(nameElement);
   }
 

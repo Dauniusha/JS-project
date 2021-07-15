@@ -8,6 +8,8 @@ import { Queen } from '../chess-pieces/each-pieces/queen';
 import { Rook } from '../chess-pieces/each-pieces/rook';
 import { storage } from '../data-base/data-base-element';
 import { BaseComponents } from '../models/base-component';
+import { PlayerWithMove } from '../models/data-base/data-base-player-move';
+import { ReplaysDBObject } from '../models/data-base/data-base-replays-object';
 import { color } from '../models/game/color-interface';
 import { PlayerStatistics } from '../player-statistics/player-statistics';
 import { Popup } from '../popup/popup';
@@ -15,13 +17,13 @@ import { setting } from '../settings/setting';
 import './game.css';
 
 export class Game extends BaseComponents {
-  private readonly chessBoard: ChessBoard;
+  protected readonly chessBoard: ChessBoard;
 
   private possibleCells: HTMLElement[] = [];
 
-  private pieceActive?: Queen | King | Knight | Bishop | Pawn | Rook;
+  protected pieceActive?: Queen | King | Knight | Bishop | Pawn | Rook;
 
-  private isWhiteMove: boolean = true;
+  protected isWhiteMove: boolean = true;
 
   private checkPieces?: (Queen | King | Knight | Bishop | Pawn | Rook)[];
 
@@ -31,18 +33,28 @@ export class Game extends BaseComponents {
 
   private activePlayer?: PlayerStatistics;
 
-  constructor() {
+  constructor(replay?: ReplaysDBObject) {
     super('section', ['game']);
 
-    [ this.firstPlayer, this.secondPlayer ] = this.playerInit();
-    setTimeout(() => { // TODO: Не понимаю, почему он перед async функциями выполняется
-      this.addMoveHolder();
-    }, 200);
+    if (replay) {
+      [ this.firstPlayer, this.secondPlayer ] = this.replayPlayerInit(replay.firstPlayer, replay.secondPlayer);
+      setTimeout(() => { // TODO: Не понимаю, почему он перед async функциями выполняется
+        this.addMoveHolder();
+      }, 200);
 
-    this.chessBoard = new ChessBoard(setting.initialGameSetup);
-    this.element.insertBefore(this.chessBoard.element, this.secondPlayer.element);
+      this.chessBoard = new ChessBoard(setting.initialGameSetup);
+      this.element.insertBefore(this.chessBoard.element, this.secondPlayer.element);
+    } else {
+      [ this.firstPlayer, this.secondPlayer ] = this.playerInit();
+      setTimeout(() => { // TODO: Не понимаю, почему он перед async функциями выполняется
+        this.addMoveHolder();
+      }, 200);
 
-    this.chessBoardListnersInit();
+      this.chessBoard = new ChessBoard(setting.initialGameSetup);
+      this.element.insertBefore(this.chessBoard.element, this.secondPlayer.element);
+
+      this.chessBoardListnersInit();
+    }
   }
 
   private playerInit(color?: string): PlayerStatistics[] {
@@ -50,14 +62,24 @@ export class Game extends BaseComponents {
       color = colorFunctions.getRandomColor();
     }
     
-    const firstPlayer = new PlayerStatistics(color, 0);
+    const firstPlayer = new PlayerStatistics({ color: color, counter: 0 });
     this.element.appendChild(firstPlayer.element);
 
     const otherColor = colorFunctions.getReverseColor(color);
-    const secondPlayer = new PlayerStatistics(otherColor, 1);
+    const secondPlayer = new PlayerStatistics({ color: otherColor, counter: 1 });
     this.element.appendChild(secondPlayer.element);
 
     return [ firstPlayer, secondPlayer ];
+  }
+
+  private replayPlayerInit(firstPlayer: PlayerWithMove, secondPlayer: PlayerWithMove): PlayerStatistics[] {
+    const firstPlayerStatistics = new PlayerStatistics(undefined, { player: firstPlayer, counter: 0 });
+    this.element.appendChild(firstPlayerStatistics.element);
+
+    const secondPlayerStatistics = new PlayerStatistics(undefined, { player: secondPlayer, counter: 1 });
+    this.element.appendChild(secondPlayerStatistics.element);
+
+    return [ firstPlayerStatistics, secondPlayerStatistics ];
   }
 
   getChessBoard(): ChessBoard {
@@ -156,7 +178,7 @@ export class Game extends BaseComponents {
     }
   }
 
-  private moveBacklightAdd(newCell: string) {
+  protected moveBacklightAdd(newCell: string) {
     const cells = this.chessBoard.getAllCells();
     cells.forEach((cell) => {
       if (this.pieceActive?.cell === cell.id || newCell === cell.id) {
@@ -165,7 +187,7 @@ export class Game extends BaseComponents {
     });
   }
 
-  private moveBacklightRemove() {
+  protected moveBacklightRemove() {
     const cells = this.chessBoard.getAllCells();
     cells.forEach((cell) => {
       if (cell.classList.contains(setting.classNames.moveBacklight)) {
@@ -204,12 +226,12 @@ export class Game extends BaseComponents {
     }
   }
 
-  private createWinPopup() {
+  protected createWinPopup() {
     const winnerName = this.activePlayer?.getName();
     this.createPopup(`${winnerName} won!`);
   }
 
-  private createDrawPopup() {
+  protected createDrawPopup() {
     this.createPopup('Draw!');
   }
 
@@ -224,7 +246,7 @@ export class Game extends BaseComponents {
     }, { once: true });
   }
 
-  private checkBacklightAdd() {
+  protected checkBacklightAdd() {
     if (this.pieceActive) {
       this.checkPieces = this.chessBoard.getCheckPieces(this.pieceActive.color);
       this.checkPieces.forEach((piece) => {
@@ -233,7 +255,7 @@ export class Game extends BaseComponents {
     }
   }
 
-  private checkBacklightRemove() {
+  protected checkBacklightRemove() {
     if (this.checkPieces) {
       this.checkPieces.forEach((piece) => {
         piece.element.parentElement?.classList.remove(setting.classNames.checkBacklight);
@@ -263,6 +285,14 @@ export class Game extends BaseComponents {
     } else {
       whitePlayer?.getPlayer().getAvatar().classList.remove(setting.classNames.game.playerActive);
       blackPlayer?.getPlayer().getAvatar().classList.add(setting.classNames.game.playerActive);
+    }
+  }
+
+  getPlayerStatistics(): { firstPlayer: PlayerStatistics, secondPlayer: PlayerStatistics } {
+    if (this.firstPlayer && this.secondPlayer) {
+      return { firstPlayer: this.firstPlayer, secondPlayer: this.secondPlayer };
+    } else {
+      throw new Error('players does not exist!');
     }
   }
 }

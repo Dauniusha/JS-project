@@ -7,6 +7,8 @@
           align-items: center;
   position: relative;
   cursor: pointer;
+  color: #fff;
+  text-decoration: none;
   width: 95%;
   height: 8vh;
   margin: 0 auto;

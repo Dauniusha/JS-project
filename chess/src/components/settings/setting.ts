@@ -80,6 +80,8 @@ export let setting = {
       crown: 'replays__crown',
       cross: 'replays__cross',
       playerContainer: 'replays__player-container',
+      headerBtns: 'header-btns',
+      headerBtn: 'header-btns__each',
     },
   },
 
@@ -172,6 +174,9 @@ export let setting = {
     
     crown: './flags/crown.svg',
     cross: './flags/x.svg',
+
+    leftArrow: './header/chevron-left.svg',
+    rightArrow: './header/chevron-right.svg',
   },
 
   createFunctions: {

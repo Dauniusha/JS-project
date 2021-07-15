@@ -27,7 +27,7 @@ export class Lobby extends BaseComponents {
     this.element.appendChild(this.container);
 
     const firstContainer = this.playerBlockInit();
-    this.playerFirst = new Player(true, 0);
+    this.playerFirst = new Player({ writable: true, counter: 0 });
     this.replaysBtn = Lobby.replaysBtnInit();
     firstContainer.appendChild(this.playerFirst.element);
     firstContainer.appendChild(this.replaysBtn);
@@ -38,7 +38,7 @@ export class Lobby extends BaseComponents {
     this.initToogleListner();
 
     const secondContainer = this.playerBlockInit();
-    this.playerSecond = new Player(true, 1);
+    this.playerSecond = new Player({ writable: true, counter: 1 });
     this.settingBtn = Lobby.settingBtnInit();
     secondContainer.appendChild(this.playerSecond.element);
     secondContainer.appendChild(this.settingBtn);

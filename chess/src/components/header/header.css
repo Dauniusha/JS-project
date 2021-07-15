@@ -45,4 +45,26 @@ body {
   line-height: 4vh;
   text-shadow: #000 0.12vh 0.07vh, #000 0.12vh 0.12vh,  #fff 0.07vh 0.12vh, #000 -0.12vh 0.12vh, #000 -0.12vh 0.07vh, #000 -0.12vh -0.12vh, #000 0.07vh -0.12vh, #000 0.12vh -0.12vh;
 }
+
+.header-btns {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 5vh;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.header-btns__each {
+  width: 2vh;
+  height: 4vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
 /*# sourceMappingURL=header.css.map */

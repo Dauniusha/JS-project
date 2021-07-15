@@ -23,7 +23,7 @@ export class Router {
 
   private enumiration(hash: string) {
     for (let i = 0; i < this.routes.length; i++) {
-      if (this.routes[i].hash === hash) {
+      if (hash.indexOf(this.routes[i].hash) !== -1) {
         this.routes[i].needFoo();
         break;
       }
