@@ -24,7 +24,7 @@ export class ChessBoard extends BaseComponents {
   private allMoves: { cell: string, moves: string[] }[] = [];
 
   constructor(gameSetup: Setup[]) {
-    super('div', [setting.classNames.board]);
+    super('div', [setting.classNames.board, setting.classNames.game.noRotate]);
 
     this.cells = this.cellsInit();
 

@@ -20,6 +20,10 @@ export class Lobby extends BaseComponents {
 
   private readonly settingBtn: HTMLAnchorElement;
 
+  color?: string;
+
+  socket?: WebSocket;
+
   constructor() {
     super('section', [setting.classNames.lobby.lobby]);
 
@@ -82,7 +86,7 @@ export class Lobby extends BaseComponents {
 
     const gameModeBtn = document.createElement('div');
     gameModeBtn.classList.add(setting.classNames.lobby.menu.menu, setting.classNames.lobby.menu.gameMode);
-    gameModeBtn.dataset.mode = 'online'; ////
+    gameModeBtn.dataset.mode = 'online';
     gameModeBtn.innerHTML = `
       <div class="game-mode__text" id="online">Online</div>
       <div class="game-mode__text" id="offline">Offline</div>
@@ -107,10 +111,64 @@ export class Lobby extends BaseComponents {
   }
 
   private initStartListner() {
-    this.startGameBtn.addEventListener('click', () => {
-      storage.addPlayer(this.playerFirst.getNameWithAvatar(), 0);
-      storage.addPlayer(this.playerSecond.getNameWithAvatar(), 1);
-      /// 
+    this.startGameBtn.addEventListener('click', (event) => {
+      if (!(<Element>event.target).closest(`.${setting.classNames.lobby.menu.gameMode}`)) {
+        if (this.gameSwitcherBtn.dataset.mode === 'online') {
+          event.preventDefault();
+          this.initSocket();
+        } else {
+          storage.addPlayer(this.playerFirst.getNameWithAvatar(), 0);
+          storage.addPlayer(this.playerSecond.getNameWithAvatar(), 1);
+        }
+      }
     });
+  }
+
+  private initSocket() {
+    this.socket = new WebSocket(setting.serverURL);
+    this.socket.addEventListener('open', () => {
+      if (this.socket) {
+        this.socket.addEventListener('message', (event: MessageEvent<string>) => {
+          this.newMessage(event.data);
+        });
+      }
+    });
+  }
+
+  private newMessage(message: string) {
+    switch(message) {
+      case 'loading':
+        ///
+        break;
+      case 'connected':
+        this.socket?.send(`name ${this.playerFirst.getName()}`);
+        this.socket?.send(`avatar ${this.playerFirst.getAvatarURL()}`);
+        break;
+      case 'white':
+      case 'black':
+        this.color = message;
+        break;
+      default:
+        const keyValue = message.split(' ');
+
+        switch(keyValue[0]) {
+          case 'name':
+            this.playerSecond.setName(keyValue.splice(1).join(' '));
+            break;
+          case 'avatar':
+            this.playerSecond.setAvatar(keyValue[1]);
+            storage.addPlayer(this.playerFirst.getNameWithAvatar(), 0, this.color);
+            storage.addPlayer(this.playerSecond.getNameWithAvatar(), 1);
+            window.location.hash = '#/Game';
+            break;
+          default:
+            break;
+        }
+    }
+  }
+
+  resetColorAndSocket() {
+    this.color = undefined;
+    this.socket = undefined;
   }
 }

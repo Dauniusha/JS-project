@@ -144,6 +144,11 @@ body {
           transform: rotate(180deg);
 }
 
+.rotating .possible-clear-ceil::after {
+  -webkit-transform: translate3d(-50%, -50%, 0) rotate(-180deg);
+          transform: translate3d(-50%, -50%, 0) rotate(-180deg);
+}
+
 .rotating img {
   -webkit-transform: rotate(-180deg);
           transform: rotate(-180deg);

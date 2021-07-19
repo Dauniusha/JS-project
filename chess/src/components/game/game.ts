@@ -27,13 +27,13 @@ export class Game extends BaseComponents {
 
   private checkPieces?: (Queen | King | Knight | Bishop | Pawn | Rook)[];
 
-  private firstPlayer?: PlayerStatistics;
+  protected firstPlayer?: PlayerStatistics;
 
-  private secondPlayer?: PlayerStatistics;
+  protected secondPlayer?: PlayerStatistics;
 
   private activePlayer?: PlayerStatistics;
 
-  constructor(replay?: ReplaysDBObject) {
+  constructor(replay?: ReplaysDBObject, color?: string) {
     super('section', ['game']);
 
     if (replay) {
@@ -45,15 +45,13 @@ export class Game extends BaseComponents {
       this.chessBoard = new ChessBoard(setting.initialGameSetup);
       this.element.insertBefore(this.chessBoard.element, this.secondPlayer.element);
     } else {
-      [ this.firstPlayer, this.secondPlayer ] = this.playerInit();
+      [ this.firstPlayer, this.secondPlayer ] = this.playerInit(color);
       setTimeout(() => { // TODO: Не понимаю, почему он перед async функциями выполняется
         this.addMoveHolder();
       }, 200);
 
       this.chessBoard = new ChessBoard(setting.initialGameSetup);
       this.element.insertBefore(this.chessBoard.element, this.secondPlayer.element);
-
-      this.chessBoardListnersInit();
     }
   }
 
@@ -86,7 +84,7 @@ export class Game extends BaseComponents {
     return this.chessBoard;
   }
 
-  private chessBoardListnersInit() {
+  chessBoardListnersInit() {
     this.chessBoard.element.addEventListener('click', (elem) => {
       const pieceElem = (<Element>elem.target)?.closest('.' + setting.classNames.piece);
       const activeColor = this.isWhiteMove ? color.white : color.black;
@@ -115,7 +113,7 @@ export class Game extends BaseComponents {
     });
   }
 
-  private selectPiece(cellId: string) {
+  protected selectPiece(cellId: string) {
     this.possibleCellsBacklightRemove();
     this.pieceActive = this.chessBoard.selectPiece(cellId);
     this.possibleCellsBacklightAdd();
@@ -140,7 +138,7 @@ export class Game extends BaseComponents {
     });
   }
 
-  private possibleCellsBacklightRemove() {
+  protected possibleCellsBacklightRemove() {
     this.pieceActive?.element.parentElement?.classList.remove(setting.classNames.selectPieceBacklight);
     this.possibleCells.forEach((cell) => {
       cell.classList.remove(setting.classNames.possibleClearCell);
@@ -149,7 +147,7 @@ export class Game extends BaseComponents {
     this.possibleCells = [];
   }
 
-  private pieceMove(cellId: string) {
+  protected pieceMove(cellId: string) {
     if (this.pieceActive) {
       this.checkBacklightRemove();
       this.moveBacklightRemove();
@@ -160,7 +158,7 @@ export class Game extends BaseComponents {
       this.chessBoard.pieceMove(cellId, this.pieceActive);
 
       this.checkMateValidation(this.pieceActive.color);
-      // this.rotateChesseBoard();
+      // this.checkRotateChessBoard();
       this.pieceActive = undefined;
     }
   }
@@ -263,19 +261,18 @@ export class Game extends BaseComponents {
     }
   }
 
-  private rotateChesseBoard() {
+  private checkRotateChessBoard() {
     if (setting.isTwoPlayersOffline) {
-      if (this.chessBoard.element.classList.contains(setting.classNames.game.rotate)) {
-        this.chessBoard.element.classList.remove(setting.classNames.game.rotate);
-        this.chessBoard.element.classList.add(setting.classNames.game.noRotate);
-      } else {
-        this.chessBoard.element.classList.add(setting.classNames.game.rotate);
-        this.chessBoard.element.classList.remove(setting.classNames.game.noRotate);
-      }
+      this.rotateChessBoard();
     }
   }
 
-  private addMoveHolder() {
+  protected rotateChessBoard() {
+    this.chessBoard.element.classList.toggle(setting.classNames.game.rotate);
+    this.chessBoard.element.classList.toggle(setting.classNames.game.noRotate);
+  }
+
+  protected addMoveHolder() {
     const whitePlayer = this.firstPlayer?.getColor() === color.white ? this.firstPlayer : this.secondPlayer;
     const blackPlayer = this.firstPlayer?.getColor() === color.black ? this.firstPlayer : this.secondPlayer;
 

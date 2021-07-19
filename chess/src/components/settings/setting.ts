@@ -215,5 +215,7 @@ export let setting = {
   playersInitStates: {
     players: [ 'Player 1', 'Player 2' ],
     playerImgURL: '../../../avatar/Unknown.png',
-  }
+  },
+
+  serverURL: 'wss://ancient-oasis-48599.herokuapp.com',
 }

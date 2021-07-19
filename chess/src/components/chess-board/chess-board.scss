@@ -121,6 +121,10 @@ body {
   animation: 3s ease Rotate;
   transform: rotate(180deg);
 
+  .possible-clear-ceil::after {
+    transform: translate3d(-50%, -50%, 0) rotate(-180deg);
+  }
+
   img {
     transform: rotate(-180deg);
   }

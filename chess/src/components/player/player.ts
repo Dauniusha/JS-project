@@ -6,6 +6,8 @@ import { setting } from "../settings/setting";
 export class Player extends BaseComponents {
   private avatar: HTMLInputElement | HTMLElement | undefined;
 
+  private nameElement: HTMLInputElement | HTMLElement | undefined;
+
   private avatarURL: string | undefined;
 
   private name: string | undefined;
@@ -38,6 +40,7 @@ export class Player extends BaseComponents {
     nameElement.classList.add(setting.classNames.player.name);
     nameElement.type = 'text';
     nameElement.value = this.name;
+    this.nameElement = nameElement;
     this.element.appendChild(nameElement);
     this.input(nameElement);
   }
@@ -65,6 +68,7 @@ export class Player extends BaseComponents {
     const nameElement = document.createElement('div');
     nameElement.classList.add(setting.classNames.player.name);
     nameElement.innerHTML = name;
+    this.nameElement = nameElement;
     this.element.appendChild(nameElement);
   }
 
@@ -111,5 +115,30 @@ export class Player extends BaseComponents {
       return this.avatar;
     }
     throw new Error('Avatar does not exist!');
+  }
+
+  getAvatarURL(): string {
+    if (this.avatarURL) {
+      return this.avatarURL;
+    }
+    throw new Error('Avatar URL does not exist!');
+  }
+
+  setAvatar(avatar: string) {
+    this.avatarURL = avatar;
+    if (this.avatar) {
+      this.avatar.style.backgroundImage = `url(${avatar})`;
+    }
+  }
+
+  setName(name: string) {
+    this.name = name;
+    if (this.nameElement) {
+      if (this.nameElement instanceof HTMLInputElement) {
+        this.nameElement.value = name;
+      } else {
+        this.nameElement.innerHTML = name;
+      }
+    }
   }
 }

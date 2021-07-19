@@ -1,7 +1,6 @@
 import { Game } from "../game/game";
 import { ReplaysDBObject } from "../models/data-base/data-base-replays-object";
 import { color } from "../models/game/color-interface";
-import { Move } from "../move/move";
 import { PlayerStatistics } from "../player-statistics/player-statistics";
 
 export class WatchReplay extends Game {

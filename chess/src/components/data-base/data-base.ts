@@ -29,7 +29,7 @@ export class DataBase {
     });
   }
 
-  addPlayer(player: PlayerDBObject, counter: number) {
+  addPlayer(player: PlayerDBObject, counter: number, color?: string) {
     const transaction = this.dataBase?.transaction([ setting.dataBase.storeUserName ], 'readwrite');
     if (!transaction) {
       throw Error('Data base not exist!');
@@ -39,6 +39,7 @@ export class DataBase {
     const playerDB = {
       player,
       counter,
+      color,
     }
     store.put(playerDB);
 

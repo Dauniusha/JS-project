@@ -4,6 +4,7 @@ import { Game } from "./game/game";
 import { Header } from "./header/header";
 import { Lobby } from "./lobby/lobby";
 import { ReplaysDBObject } from "./models/data-base/data-base-replays-object";
+import { OnlineGame } from "./online-game/online-game";
 import { Replays } from "./replays/replays";
 import { Router } from "./route/route";
 import { setting } from "./settings/setting";
@@ -16,7 +17,7 @@ export class App {
 
   private lobby?: Lobby;
 
-  private game?: Game;
+  private game?: Game | OnlineGame;
 
   private replays?: Replays;
 
@@ -82,6 +83,7 @@ export class App {
       this.lobby = new Lobby();
     }
     this.activePage = this.lobby;
+    this.lobby.resetColorAndSocket();
     this.rootElement.insertBefore(this.lobby.element, this.footer.element);
   }
 
@@ -91,7 +93,13 @@ export class App {
 
   private startGamePage() {
     this.clearWindow();
-    this.game = new Game();
+    if (this.lobby?.socket && this.lobby.color) {
+      this.game = new OnlineGame(this.lobby.color, this.lobby.socket);
+      
+    } else {
+      this.game = new Game();
+      this.game.chessBoardListnersInit();
+    }
     this.activePage = this.game;
     this.rootElement.insertBefore(this.game.element, this.footer.element);
   }
