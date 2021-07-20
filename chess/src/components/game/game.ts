@@ -99,7 +99,7 @@ export class Game extends BaseComponents {
           this.isWhiteMove = !this.isWhiteMove;
           this.addMoveHolder();
         }
-      } else if (pieceElem /* && pieceElem.getAttribute(setting.classNames.dataPiece)?.indexOf(activeColor) !== -1 */) {
+      } else if (pieceElem && pieceElem.getAttribute(setting.classNames.dataPiece)?.indexOf(activeColor) !== -1) {
           const cell = (<Element>elem.target)?.closest('.' + setting.classNames.cell);
           if (cell && !(this.pieceActive?.cell === cell.id)) {
             this.selectPiece(cell.id);
