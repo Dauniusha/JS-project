@@ -7,8 +7,8 @@ export class Rook extends BasePiece {
   isFirstMove = true;
 
   constructor(position: string, color: string) {
-    super(position, color);
-    const pieceType = color + 'Rook';
+    super(position, color, 'Rook');
+    const pieceType = color + this.name;
     this.element.setAttribute(setting.classNames.dataPiece, pieceType);
     (<HTMLImageElement> this.element).src = setting.imgNames[<keyof typeof setting.imgNames> pieceType];
   }

@@ -167,7 +167,7 @@ export class Game extends BaseComponents {
     if (this.pieceActive) {
       this.activePlayer = this.pieceActive.color === this.firstPlayer?.getColor() ? this.firstPlayer : this.secondPlayer;
       this.activePlayer?.moveTable.addMove(
-        this.pieceActive.constructor.name,
+        this.pieceActive.name,
         this.activePlayer.getColor(),
         this.pieceActive.cell,
         newCell);

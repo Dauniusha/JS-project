@@ -4,9 +4,9 @@ import { setting } from "../../settings/setting";
 import { BasePiece } from "../base-piece";
 
 export class Bishop extends BasePiece {
-  constructor(position: string, color: string) {
-    super(position, color);
-    const pieceType = color + 'Bishop';
+  constructor(position: string, color: string,) {
+    super(position, color, 'Bishop');
+    const pieceType = color + this.name;
     this.element.setAttribute(setting.classNames.dataPiece, pieceType);
     (<HTMLImageElement> this.element).src = setting.imgNames[<keyof typeof setting.imgNames> pieceType];
   }

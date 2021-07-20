@@ -12,6 +12,7 @@ export class MoveTable extends BaseComponents {
   }
 
   addMove(pieceName: string, color: string, startcell: string, endCell: string /* time: string */) {
+    console.log(pieceName);
     const fullPieceName = color  + pieceName;
     const move = new Move(fullPieceName, startcell, endCell);
     this.fullPieceName.push(move);

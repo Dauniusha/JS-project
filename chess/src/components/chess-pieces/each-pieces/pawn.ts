@@ -14,8 +14,8 @@ export class Pawn extends BasePiece {
   canBeCapturedEnPassant: boolean = false;
 
   constructor(position: string, pieceColor: string) {
-    super(position, pieceColor);
-    const pieceType = pieceColor + 'Pawn';
+    super(position, pieceColor, 'Pawn');
+    const pieceType = pieceColor + this.name;
     this.element.setAttribute(setting.classNames.dataPiece, pieceType);
     (<HTMLImageElement> this.element).src = setting.imgNames[<keyof typeof setting.imgNames> pieceType];
 

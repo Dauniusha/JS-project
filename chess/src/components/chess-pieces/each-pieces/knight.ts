@@ -7,8 +7,8 @@ import { BasePiece } from "../base-piece";
 
 export class Knight extends BasePiece {
   constructor(position: string, color: string) {
-    super(position, color);
-    const pieceType = color + 'Knight';
+    super(position, color, 'Knight');
+    const pieceType = color + this.name;
     this.element.setAttribute(setting.classNames.dataPiece, pieceType);
     (<HTMLImageElement> this.element).src = setting.imgNames[<keyof typeof setting.imgNames> pieceType];
   }

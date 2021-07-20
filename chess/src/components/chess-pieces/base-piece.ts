@@ -12,7 +12,7 @@ export class BasePiece extends BaseComponents {
 
   possibleMoves: string[] = [];
 
-  constructor(position: string, color: string) {
+  constructor(position: string, color: string, readonly name: string) {
     super('img', [setting.classNames.piece]);
     this.cell = position;
     this.color = color;
