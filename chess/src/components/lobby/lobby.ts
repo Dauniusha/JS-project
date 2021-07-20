@@ -14,7 +14,9 @@ export class Lobby extends BaseComponents {
 
   private readonly replaysBtn: HTMLAnchorElement;
 
-  private readonly startGameBtn: HTMLAnchorElement;
+  private readonly startGameBtn: HTMLElement;
+
+  private readonly startTextElement: HTMLAnchorElement;
 
   private readonly gameSwitcherBtn: HTMLElement;
 
@@ -36,7 +38,7 @@ export class Lobby extends BaseComponents {
     firstContainer.appendChild(this.playerFirst.element);
     firstContainer.appendChild(this.replaysBtn);
 
-    [ this.startGameBtn, this.gameSwitcherBtn ] = Lobby.startBtnAndSwicherInit();
+    [ this.startGameBtn, this.startTextElement, this.gameSwitcherBtn ] = Lobby.startBtnAndSwicherInit();
     this.container.appendChild(this.startGameBtn);
     this.initStartListner();
     this.initToogleListner();
@@ -76,13 +78,13 @@ export class Lobby extends BaseComponents {
     return btn;
   }
 
-  private static startBtnAndSwicherInit(): [ HTMLAnchorElement, HTMLElement ] { // TODO: Выгрузка режима из БД
-    const startBtn = document.createElement('a');
-    startBtn.href = '#/Game';
-    startBtn.classList.add(setting.classNames.lobby.menu.menu, setting.classNames.lobby.menu.start);
-    startBtn.innerHTML = `
-      <h2 class="${setting.classNames.lobby.menu.startText}">Start</h2>
-    `;
+  private static startBtnAndSwicherInit(): [ HTMLElement, HTMLAnchorElement, HTMLElement ] { // TODO: Выгрузка режима из БД
+    const startBtn = createElement([setting.classNames.lobby.menu.start]);
+
+    const startText = document.createElement('a');
+    startText.href = '#/Game';
+    startText.classList.add(setting.classNames.lobby.menu.menu, setting.classNames.lobby.menu.startText);
+    startText.innerHTML = 'Start';
 
     const gameModeBtn = document.createElement('div');
     gameModeBtn.classList.add(setting.classNames.lobby.menu.menu, setting.classNames.lobby.menu.gameMode);
@@ -92,34 +94,39 @@ export class Lobby extends BaseComponents {
       <div class="game-mode__text" id="offline">Offline</div>
     `;
 
+    startBtn.appendChild(startText);
     startBtn.appendChild(gameModeBtn);
     
-    return [ startBtn, gameModeBtn ];
+    return [ startBtn, startText, gameModeBtn ];
   }
 
   private initToogleListner() {
-    this.gameSwitcherBtn.addEventListener('click', (event) => {
-      event.preventDefault();
+    this.gameSwitcherBtn.addEventListener('click', () => {
       let needDatasetName = 'online';
       if (this.gameSwitcherBtn.dataset.mode === 'online') {
+        this.resetOnlineSearch();
         needDatasetName = 'offline';
       }
 
       this.startGameBtn.dataset.mode = 'start-' + needDatasetName;
       this.gameSwitcherBtn.dataset.mode = needDatasetName;
+
     });
   }
 
+  private resetOnlineSearch() {
+    this.removeBlockBtns();
+    this.resetColorAndSocket();
+  }
+
   private initStartListner() {
-    this.startGameBtn.addEventListener('click', (event) => {
-      if (!(<Element>event.target).closest(`.${setting.classNames.lobby.menu.gameMode}`)) {
-        if (this.gameSwitcherBtn.dataset.mode === 'online') {
-          event.preventDefault();
-          this.initSocket();
-        } else {
-          storage.addPlayer(this.playerFirst.getNameWithAvatar(), 0);
-          storage.addPlayer(this.playerSecond.getNameWithAvatar(), 1);
-        }
+    this.startTextElement.addEventListener('click', (event) => {
+      if (this.gameSwitcherBtn.dataset.mode === 'online') {
+        event.preventDefault();
+        this.initSocket();
+      } else {
+        storage.addPlayer(this.playerFirst.getNameWithAvatar(), 0);
+        storage.addPlayer(this.playerSecond.getNameWithAvatar(), 1);
       }
     });
   }
@@ -128,7 +135,7 @@ export class Lobby extends BaseComponents {
     this.socket = new WebSocket(setting.serverURL);
     this.socket.addEventListener('open', () => {
       if (this.socket) {
-        this.socket.addEventListener('message', (event: MessageEvent<string>) => {
+        this.socket.addEventListener('message', (event: MessageEvent<any>) => {
           this.newMessage(event.data);
         });
       }
@@ -138,7 +145,7 @@ export class Lobby extends BaseComponents {
   private newMessage(message: string) {
     switch(message) {
       case 'loading':
-        ///
+        this.blockBtns();
         break;
       case 'connected':
         this.socket?.send(`name ${this.playerFirst.getName()}`);
@@ -169,6 +176,17 @@ export class Lobby extends BaseComponents {
 
   resetColorAndSocket() {
     this.color = undefined;
+    this.socket?.close();
     this.socket = undefined;
+  }
+
+  private blockBtns() {
+    this.startTextElement.classList.add(setting.classNames.disable);
+    this.playerSecond.element.classList.add(setting.classNames.disable);
+  }
+
+  private removeBlockBtns() {
+    this.startTextElement.classList.remove(setting.classNames.disable);
+    this.playerSecond.element.classList.remove(setting.classNames.disable);
   }
 }

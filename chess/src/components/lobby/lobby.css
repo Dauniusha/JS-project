@@ -125,6 +125,15 @@
 }
 
 .lobby .menu-start {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   width: 45vh;
   height: 45vh;
   border-radius: 45vh;
@@ -140,6 +149,10 @@
 
 .lobby .menu-start__text {
   position: absolute;
+  width: 45vh;
+  height: 45vh;
+  border-radius: 45vh;
+  line-height: 45vh;
   font-style: normal;
   font-size: 15vh;
   -webkit-transform: rotate(-45deg);
@@ -271,5 +284,10 @@
   border: #07575B 3px solid;
   border-radius: 5px;
   text-shadow: #000 0.1vh 0.05vh, #000 0.1vh 0.1vh,  #000 0.05vh 0.1vh, #000 -0.1vh 0.1vh, #000 -0.1vh 0.05vh, #000 -0.1vh -0.1vh, #000 0.05vh -0.1vh, #000 0.1vh -0.1vh;
+}
+
+.disable {
+  pointer-events: none;
+  opacity: 0.5;
 }
 /*# sourceMappingURL=lobby.css.map */

@@ -70,7 +70,11 @@ export class WatchReplay extends Game {
 
     if (isCheck && !defendersCanMove) {
       this.checkBacklightAdd();
-      this.createWinPopup();
+      if (this.activePlayer) {
+        this.createWinPopup(this.activePlayer?.getName());
+      } else {
+        throw new Error('Active player does not exist!');
+      }
     } else if (isCheck) {
       this.checkBacklightAdd();
       console.log('check');

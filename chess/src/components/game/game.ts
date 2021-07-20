@@ -31,7 +31,7 @@ export class Game extends BaseComponents {
 
   protected secondPlayer?: PlayerStatistics;
 
-  private activePlayer?: PlayerStatistics;
+  protected activePlayer?: PlayerStatistics;
 
   constructor(replay?: ReplaysDBObject, color?: string) {
     super('section', ['game']);
@@ -201,17 +201,24 @@ export class Game extends BaseComponents {
     if (isCheck && !defendersCanMove) {
       // Do some logic for check-mate
       this.checkBacklightAdd();
-      this.createWinPopup();
-      this.createReplay();
+      this.createEndGame(true, this.activePlayer?.getName());
     } else if (isCheck) {
       // Do some logic for check
       this.checkBacklightAdd();
       console.log('check');
     } else if (!defendersCanMove) {
       // Do some logic for stalemate
-      this.createDrawPopup();
-      this.createReplay();
+      this.createEndGame(false);
     }
+  }
+
+  protected createEndGame(isWin: boolean, name: string = '') {
+    if (isWin) {
+      this.createWinPopup(name);
+    } else {
+      this.createDrawPopup();
+    }
+    this.createReplay()
   }
 
   private createReplay() {
@@ -224,9 +231,8 @@ export class Game extends BaseComponents {
     }
   }
 
-  protected createWinPopup() {
-    const winnerName = this.activePlayer?.getName();
-    this.createPopup(`${winnerName} won!`);
+  protected createWinPopup(name: string) {
+    this.createPopup(`${name} won!`);
   }
 
   protected createDrawPopup() {

@@ -99,6 +99,9 @@
   }
 
   .menu-start {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 45vh;
     height: 45vh;
     border-radius: 45vh;
@@ -110,6 +113,10 @@
 
     &__text {
       position: absolute;
+      width: 45vh;
+      height: 45vh;
+      border-radius: 45vh;
+      line-height: 45vh;
       font-style: normal;
       font-size: 15vh;
       transform: rotate(-45deg);
@@ -249,4 +256,9 @@
     #000 0.05vh -0.1vh,
     #000 0.1vh -0.1vh;
   }
+}
+
+.disable {
+  pointer-events: none;
+  opacity: 0.5;
 }

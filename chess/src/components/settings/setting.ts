@@ -83,6 +83,8 @@ export let setting = {
       headerBtns: 'header-btns',
       headerBtn: 'header-btns__each',
     },
+    disable: 'disable',
+    enable: 'enable',
   },
 
   initialGameSetup: [

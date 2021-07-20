@@ -20,15 +20,20 @@ export class OnlineGame extends Game {
     this.socket.addEventListener('message', (event: MessageEvent<string>) => {
       this.makeEnemyOnlineMove(event.data);
     });
+
+    this.socket.addEventListener('close', () => {
+      this.createEndGame(true, this.secondPlayer?.getName());
+    });
   }
 
   private makeEnemyOnlineMove(message: string) {
-    console.log(message);
+    if (message === 'disconnected') {
+      this.createEndGame(true, this.firstPlayer?.getName());
+      return;
+    }
+
     const [ startCell, endCell ] = MessageReader.readMessage(message);
     this.pieceActive = this.chessBoard.selectPiece(startCell);
-
-    const pieceName = this.pieceActive.constructor.name;
-    const pieceColor = this.pieceActive.color;
 
     this.pieceMove(endCell);
     this.isWhiteMove = !this.isWhiteMove;
