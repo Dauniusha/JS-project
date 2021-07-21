@@ -7,6 +7,10 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
@@ -96,5 +100,31 @@
 
 .popup #refuse {
   right: 20vh;
+}
+
+.popup .choose-piece {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  width: 90vh;
+}
+
+.popup .choose-piece__each {
+  width: 20vh;
+  height: 20vh;
+  border-radius: 10vh;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.popup .choose-piece__each:hover {
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
 }
 /*# sourceMappingURL=popup.css.map */

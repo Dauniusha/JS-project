@@ -117,11 +117,6 @@ export class Lobby extends BaseComponents {
     });
   }
 
-  private resetOnlineSearch() {
-    this.removeBlockBtns();
-    this.resetColorAndSocket();
-  }
-
   private initStartListner() {
     this.startTextElement.addEventListener('click', (event) => {
       if (this.gameSwitcherBtn.dataset.mode === 'online') {
@@ -197,12 +192,18 @@ export class Lobby extends BaseComponents {
     this.playerSecond.element.appendChild(this.loadingElement);
   }
 
+  resetOnlineSearch() {
+    this.hideLoadingScreen();
+    this.removeBlockBtns();
+    this.resetColorAndSocket();
+  }
+
   private hideLoadingScreen() {
     this.loadingElement?.remove();
     this.loadingElement = undefined;
   }
 
-  resetColorAndSocket() {
+  private resetColorAndSocket() {
     this.color = undefined;
     this.socket?.close();
     this.socket = undefined;

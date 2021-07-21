@@ -1,4 +1,6 @@
+import { cellNameToCellPosition } from '../../shared/cell-name-to-cell-position';
 import { colorFunctions } from '../../shared/color';
+import { createElement } from '../../shared/create-element';
 import { ChessBoard } from '../chess-board/chess-board';
 import { Bishop } from '../chess-pieces/each-pieces/bishop';
 import { King } from '../chess-pieces/each-pieces/king';
@@ -97,9 +99,7 @@ export class Game extends BaseComponents {
       ) {
         const cell = (<Element>elem.target)?.closest('.' + setting.classNames.cell);
         if (cell) {
-          this.pieceMove(cell.id);
-          this.isWhiteMove = !this.isWhiteMove;
-          this.addMoveHolder();
+          this.completeMove(cell.id);
         }
       } else if (pieceElem && pieceElem.getAttribute(setting.classNames.dataPiece)?.indexOf(activeColor) !== -1) {
           const cell = (<Element>elem.target)?.closest('.' + setting.classNames.cell);
@@ -148,6 +148,19 @@ export class Game extends BaseComponents {
     this.possibleCells = [];
   }
 
+  private completeMove(cellId: string) {
+    if (this.pieceActive) {    
+      this.pieceMove(cellId);
+
+      if (this.pieceActive instanceof Pawn && (this.pieceActive.cell.indexOf('8') !== -1 || this.pieceActive.cell.indexOf('1') !== -1)) {
+        this.initPawnTransformation(this.pieceActive);
+      } else {
+        this.removeCancelMoveAndCheckValidation(this.pieceActive.color);
+      }
+      // this.checkRotateChessBoard();
+    }
+  }
+
   protected pieceMove(cellId: string) {
     if (this.pieceActive) {
       this.checkBacklightRemove();
@@ -157,11 +170,44 @@ export class Game extends BaseComponents {
       this.moveBacklightAdd(cellId);
       this.takeActivePlayer(cellId);
       this.chessBoard.pieceMove(cellId, this.pieceActive);
-
-      this.checkMateValidation(this.pieceActive.color);
-      // this.checkRotateChessBoard();
-      this.pieceActive = undefined;
     }
+  }
+
+  private initPawnTransformation(piece: Pawn) {
+    const popup = this.createChoosePiecePopup(piece.color);
+    popup.showPopup();
+    popup.element.addEventListener('click', (event) => {
+        if (event.target instanceof HTMLImageElement) {
+          const fullName = piece.color + event.target.alt;
+          this.replaceTransormPiece(piece, fullName);
+          Game.removePopup(popup);
+          this.removeCancelMoveAndCheckValidation(piece.color);
+        }
+    });
+  }
+
+  protected replaceTransormPiece(piece: Pawn, fullName: string) {
+    for (let i = 0; i < setting.gameSetup.length; i++) {
+      if (setting.gameSetup[i].cell === piece.cell) {
+        setting.gameSetup[i].piece = fullName;
+        break;
+      }
+    }
+
+    const newPiece = setting.createFunctions[<keyof typeof setting.createFunctions> fullName](piece.cell);
+    piece.element.remove();
+    const piecePosition = cellNameToCellPosition(piece.cell);
+    this.chessBoard.getAllCells()[piecePosition].appendChild(newPiece.element);
+    this.chessBoard.pieces.splice(this.chessBoard.pieces.indexOf(piece), 1, newPiece);
+  }
+
+  protected removeCancelMoveAndCheckValidation(color: string) {
+    this.chessBoard.removeCloseMove();
+    this.checkMateValidation(color);
+
+    this.pieceActive = undefined;
+    this.isWhiteMove = !this.isWhiteMove;
+    this.addMoveHolder();
   }
 
   private takeActivePlayer(newCell: string) {
@@ -195,7 +241,7 @@ export class Game extends BaseComponents {
     });
   }
 
-  private checkMateValidation(movedPieceColor: string) {
+  protected checkMateValidation(movedPieceColor: string) {
     const isCheck = this.chessBoard.checkValidation(movedPieceColor);
     const defendersCanMove = this.chessBoard.movePossibilityValidation(movedPieceColor);
 
@@ -244,17 +290,18 @@ export class Game extends BaseComponents {
 
   private createPopup(text: string) {
     const popup = new Popup();
+    popup.btnsInit();
     popup.text.innerHTML = text;
     this.element.parentElement?.appendChild(popup.element);
     popup.showPopup();
-    popup.element.addEventListener('click', async () => {
-      await popup.closePopup();
-      popup.element.remove();
+    popup.element.addEventListener('click', () => {
+      Game.removePopup(popup);
     }, { once: true });
   }
 
   protected static createConfirmDrawPopup(): Popup {
-    const popup = new Popup(true);
+    const popup = new Popup();
+    popup.element.id = 'confirm-popup';
     popup.text.innerHTML = 'The opponent offers a draw';
     return popup;
   }
@@ -333,5 +380,27 @@ export class Game extends BaseComponents {
         this.isEndGame = true;
       }
     }, { once: true });
+  }
+
+  protected createChoosePiecePopup(color: string): Popup {
+    const popup = new Popup();
+    popup.text.innerHTML = `Choose new piece`;
+
+    const pieceContainer = createElement(['choose-piece']);
+    pieceContainer.innerHTML = `
+    <img class="choose-piece__each" src="./chess/${color}-queen.svg" alt="Queen">
+    <img class="choose-piece__each" src="./chess/${color}-rook.svg" alt="Rook">
+    <img class="choose-piece__each" src="./chess/${color}-knight.svg" alt="Knight">
+    <img class="choose-piece__each" src="./chess/${color}-bishop.svg" alt="Bishop">
+    `;
+    popup.element.appendChild(pieceContainer);
+    this.element.parentElement?.appendChild(popup.element);
+    
+    return popup;
+  }
+
+  protected static async removePopup(popup: Popup) {
+    await popup.closePopup();
+    popup.element.remove();
   }
 }

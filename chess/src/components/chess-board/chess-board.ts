@@ -19,7 +19,7 @@ import { colorFunctions } from '../../shared/color';
 export class ChessBoard extends BaseComponents {
   private readonly cells: HTMLElement[];
 
-  private pieces: (Queen | King | Knight | Bishop | Pawn | Rook)[] = []; // TODO: Не понимаю, как сделать через полиморфизм, все компоненты наследуются от одного родителя и все имеют одинаковый перегруженный метод
+  pieces: (Queen | King | Knight | Bishop | Pawn | Rook)[] = []; // TODO: Не понимаю, как сделать через полиморфизм, все компоненты наследуются от одного родителя и все имеют одинаковый перегруженный метод
 
   private allMoves: { cell: string, moves: string[] }[] = [];
 
@@ -258,7 +258,9 @@ export class ChessBoard extends BaseComponents {
     ChessBoard.updateGameSetup(cell, piece);
 
     piece.cell = cell;
-    
+  }
+
+  removeCloseMove() {
     this.allPossibleMoveDetermination();
 
     this.removeMovesForСheck(color.white);

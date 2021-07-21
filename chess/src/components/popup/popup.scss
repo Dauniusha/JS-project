@@ -5,6 +5,7 @@
   top: 0;
   left: 0;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   background: rgba(0, 0, 0, 0.75);
@@ -93,5 +94,23 @@
 
   #refuse {
     right: 20vh;
+  }
+
+  .choose-piece {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 90vh;
+
+    &__each {
+      width: 20vh;
+      height: 20vh;
+      border-radius: 10vh;
+      object-fit: cover;
+
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
   }
 }

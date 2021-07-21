@@ -8,17 +8,12 @@ export class Popup extends BaseComponents {
 
   readonly text: HTMLParagraphElement;
 
-  constructor(isConfirm: boolean = false) {
+  constructor() {
     super('div', ['popup', setting.classNames.popups.closeClass]);
     const popUpInner = new BaseComponents('div', ['popup__inner']);
     this.popUp = new BaseComponents('div', ['popup__container']);
     popUpInner.element.appendChild(this.popUp.element);
     this.text = this.popupTextInit();
-    if (!isConfirm) {
-      this.btnsInit();
-    } else {
-      popUpInner.element.id = 'confirm-popup';
-    }
     this.element.appendChild(popUpInner.element);
   }
 
@@ -33,7 +28,7 @@ export class Popup extends BaseComponents {
     });
   }
 
-  private btnsInit() {
+  btnsInit() {
     const toLobbyBtn = document.createElement('a');
     toLobbyBtn.innerHTML = 'To lobby';
     toLobbyBtn.href = '#/Lobby';

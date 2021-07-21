@@ -82,14 +82,15 @@ export class App {
     this.clearWindow();
     if (!this.lobby) {
       this.lobby = new Lobby();
+    } else {
+      this.lobby.resetOnlineSearch();
     }
     this.activePage = this.lobby;
-    this.lobby.resetColorAndSocket();
     this.rootElement.insertBefore(this.lobby.element, this.footer.element);
   }
 
   private startSettingPage() {
-
+    
   }
 
   private startGamePage() {
@@ -170,6 +171,9 @@ export class App {
   }
 
   private clearWindow() {
+    if (this.game instanceof OnlineGame) {
+      this.game.offSocket();
+    }
     this.activePage?.element.remove();
   }
 }
