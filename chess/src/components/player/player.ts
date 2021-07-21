@@ -4,13 +4,13 @@ import { PlayerDBObject } from "../models/data-base/data-base-player-object";
 import { setting } from "../settings/setting";
 
 export class Player extends BaseComponents {
-  private avatar: HTMLInputElement | HTMLElement | undefined;
+  private avatar?: HTMLInputElement | HTMLElement;
 
-  private nameElement: HTMLInputElement | HTMLElement | undefined;
+  private nameElement?: HTMLInputElement | HTMLElement;
 
-  private avatarURL: string | undefined;
+  private avatarURL?: string;
 
-  private name: string | undefined;
+  private name?: string;
 
   constructor( casual?: { writable: boolean, counter: number }, replay?: { avatarURL: string, name: string }) {
     super('div', [setting.classNames.player.player]);
@@ -100,6 +100,13 @@ export class Player extends BaseComponents {
     } else {
       throw new Error('Name does not exist!');
     }
+  }
+
+  getNameElement(): HTMLInputElement | HTMLElement {
+    if (this.nameElement) {
+      return this.nameElement;
+    }
+    throw new Error('Name element does not exist!');
   }
 
   getNameWithAvatar(): PlayerDBObject {

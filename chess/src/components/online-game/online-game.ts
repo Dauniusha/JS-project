@@ -6,8 +6,6 @@ import { setting } from "../settings/setting";
 export class OnlineGame extends Game {
   private readonly color: string;
 
-  private isEndGame: boolean = false;
-
   constructor(color: string, private socket: WebSocket) {
     super(undefined, color);
     if (color === 'black') {
@@ -51,7 +49,7 @@ export class OnlineGame extends Game {
   private confirmDrawPopup() {
     const popup = Game.createConfirmDrawPopup();
     popup.confirmPopupBtns();
-    this.element.appendChild(popup.element);
+    this.element.parentElement?.appendChild(popup.element);
     popup.showPopup();
     popup.element.addEventListener('click', async (event) => {
       await popup.closePopup();

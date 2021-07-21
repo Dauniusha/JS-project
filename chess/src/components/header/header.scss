@@ -70,14 +70,14 @@ body {
 
   &-game-btns {
     height: 6vh;
-    width: 44vh;
+    width: 46vh;
     display: flex;
     align-items: center;
     justify-content: space-between;
 
     &__each {
       height: 5vh;
-      width: 20vh;
+      width: 21vh;
       font-size: 2.2vh;
       letter-spacing: 1.5px;
       text-transform: uppercase;
@@ -108,5 +108,10 @@ body {
     #draw {
       background: #ff936f;
     }
+  }
+
+  .disable {
+    pointer-events: none;
+    opacity: 0.5;
   }
 }

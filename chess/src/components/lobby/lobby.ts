@@ -22,6 +22,8 @@ export class Lobby extends BaseComponents {
 
   private readonly settingBtn: HTMLAnchorElement;
 
+  private loadingElement?: HTMLElement;
+
   color?: string;
 
   socket?: WebSocket;
@@ -105,6 +107,7 @@ export class Lobby extends BaseComponents {
       let needDatasetName = 'online';
       if (this.gameSwitcherBtn.dataset.mode === 'online') {
         this.resetOnlineSearch();
+        this.hideLoadingScreen();
         needDatasetName = 'offline';
       }
 
@@ -124,6 +127,7 @@ export class Lobby extends BaseComponents {
       if (this.gameSwitcherBtn.dataset.mode === 'online') {
         event.preventDefault();
         this.blockBtns();
+        this.showLoadingOrConnectingScreen('connecting');
         this.initSocket();
       } else {
         storage.addPlayer(this.playerFirst.getNameWithAvatar(), 0);
@@ -147,7 +151,7 @@ export class Lobby extends BaseComponents {
     console.log(message);
     switch(message) {
       case 'loading':
-        // this.blockBtns();
+        this.showLoadingOrConnectingScreen('loading');
         break;
       case 'connected':
         this.socket?.send(`name ${this.playerFirst.getName()}`);
@@ -168,6 +172,7 @@ export class Lobby extends BaseComponents {
             this.playerSecond.setAvatar(keyValue[1]);
             storage.addPlayer(this.playerFirst.getNameWithAvatar(), 0, this.color);
             storage.addPlayer(this.playerSecond.getNameWithAvatar(), 1);
+            this.hideLoadingScreen();
             this.removeBlockBtns();
             window.location.hash = '#/Game';
             break;
@@ -175,6 +180,26 @@ export class Lobby extends BaseComponents {
             break;
         }
     }
+  }
+
+  private showLoadingOrConnectingScreen(status: string) {
+    this.hideLoadingScreen();
+    this.loadingElement = createElement([setting.classNames.lobby.menu.menu, 'loading']);
+    this.loadingElement.innerHTML = ` 
+    <p class="loading__text">${status}</p>
+    <div class="lds-ellipsis">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    `;
+    this.playerSecond.element.appendChild(this.loadingElement);
+  }
+
+  private hideLoadingScreen() {
+    this.loadingElement?.remove();
+    this.loadingElement = undefined;
   }
 
   resetColorAndSocket() {
@@ -185,11 +210,13 @@ export class Lobby extends BaseComponents {
 
   private blockBtns() {
     this.startTextElement.classList.add(setting.classNames.disable);
-    this.playerSecond.element.classList.add(setting.classNames.disable);
+    this.playerSecond.getAvatar().classList.add(setting.classNames.disable);
+    this.playerSecond.getNameElement().classList.add(setting.classNames.disable);
   }
 
   private removeBlockBtns() {
     this.startTextElement.classList.remove(setting.classNames.disable);
-    this.playerSecond.element.classList.remove(setting.classNames.disable);
+    this.playerSecond.getAvatar().classList.remove(setting.classNames.disable);
+    this.playerSecond.getNameElement().classList.remove(setting.classNames.disable);
   }
 }

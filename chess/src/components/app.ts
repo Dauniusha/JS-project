@@ -109,18 +109,22 @@ export class App {
 
   private initGameBtns(surrenderBtn: HTMLElement, drawBtn: HTMLElement) {
     surrenderBtn.addEventListener('click', () => {
-      if (this.game instanceof OnlineGame) {
-        this.game.surrenderBtnEvent();
-      } else {
-        this.game?.surrender();
+      if (!this.game?.isEndGame) {
+        if (this.game instanceof OnlineGame) {
+          this.game.surrenderBtnEvent();
+        } else {
+          this.game?.surrender();
+        }
       }
     }, { once: true });
 
     drawBtn.addEventListener('click', () => {
-      if (this.game instanceof OnlineGame) {
-        this.game.drawBtnEvent();
-      } else {
-        this.game?.draw();
+      if (!this.game?.isEndGame) {
+        if (this.game instanceof OnlineGame) {
+          this.game.drawBtnEvent();
+        } else {
+          this.game?.draw();
+        }
       }
     });
   }

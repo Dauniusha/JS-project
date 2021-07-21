@@ -33,6 +33,8 @@ export class Game extends BaseComponents {
 
   protected activePlayer?: PlayerStatistics;
 
+  isEndGame: boolean = false;
+
   constructor(replay?: ReplaysDBObject, color?: string) {
     super('section', ['game']);
 
@@ -201,6 +203,7 @@ export class Game extends BaseComponents {
       // Do some logic for check-mate
       this.checkBacklightAdd();
       this.createEndGame(true, this.activePlayer?.getName());
+      this.isEndGame = true;
     } else if (isCheck) {
       // Do some logic for check
       this.checkBacklightAdd();
@@ -208,6 +211,7 @@ export class Game extends BaseComponents {
     } else if (!defendersCanMove) {
       // Do some logic for stalemate
       this.createEndGame(false);
+      this.isEndGame = true;
     }
   }
 
@@ -241,7 +245,7 @@ export class Game extends BaseComponents {
   private createPopup(text: string) {
     const popup = new Popup();
     popup.text.innerHTML = text;
-    this.element.appendChild(popup.element);
+    this.element.parentElement?.appendChild(popup.element);
     popup.showPopup();
     popup.element.addEventListener('click', async () => {
       await popup.closePopup();
@@ -313,18 +317,20 @@ export class Game extends BaseComponents {
     } else {
       this.createEndGame(true, whitePlayer?.getName());
     }
+    this.isEndGame = true;
   }
 
   draw() {
     const popup = Game.createConfirmDrawPopup();
     popup.confirmPopupBtns();
-    this.element.appendChild(popup.element);
+    this.element.parentElement?.appendChild(popup.element);
     popup.showPopup();
     popup.element.addEventListener('click', async (event) => {
       await popup.closePopup();
       popup.element.remove();
       if ((<Element>event.target).classList.contains(setting.classNames.popups.popupLobbyBtn)) {
         this.createEndGame(false);
+        this.isEndGame = true;
       }
     }, { once: true });
   }

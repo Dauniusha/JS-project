@@ -237,6 +237,7 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  position: relative;
 }
 
 .player__avatar, .player__game-avatar {
@@ -284,6 +285,146 @@
   border: #07575B 3px solid;
   border-radius: 5px;
   text-shadow: #000 0.1vh 0.05vh, #000 0.1vh 0.1vh,  #000 0.05vh 0.1vh, #000 -0.1vh 0.1vh, #000 -0.1vh 0.05vh, #000 -0.1vh -0.1vh, #000 0.05vh -0.1vh, #000 0.1vh -0.1vh;
+}
+
+.player .loading {
+  position: absolute;
+  left: -2vh;
+  top: -3vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 10vh;
+  height: 10vh;
+  border-radius: 10vh;
+  cursor: default;
+}
+
+.player .loading__text {
+  margin: 0;
+  font-size: 2vh;
+  text-shadow: #000 0.1vh 0.05vh, #000 0.1vh 0.1vh, #000 0.05vh 0.1vh, #000 -0.1vh 0.1vh, #000 -0.1vh 0.05vh, #000 -0.1vh -0.1vh, #000 0.05vh -0.1vh, #000 0.1vh -0.1vh;
+}
+
+.player .loading .lds-ellipsis {
+  display: inline-block;
+  position: relative;
+  width: 6vh;
+  height: 3vh;
+}
+
+.player .loading .lds-ellipsis div {
+  position: absolute;
+  top: 1vh;
+  width: 1.5vh;
+  height: 1.5vh;
+  border-radius: 1.5vh;
+  background: #fff;
+  -webkit-animation-timing-function: cubic-bezier(0, 1, 1, 0);
+          animation-timing-function: cubic-bezier(0, 1, 1, 0);
+  -webkit-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.8);
+          box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.8);
+  border: 0.5px solid #333;
+}
+
+.player .loading .lds-ellipsis div:nth-child(1) {
+  left: 0;
+  -webkit-animation: lds-ellipsis1 0.6s infinite;
+          animation: lds-ellipsis1 0.6s infinite;
+}
+
+.player .loading .lds-ellipsis div:nth-child(2) {
+  left: 0;
+  -webkit-animation: lds-ellipsis2 0.6s infinite;
+          animation: lds-ellipsis2 0.6s infinite;
+}
+
+.player .loading .lds-ellipsis div:nth-child(3) {
+  left: 2.25vh;
+  -webkit-animation: lds-ellipsis2 0.6s infinite;
+          animation: lds-ellipsis2 0.6s infinite;
+}
+
+.player .loading .lds-ellipsis div:nth-child(4) {
+  left: 4.5vh;
+  -webkit-animation: lds-ellipsis3 0.6s infinite;
+          animation: lds-ellipsis3 0.6s infinite;
+}
+
+@-webkit-keyframes lds-ellipsis1 {
+  0% {
+    -webkit-transform: scale(0);
+            transform: scale(0);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+
+@keyframes lds-ellipsis1 {
+  0% {
+    -webkit-transform: scale(0);
+            transform: scale(0);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+
+@-webkit-keyframes lds-ellipsis3 {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  100% {
+    -webkit-box-shadow: none;
+            box-shadow: none;
+    border: none;
+    -webkit-transform: scale(0);
+            transform: scale(0);
+  }
+}
+
+@keyframes lds-ellipsis3 {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  100% {
+    -webkit-box-shadow: none;
+            box-shadow: none;
+    border: none;
+    -webkit-transform: scale(0);
+            transform: scale(0);
+  }
+}
+
+@-webkit-keyframes lds-ellipsis2 {
+  0% {
+    -webkit-transform: translate(0, 0);
+            transform: translate(0, 0);
+  }
+  100% {
+    -webkit-transform: translate(2.25vh, 0);
+            transform: translate(2.25vh, 0);
+  }
+}
+
+@keyframes lds-ellipsis2 {
+  0% {
+    -webkit-transform: translate(0, 0);
+            transform: translate(0, 0);
+  }
+  100% {
+    -webkit-transform: translate(2.25vh, 0);
+            transform: translate(2.25vh, 0);
+  }
 }
 
 .disable {

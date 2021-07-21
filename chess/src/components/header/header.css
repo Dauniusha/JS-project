@@ -75,7 +75,7 @@ body {
 
 .header-game-btns {
   height: 6vh;
-  width: 44vh;
+  width: 46vh;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -89,7 +89,7 @@ body {
 
 .header-game-btns__each {
   height: 5vh;
-  width: 20vh;
+  width: 21vh;
   font-size: 2.2vh;
   letter-spacing: 1.5px;
   text-transform: uppercase;
@@ -120,5 +120,10 @@ body {
 
 .header-game-btns #draw {
   background: #ff936f;
+}
+
+.header .disable {
+  pointer-events: none;
+  opacity: 0.5;
 }
 /*# sourceMappingURL=header.css.map */
