@@ -134,7 +134,6 @@ export class Game extends BaseComponents {
           this.possibleCells.push(cell);
         }
       });
-
     });
   }
 
@@ -250,6 +249,12 @@ export class Game extends BaseComponents {
     }, { once: true });
   }
 
+  protected static createConfirmDrawPopup(): Popup {
+    const popup = new Popup(true);
+    popup.text.innerHTML = 'The opponent offers a draw';
+    return popup;
+  }
+
   protected checkBacklightAdd() {
     if (this.pieceActive) {
       this.checkPieces = this.chessBoard.getCheckPieces(this.pieceActive.color);
@@ -297,5 +302,30 @@ export class Game extends BaseComponents {
     } else {
       throw new Error('players does not exist!');
     }
+  }
+
+  surrender() {
+    const whitePlayer = this.firstPlayer?.getColor() === color.white ? this.firstPlayer : this.secondPlayer;
+    const blackPlayer = this.firstPlayer?.getColor() === color.black ? this.firstPlayer : this.secondPlayer;
+
+    if (this.isWhiteMove) {
+      this.createEndGame(true, blackPlayer?.getName());
+    } else {
+      this.createEndGame(true, whitePlayer?.getName());
+    }
+  }
+
+  draw() {
+    const popup = Game.createConfirmDrawPopup();
+    popup.confirmPopupBtns();
+    this.element.appendChild(popup.element);
+    popup.showPopup();
+    popup.element.addEventListener('click', async (event) => {
+      await popup.closePopup();
+      popup.element.remove();
+      if ((<Element>event.target).classList.contains(setting.classNames.popups.popupLobbyBtn)) {
+        this.createEndGame(false);
+      }
+    }, { once: true });
   }
 }

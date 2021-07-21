@@ -78,6 +78,7 @@ export class App {
   }
 
   private startLobbyPage() {
+    this.header.removeAllBtns();
     this.clearWindow();
     if (!this.lobby) {
       this.lobby = new Lobby();
@@ -92,19 +93,40 @@ export class App {
   }
 
   private startGamePage() {
+    this.header.removeAllBtns();
     this.clearWindow();
     if (this.lobby?.socket && this.lobby.color) {
       this.game = new OnlineGame(this.lobby.color, this.lobby.socket);
-      
     } else {
       this.game = new Game();
       this.game.chessBoardListnersInit();
     }
+    const btns = this.header.createSurrenderAndDrawBtns();
+    this.initGameBtns(btns.surrenderBtn, btns.drawBtn);
     this.activePage = this.game;
     this.rootElement.insertBefore(this.game.element, this.footer.element);
   }
 
+  private initGameBtns(surrenderBtn: HTMLElement, drawBtn: HTMLElement) {
+    surrenderBtn.addEventListener('click', () => {
+      if (this.game instanceof OnlineGame) {
+        this.game.surrenderBtnEvent();
+      } else {
+        this.game?.surrender();
+      }
+    }, { once: true });
+
+    drawBtn.addEventListener('click', () => {
+      if (this.game instanceof OnlineGame) {
+        this.game.drawBtnEvent();
+      } else {
+        this.game?.draw();
+      }
+    });
+  }
+
   private startReplaysPage() {
+    this.header.removeAllBtns();
     this.clearWindow();
     this.replays = new Replays();
     this.activePage = this.replays;
@@ -112,6 +134,7 @@ export class App {
   }
 
   private async startWatchReplay() {
+    this.header.removeAllBtns();
     this.clearWindow();
     const replay = await App.getReplay();
     const btns = this.header.createReplayBtns();

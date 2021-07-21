@@ -14,3 +14,7 @@ Shedule:
 12.07.2021: Do popups and full game cycle. TODO: Data base.
 13.07.2021: Do data base, board animation and moves flag. TODO: Replays.
 14.07.2021: Done replays table and start do replays watch logic. TODO: Replays.
+15-16.07.2021: Create server. TODO: Refactoring.
+17-18.07.2021: Refactoring. TODO: Deploy.
+19.07.2021: Deploy server and project. TODO: Fix bug.
+20.07.2021; Fixing bug. TODO: Create confirm buttons.

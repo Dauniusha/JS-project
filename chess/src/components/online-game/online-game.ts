@@ -6,6 +6,8 @@ import { setting } from "../settings/setting";
 export class OnlineGame extends Game {
   private readonly color: string;
 
+  private isEndGame: boolean = false;
+
   constructor(color: string, private socket: WebSocket) {
     super(undefined, color);
     if (color === 'black') {
@@ -18,17 +20,58 @@ export class OnlineGame extends Game {
 
   private initListner() {
     this.socket.addEventListener('message', (event: MessageEvent<string>) => {
-      this.makeEnemyOnlineMove(event.data);
+      switch(event.data) {
+        case 'draw':
+          this.confirmDrawPopup();
+          break;
+        case 'confirm draw':
+          this.createEndGame(false);
+          this.isEndGame = true;
+          break;
+        case 'refuse draw':
+          break;
+        case 'surrender':
+          this.createEndGame(true, this.firstPlayer?.getName());
+          this.isEndGame = true;
+          break;
+        default:
+          this.makeEnemyOnlineMove(event.data);
+          break;
+      }
     });
 
     this.socket.addEventListener('close', () => {
-      this.createEndGame(true, this.secondPlayer?.getName());
+      if (!this.isEndGame) {
+        this.createEndGame(true, this.secondPlayer?.getName());
+        this.isEndGame = true;
+      }
     });
+  }
+
+  private confirmDrawPopup() {
+    const popup = Game.createConfirmDrawPopup();
+    popup.confirmPopupBtns();
+    this.element.appendChild(popup.element);
+    popup.showPopup();
+    popup.element.addEventListener('click', async (event) => {
+      await popup.closePopup();
+      popup.element.remove();
+      if ((<Element>event.target).classList.contains(setting.classNames.popups.popupLobbyBtn)) {
+        this.socket.send('confirm draw');
+        this.createEndGame(false);
+        this.isEndGame = true;
+      } else {
+        this.socket.send('refuse draw');
+      }
+    }, { once: true });
   }
 
   private makeEnemyOnlineMove(message: string) {
     if (message === 'disconnected') {
-      this.createEndGame(true, this.firstPlayer?.getName());
+      if (!this.isEndGame) {
+        this.createEndGame(true, this.firstPlayer?.getName());
+        this.isEndGame = true;
+      }
       return;
     }
 
@@ -69,5 +112,15 @@ export class OnlineGame extends Game {
         this.possibleCellsBacklightRemove();
       }
     });
+  }
+
+  surrenderBtnEvent() {
+    this.socket.send('surrender');
+    this.createEndGame(true, this.secondPlayer?.getName());
+    this.isEndGame = true;
+  }
+
+  drawBtnEvent() {
+    this.socket.send('draw');
   }
 }

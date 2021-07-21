@@ -10,6 +10,10 @@ export class Header extends BaseComponents {
 
   private previousMoveBtn?: HTMLElement;
 
+  private surrenderBtn?: HTMLElement;
+
+  private drawBtn?: HTMLElement;
+
   constructor() {
     super('header', [setting.classNames.headers.header]);
     
@@ -26,7 +30,7 @@ export class Header extends BaseComponents {
     logoElement.classList.add(setting.classNames.headers.logo);
     logoElement.innerHTML = `
       <img class="${setting.classNames.headers.logoImg}" src="../../../logo/logo.svg">
-      <span class="${setting.classNames.headers.logoText}">Chess</span>
+      <a href="#/Lobby" class="${setting.classNames.headers.logoText}">Chess</a>
     `;
     this.container.appendChild(logoElement);
   }
@@ -45,6 +49,34 @@ export class Header extends BaseComponents {
     this.container.appendChild(replayBtns);
 
     return { previousBtn: this.previousMoveBtn, nextBtn: this.nextMoveBtn };
+  }
+
+  createSurrenderAndDrawBtns(): { surrenderBtn: HTMLElement, drawBtn: HTMLElement } {
+    const btnsContainer = createElement([ setting.classNames.headers.gameBtnsContainer ]);
+
+    this.surrenderBtn = createElement([ setting.classNames.headers.gameBtn ]);
+    this.surrenderBtn.innerHTML = 'surrender';
+    this.surrenderBtn.id = 'surrender';
+    btnsContainer.appendChild(this.surrenderBtn);
+
+    this.drawBtn = createElement([ setting.classNames.headers.gameBtn ]);
+    this.drawBtn.innerHTML = 'offer a draw';
+    this.drawBtn.id = 'draw';
+    btnsContainer.appendChild(this.drawBtn);
+
+    this.container.appendChild(btnsContainer);
+
+    return { surrenderBtn: this.surrenderBtn, drawBtn: this.drawBtn };
+  }
+
+  removeAllBtns() {
+    this.nextMoveBtn?.parentElement?.remove();
+    this.nextMoveBtn = undefined;
+    this.previousMoveBtn = undefined;
+
+    this.surrenderBtn?.parentElement?.remove();
+    this.surrenderBtn = undefined;
+    this.drawBtn = undefined;
   }
 
   /* getReplayBtns(): { previousBtn: HTMLElement, nextBtn: HTMLElement } {

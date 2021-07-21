@@ -1,3 +1,4 @@
+import { createElement } from "../../shared/create-element";
 import { BaseComponents } from "../models/base-component";
 import { setting } from "../settings/setting";
 import './popup.css';
@@ -7,13 +8,17 @@ export class Popup extends BaseComponents {
 
   readonly text: HTMLParagraphElement;
 
-  constructor() {
+  constructor(isConfirm: boolean = false) {
     super('div', ['popup', setting.classNames.popups.closeClass]);
     const popUpInner = new BaseComponents('div', ['popup__inner']);
     this.popUp = new BaseComponents('div', ['popup__container']);
     popUpInner.element.appendChild(this.popUp.element);
     this.text = this.popupTextInit();
-    this.btnsInit();
+    if (!isConfirm) {
+      this.btnsInit();
+    } else {
+      popUpInner.element.id = 'confirm-popup';
+    }
     this.element.appendChild(popUpInner.element);
   }
 
@@ -47,5 +52,19 @@ export class Popup extends BaseComponents {
     text.classList.add(setting.classNames.popups.popupText);
     this.popUp.element.appendChild(text);
     return text;
+  }
+
+  confirmPopupBtns(): HTMLElement[] {
+    const confirmBtn = createElement([setting.classNames.popups.popupLobbyBtn]);
+    confirmBtn.id = 'confirm';
+    confirmBtn.innerHTML = 'Confirm';
+    this.popUp.element.appendChild(confirmBtn);
+
+    const refuseBtn = createElement([setting.classNames.popups.popupReplaysBtn]);
+    refuseBtn.id = 'refuse';
+    refuseBtn.innerHTML = 'Refuse';
+    this.popUp.element.appendChild(refuseBtn);
+
+    return [ confirmBtn, refuseBtn ];
   }
 }

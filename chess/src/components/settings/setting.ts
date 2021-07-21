@@ -29,6 +29,8 @@ export let setting = {
       logo: 'header-logo',
       logoImg: 'header-logo__img',
       logoText: 'header-logo__text',
+      gameBtnsContainer: 'header-game-btns',
+      gameBtn: 'header-game-btns__each',
     },
     lobby: {
       lobby: 'lobby',

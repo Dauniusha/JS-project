@@ -85,4 +85,16 @@
   bottom: -9vh;
   right: -1vh;
 }
+
+.popup #confirm-popup {
+  font-size: 8vh;
+}
+
+.popup #confirm {
+  left: 18vh;
+}
+
+.popup #refuse {
+  right: 20vh;
+}
 /*# sourceMappingURL=popup.css.map */

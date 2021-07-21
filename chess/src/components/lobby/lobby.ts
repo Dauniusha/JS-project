@@ -166,6 +166,7 @@ export class Lobby extends BaseComponents {
             this.playerSecond.setAvatar(keyValue[1]);
             storage.addPlayer(this.playerFirst.getNameWithAvatar(), 0, this.color);
             storage.addPlayer(this.playerSecond.getNameWithAvatar(), 1);
+            this.removeBlockBtns();
             window.location.hash = '#/Game';
             break;
           default:
