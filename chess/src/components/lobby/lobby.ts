@@ -123,6 +123,7 @@ export class Lobby extends BaseComponents {
     this.startTextElement.addEventListener('click', (event) => {
       if (this.gameSwitcherBtn.dataset.mode === 'online') {
         event.preventDefault();
+        this.blockBtns();
         this.initSocket();
       } else {
         storage.addPlayer(this.playerFirst.getNameWithAvatar(), 0);
@@ -143,9 +144,10 @@ export class Lobby extends BaseComponents {
   }
 
   private newMessage(message: string) {
+    console.log(message);
     switch(message) {
       case 'loading':
-        this.blockBtns();
+        // this.blockBtns();
         break;
       case 'connected':
         this.socket?.send(`name ${this.playerFirst.getName()}`);

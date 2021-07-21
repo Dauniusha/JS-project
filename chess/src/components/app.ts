@@ -37,12 +37,12 @@ export class App {
     this.rootElement.appendChild(this.footer.element);
 
     this.router = new Router();
-    // this.initRoute();
   }
 
   private async initDB() {
     await storage.createDataBase();
     this.initRoute();
+    this.router.changeRoute();
   }
 
   private initRoute() {

@@ -14,7 +14,7 @@ export class Router {
 
   changeRoute() {
     const location = window.location.hash;
-    if (!location) {
+    if (!location) {    
       this.enumiration(setting.startPage);
     } else {
       this.enumiration(location);
