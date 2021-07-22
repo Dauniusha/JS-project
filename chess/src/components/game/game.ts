@@ -144,7 +144,7 @@ export class Game extends BaseComponents {
         || (<Element>elem.target)?.closest('.' + setting.classNames.possibleEngagedCell))
         ) {
           this.completeMove(cell.id);
-          this.chessBoard.element.onmousemove = null;
+          document.onmousemove = null;
           return;
       }
       console.log(this.pieceActive);
@@ -178,7 +178,7 @@ export class Game extends BaseComponents {
               ) {
                 console.log(elemBelow);
                 this.completeMove(elemBelow.id);
-                this.chessBoard.element.onmousemove = null;
+                document.onmousemove = null;
                 pieceElem.onmouseup = null;
                 return;
             }
@@ -193,11 +193,11 @@ export class Game extends BaseComponents {
             }
           }
 
-          this.chessBoard.element.onmousemove = null;
+          document.onmousemove = null;
           pieceElem.onmouseup = null;
         };
 
-        this.chessBoard.element.onmousemove = (event) => {
+        document.onmousemove = (event) => {
           this.onMouseMove(event);
         };
       } else {
@@ -230,6 +230,7 @@ export class Game extends BaseComponents {
     if (this.dragObj) {
       const elemBelow = Game.takeElementBelow(this.dragObj.object, event);
 
+      console.log(elemBelow);
       if (!elemBelow) {
         return;
       }
