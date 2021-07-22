@@ -275,4 +275,11 @@ body {
             box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.8);
   }
 }
+
+.draging {
+  position: absolute;
+  z-index: 1000;
+  width: 7.875vh;
+  height: 7.875vh;
+}
 /*# sourceMappingURL=chess-board.css.map */

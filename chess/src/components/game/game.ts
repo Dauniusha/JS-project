@@ -39,6 +39,12 @@ export class Game extends BaseComponents {
 
   isEndGame: boolean = false;
 
+  private isDragAndDrop: boolean = false;
+
+  private isSecondClick: boolean = false;
+
+  private dragObj?: { object: HTMLImageElement, shiftX: number, shiftY: number, currentDroppable: HTMLElement | null };
+
   constructor(replay?: ReplaysDBObject, color?: string) {
     super('section', ['game']);
 
@@ -119,6 +125,143 @@ export class Game extends BaseComponents {
     });
   }
 
+  dragAndDropListners() {
+    this.chessBoard.element.addEventListener('mousedown', (elem) => {
+      this.isDragAndDrop = false;
+      console.log('mousedown');
+
+      const pieceElem = <HTMLImageElement> (<Element>elem.target)?.closest('.' + setting.classNames.piece);
+      if (pieceElem) {
+        pieceElem.ondragstart = () => false;
+      }
+
+      const activeColor = this.isWhiteMove ? color.white : color.black;
+      const cell = (<Element>elem.target)?.closest('.' + setting.classNames.cell);
+
+      if (
+        cell &&
+        ((<Element>elem.target)?.closest('.' + setting.classNames.possibleClearCell)
+        || (<Element>elem.target)?.closest('.' + setting.classNames.possibleEngagedCell))
+        ) {
+          this.completeMove(cell.id);
+          this.chessBoard.element.onmousemove = null;
+          return;
+      }
+      console.log(this.pieceActive);
+      if (pieceElem && pieceElem.getAttribute(setting.classNames.dataPiece)?.indexOf(activeColor) !== -1) {
+        if (cell && !(this.pieceActive?.cell === cell.id)) {
+          this.selectPiece(cell.id);
+        } else if (cell && (this.pieceActive?.cell === cell.id)) {
+          this.isSecondClick = true;
+        }
+
+        this.dragObj = {
+          object: pieceElem,
+          shiftX: elem.clientX - pieceElem.getBoundingClientRect().left,
+          shiftY: elem.clientY - pieceElem.getBoundingClientRect().top,
+          currentDroppable: null,
+        };
+        Game.addDragStyles(pieceElem);
+        this.moveAtCoordinates(elem.pageX, elem.pageY);
+
+        pieceElem.onmouseup = (event) => {
+          console.log('mouseup');
+          if (this.isDragAndDrop) { // Mouse move
+            console.log('drag');
+            const elemBelow = Game.takeElementBelow(pieceElem, event);
+            if (cell) {
+              Game.removeDragStyles(pieceElem, cell, elemBelow);
+            }
+            if (
+              elemBelow?.closest('.' + setting.classNames.possibleClearCell)
+              || elemBelow?.closest('.' + setting.classNames.possibleEngagedCell)
+              ) {
+                console.log(elemBelow);
+                this.completeMove(elemBelow.id);
+                this.chessBoard.element.onmousemove = null;
+                pieceElem.onmouseup = null;
+                return;
+            }
+          } else { // Click
+            if (cell) {
+              Game.removeDragStyles(pieceElem, cell);
+              if (this.pieceActive?.cell === cell.id && this.isSecondClick) {
+                this.possibleCellsBacklightRemove();
+                this.isSecondClick = false;
+                this.pieceActive = undefined;
+              }
+            }
+          }
+
+          this.chessBoard.element.onmousemove = null;
+          pieceElem.onmouseup = null;
+        };
+
+        this.chessBoard.element.onmousemove = (event) => {
+          this.onMouseMove(event);
+        };
+      } else {
+        this.possibleCellsBacklightRemove();
+        this.pieceActive = undefined;
+      }
+    });
+  }
+
+  private static addDragStyles(pieceElem: HTMLImageElement) {
+    pieceElem.classList.add('draging')
+    document.body.append(pieceElem);
+  }
+
+  private static removeDragStyles(pieceElem: HTMLImageElement, cell: Element, elemBelow: Element | null = null) {
+    cell.appendChild(pieceElem);
+    pieceElem.classList.remove('draging');
+    cell.classList.add(setting.classNames.selectPieceBacklight);
+    if (cell !== elemBelow) {
+      elemBelow?.classList.remove(setting.classNames.selectPieceBacklight);
+    }
+  }
+
+  private onMouseMove(event: MouseEvent) {
+    this.isDragAndDrop = true;
+    console.log('mousemove');
+
+    this.moveAtCoordinates(event.pageX, event.pageY);
+
+    if (this.dragObj) {
+      const elemBelow = Game.takeElementBelow(this.dragObj.object, event);
+
+      if (!elemBelow) {
+        return;
+      }
+
+      const droppableBelow = <HTMLElement> elemBelow.closest('.' + setting.classNames.cell);
+
+      if (this.dragObj.currentDroppable != droppableBelow) {
+        if (this.dragObj.currentDroppable) {
+          this.removeDragBacklights(this.dragObj.currentDroppable);
+        }
+        this.dragObj.currentDroppable = droppableBelow;
+        if (this.dragObj.currentDroppable) {
+          this.addDragBacklights(this.dragObj.currentDroppable);
+        }
+      }
+    }
+  }
+
+  private static takeElementBelow(obj: HTMLElement, event: MouseEvent): Element | null {
+    obj.hidden = true;
+    const elemBelow = document.elementFromPoint(event.clientX, event.clientY);
+    obj.hidden = false;
+    return elemBelow ? elemBelow.closest('.' + setting.classNames.cell) : null;
+  }
+
+  private moveAtCoordinates(pageX: number, pageY: number) {
+    if (this.dragObj) {
+      this.dragObj.object.style.left = pageX - this.dragObj.shiftX + 'px';
+      this.dragObj.object.style.top = pageY - this.dragObj.shiftY + 'px';
+    }
+  }
+
   protected selectPiece(cellId: string) {
     this.possibleCellsBacklightRemove();
     this.pieceActive = this.chessBoard.selectPiece(cellId);
@@ -156,7 +299,9 @@ export class Game extends BaseComponents {
     if (this.pieceActive) {    
       this.pieceMove(cellId);
 
-      if (this.pieceActive instanceof Pawn && (this.pieceActive.cell.indexOf('8') !== -1 || this.pieceActive.cell.indexOf('1') !== -1)) {
+      if (this.pieceActive instanceof Pawn &&
+        (this.pieceActive.cell.indexOf('8') !== -1 || this.pieceActive.cell.indexOf('1') !== -1)
+        ) {
         this.initPawnTransformation(this.pieceActive);
       } else {
         this.removeCancelMoveAndCheckValidation(this.pieceActive.color);
@@ -244,6 +389,14 @@ export class Game extends BaseComponents {
         cell.classList.remove(setting.classNames.moveBacklight);
       } 
     });
+  }
+
+  protected addDragBacklights(cell: HTMLElement) {
+    cell.classList.add(setting.classNames.selectPieceBacklight);
+  }
+
+  protected removeDragBacklights(cell: HTMLElement) {
+    cell.classList.remove(setting.classNames.selectPieceBacklight);
   }
 
   protected checkMateValidation(movedPieceColor: string) {

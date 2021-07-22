@@ -101,7 +101,8 @@ export class App {
       this.game = new OnlineGame(this.lobby.color, this.lobby.socket);
     } else {
       this.game = new Game();
-      this.game.chessBoardListnersInit();
+      // this.game.chessBoardListnersInit();
+      this.game.dragAndDropListners();
     }
     const btns = this.header.createSurrenderAndDrawBtns();
     this.initGameBtns(btns.surrenderBtn, btns.drawBtn);

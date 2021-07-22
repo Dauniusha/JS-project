@@ -60,8 +60,8 @@ class Timer extends BaseComponents {
 
   private resetTimer() {
     this.timeNow = 0;
-    this.minute.element.innerHTML = '';
-    this.second.element.innerHTML = '';
+    this.minute.element.innerHTML = '00';
+    this.second.element.innerHTML = '00';
   }
 
   clearTimer() {
