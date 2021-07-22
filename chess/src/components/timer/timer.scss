@@ -1,0 +1,30 @@
+.timer {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 6vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 5vh;
+  width: 14.5vh;
+  text-shadow: 2px 2px 3px #000,
+  #000 0.1vh 0.05vh,
+  #000 0.1vh 0.1vh,
+  #000 0.05vh 0.1vh,
+  #000 -0.1vh 0.1vh,
+  #000 -0.1vh 0.05vh,
+  #000 -0.1vh -0.1vh,
+  #000 0.05vh -0.1vh,
+  #000 0.1vh -0.1vh;
+
+  &__inner {
+    font-size: 5vh;
+    width: 6vh;
+  }
+
+  &__colon {
+    font-size: 4vh;
+    color: #ff936f;
+  }
+}

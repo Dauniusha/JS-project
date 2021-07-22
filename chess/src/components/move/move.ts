@@ -6,7 +6,7 @@ import './move.css';
 
 export class Move extends BaseComponents {
 
-  constructor(private fullName: string, private startCell: string, private endCell: string, private time: string = '1:30') {
+  constructor(private fullName: string, private startCell: string, private endCell: string, private time: string) {
     super('div', [setting.classNames.game.playerMoveTableEach]);
 
     const pieceImg = createElement([setting.classNames.game.playerMoveTableImg]);

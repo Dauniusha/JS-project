@@ -1,6 +1,7 @@
 import { createElement } from '../../shared/create-element';
 import { BaseComponents } from '../models/base-component';
 import { setting } from '../settings/setting';
+import { timer } from '../timer/timer';
 import './header.css';
 
 export class Header extends BaseComponents {
@@ -70,6 +71,8 @@ export class Header extends BaseComponents {
   }
 
   removeAllBtns() {
+    timer.element.remove();
+
     this.nextMoveBtn?.parentElement?.remove();
     this.nextMoveBtn = undefined;
     this.previousMoveBtn = undefined;
@@ -77,6 +80,10 @@ export class Header extends BaseComponents {
     this.surrenderBtn?.parentElement?.remove();
     this.surrenderBtn = undefined;
     this.drawBtn = undefined;
+  }
+
+  getContainer(): HTMLElement {
+    return this.container;
   }
 
   /* getReplayBtns(): { previousBtn: HTMLElement, nextBtn: HTMLElement } {

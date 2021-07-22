@@ -1,0 +1,30 @@
+.timer {
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  right: 6vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 5vh;
+  width: 14.5vh;
+  text-shadow: 2px 2px 3px #000, #000 0.1vh 0.05vh, #000 0.1vh 0.1vh, #000 0.05vh 0.1vh, #000 -0.1vh 0.1vh, #000 -0.1vh 0.05vh, #000 -0.1vh -0.1vh, #000 0.05vh -0.1vh, #000 0.1vh -0.1vh;
+}
+
+.timer__inner {
+  font-size: 5vh;
+  width: 6vh;
+}
+
+.timer__colon {
+  font-size: 4vh;
+  color: #ff936f;
+}
+/*# sourceMappingURL=timer.css.map */

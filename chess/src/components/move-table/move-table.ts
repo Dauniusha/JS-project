@@ -11,17 +11,16 @@ export class MoveTable extends BaseComponents {
     super('div', [setting.classNames.game.playerMoveTable]);
   }
 
-  addMove(pieceName: string, color: string, startcell: string, endCell: string /* time: string */) {
-    console.log(pieceName);
+  addMove(pieceName: string, color: string, startcell: string, endCell: string, time: string) {
     const fullPieceName = color  + pieceName;
-    const move = new Move(fullPieceName, startcell, endCell);
+    const move = new Move(fullPieceName, startcell, endCell, time);
     this.fullPieceName.push(move);
     this.element.appendChild(move.element);
   }
 
   moveInit(moves: ClearMove[]) {
     moves.forEach((move) => {
-      const moveRecord = new Move(move.fullName, move.startCell, move.endCell);
+      const moveRecord = new Move(move.fullName, move.startCell, move.endCell, move.time);
       this.fullPieceName.push(moveRecord);
       this.element.appendChild(moveRecord.element);
     });

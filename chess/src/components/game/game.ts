@@ -1,6 +1,7 @@
 import { cellNameToCellPosition } from '../../shared/cell-name-to-cell-position';
 import { colorFunctions } from '../../shared/color';
 import { createElement } from '../../shared/create-element';
+import { timeFunctions } from '../../shared/translate-time';
 import { ChessBoard } from '../chess-board/chess-board';
 import { Bishop } from '../chess-pieces/each-pieces/bishop';
 import { King } from '../chess-pieces/each-pieces/king';
@@ -16,6 +17,7 @@ import { color } from '../models/game/color-interface';
 import { PlayerStatistics } from '../player-statistics/player-statistics';
 import { Popup } from '../popup/popup';
 import { setting } from '../settings/setting';
+import { timer } from '../timer/timer';
 import './game.css';
 
 export class Game extends BaseComponents {
@@ -56,6 +58,8 @@ export class Game extends BaseComponents {
 
       this.chessBoard = new ChessBoard(setting.initialGameSetup);
       this.element.insertBefore(this.chessBoard.element, this.secondPlayer.element);
+
+
     }
   }
 
@@ -217,7 +221,8 @@ export class Game extends BaseComponents {
         this.pieceActive.name,
         this.activePlayer.getColor(),
         this.pieceActive.cell,
-        newCell);
+        newCell,
+        timeFunctions.getStringTime(timer.getTimeNow()));
     } else {
       throw new Error('pieceActive does not exist!');
     }

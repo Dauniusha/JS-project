@@ -31,6 +31,11 @@ export let setting = {
       logoText: 'header-logo__text',
       gameBtnsContainer: 'header-game-btns',
       gameBtn: 'header-game-btns__each',
+      timer: {
+        timer: 'timer',
+        timerEach: 'timer__inner',
+        timerColon: 'timer__colon',
+      },
     },
     lobby: {
       lobby: 'lobby',

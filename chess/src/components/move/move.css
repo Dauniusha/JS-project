@@ -26,5 +26,6 @@
   top: 50%;
   -webkit-transform: translateY(-50%);
           transform: translateY(-50%);
+  letter-spacing: 1.5px;
 }
 /*# sourceMappingURL=move.css.map */

@@ -8,6 +8,7 @@ import { OnlineGame } from "./online-game/online-game";
 import { Replays } from "./replays/replays";
 import { Router } from "./route/route";
 import { setting } from "./settings/setting";
+import { timer } from "./timer/timer";
 import { WatchReplay } from "./watch-replays/replays-watch";
 
 export class App {
@@ -104,6 +105,7 @@ export class App {
     }
     const btns = this.header.createSurrenderAndDrawBtns();
     this.initGameBtns(btns.surrenderBtn, btns.drawBtn);
+    this.initTimer();
     this.activePage = this.game;
     this.rootElement.insertBefore(this.game.element, this.footer.element);
   }
@@ -168,6 +170,12 @@ export class App {
     nextBtn.addEventListener('click', () => {
       this.watchReplay?.makeMove(true);
     });
+  }
+
+  private initTimer() {
+    timer.clearTimer();
+    this.header.getContainer().appendChild(timer.element);
+    timer.startTimer();
   }
 
   private clearWindow() {
