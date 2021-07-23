@@ -53,22 +53,6 @@ body {
     }
   }
 
-  &-btns {
-    display: flex;
-    align-items: center;
-    width: 5vh;
-    justify-content: space-between;
-    
-    &__each {
-      width: 2vh;
-      height: 4vh;
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      cursor: pointer;
-    }
-  }
-
   &-game-btns {
     height: 6vh;
     width: 46vh;
@@ -114,5 +98,86 @@ body {
   .disable {
     pointer-events: none;
     opacity: 0.5;
+  }
+
+  .replays__boost-btns {
+    width: 19vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 5vh;
+  }
+
+  .replays__boost-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 3.7vh;
+    height: 3.7vh;
+    box-sizing: border-box;
+    border-radius: 3.7vh;
+    font-size: 2vh;
+    text-shadow: #000 0.1vh 0.05vh,
+    #000 0.1vh 0.1vh, 
+    #000 0.05vh 0.1vh,
+    #000 -0.1vh 0.1vh,
+    #000 -0.1vh 0.05vh,
+    #000 -0.1vh -0.1vh,
+    #000 0.05vh -0.1vh,
+    #000 0.1vh -0.1vh;
+    background: #ff936f;
+    border: 2px solid #333;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.8);
+    transition: all 0.1s ease;
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.8);
+    }
+  }
+
+  &-btns {
+    display: flex;
+    align-items: center;
+    width: 16vh;
+    justify-content: space-between;
+    
+    &__each {
+      width: 4vh;
+      height: 4vh;
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+      cursor: pointer;
+      transition: all 0.1s ease;
+      background-color: #ff936f;
+      border: 2px solid #333;
+      border-radius: 4vh;
+      box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.8);
+
+      &:hover {
+        transform: scale(1.05);
+        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+      }
+    }
+  }
+
+  .replays__exit-btn {
+    margin-left: 5vh;
+    width: 4vh;
+    height: 4vh;
+    background-color: #ff936f;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 4vh;
+    border: 2px solid #333;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.8);
+    transition: all 0.2s ease;
+
+    &:hover {
+      transform: scale(1.02);
+      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+    }
   }
 }

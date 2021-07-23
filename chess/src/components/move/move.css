@@ -1,5 +1,7 @@
 .player-statistics__table-each {
-  margin: 1vh;
+  margin: 0.5vh;
+  margin-left: 1vh;
+  padding: 0.5vh;
   width: 23vh;
   max-width: 23vh;
   height: 4vh;
@@ -11,6 +13,9 @@
       -ms-flex-align: center;
           align-items: center;
   position: relative;
+  border-radius: 1.5vh;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 .player-statistics__table-each .player-statistics__table-img {
@@ -22,10 +27,17 @@
 
 .player-statistics__table-each .player-statistics__table-time {
   position: absolute;
-  right: 0;
+  right: 1vh;
   top: 50%;
   -webkit-transform: translateY(-50%);
           transform: translateY(-50%);
   letter-spacing: 1.5px;
+}
+
+.replays__active-move {
+  background-color: rgba(157, 234, 253, 0.55);
+  border: 1px solid #333;
+  -webkit-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+          box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
 }
 /*# sourceMappingURL=move.css.map */

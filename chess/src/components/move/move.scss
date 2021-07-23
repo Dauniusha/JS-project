@@ -1,5 +1,7 @@
 .player-statistics__table-each {
-  margin: 1vh;
+  margin: 0.5vh;
+  margin-left: 1vh;
+  padding: 0.5vh;
   width: 23vh;
   max-width: 23vh;
   height: 4vh;
@@ -7,6 +9,8 @@
   display: flex;
   align-items: center;
   position: relative;
+  border-radius: 1.5vh;
+  box-sizing: border-box;
 
   .player-statistics__table-img {
     width: 4vh;
@@ -17,9 +21,16 @@
 
   .player-statistics__table-time {
     position: absolute;
-    right: 0;
+    right: 1vh;
     top: 50%;
     transform: translateY(-50%);
     letter-spacing: 1.5px;
   }
+
+}
+
+.replays__active-move {
+  background-color: rgba(157, 234, 253, 0.55);
+  border: 1px solid #333;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
 }

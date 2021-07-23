@@ -106,6 +106,7 @@ export class App {
     const btns = this.header.createSurrenderAndDrawBtns();
     this.initGameBtns(btns.surrenderBtn, btns.drawBtn);
     this.initTimer();
+    timer.startTimer();
     this.activePage = this.game;
     this.rootElement.insertBefore(this.game.element, this.footer.element);
   }
@@ -145,8 +146,8 @@ export class App {
     this.clearWindow();
     const replay = await App.getReplay();
     const btns = this.header.createReplayBtns();
-    this.initReplayBtnsListners(btns.previousBtn, btns.nextBtn);
-    this.watchReplay = new WatchReplay(replay);
+    this.initTimer();
+    this.watchReplay = new WatchReplay(replay, btns);
     this.activePage = this.watchReplay;
     this.rootElement.insertBefore(this.watchReplay.element, this.footer.element);
   }
@@ -163,19 +164,9 @@ export class App {
     });
   }
 
-  private initReplayBtnsListners(previousBtn: HTMLElement, nextBtn: HTMLElement) {
-    previousBtn.addEventListener('click', () => {
-      this.watchReplay?.makeMove(false);
-    });
-    nextBtn.addEventListener('click', () => {
-      this.watchReplay?.makeMove(true);
-    });
-  }
-
   private initTimer() {
     timer.clearTimer();
     this.header.getContainer().appendChild(timer.element);
-    timer.startTimer();
   }
 
   private clearWindow() {

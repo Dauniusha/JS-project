@@ -1,7 +1,6 @@
 import { cellNameToCellPosition } from '../../shared/cell-name-to-cell-position';
 import { colorFunctions } from '../../shared/color';
 import { createElement } from '../../shared/create-element';
-import { MessageReader } from '../../shared/server-message-reader';
 import { timeFunctions } from '../../shared/translate-time';
 import { ChessBoard } from '../chess-board/chess-board';
 import { Bishop } from '../chess-pieces/each-pieces/bishop';
@@ -13,6 +12,7 @@ import { Rook } from '../chess-pieces/each-pieces/rook';
 import { storage } from '../data-base/data-base-element';
 import { BaseComponents } from '../models/base-component';
 import { PlayerWithMove } from '../models/data-base/data-base-player-move';
+import { PlayerDBObject } from '../models/data-base/data-base-player-object';
 import { ReplaysDBObject } from '../models/data-base/data-base-replays-object';
 import { color } from '../models/game/color-interface';
 import { PlayerStatistics } from '../player-statistics/player-statistics';
@@ -417,7 +417,7 @@ export class Game extends BaseComponents {
     if (isCheck && !defendersCanMove) {
       // Do some logic for check-mate
       this.checkBacklightAdd();
-      this.createEndGame(true, this.activePlayer?.getName());
+      this.createEndGame(true, this.activePlayer);
       this.isEndGame = true;
     } else if (isCheck) {
       // Do some logic for check
@@ -435,23 +435,30 @@ export class Game extends BaseComponents {
     }
   }
 
-  protected createEndGame(isWin: boolean, name = '') {
+  protected createEndGame(isWin: boolean, winner?: PlayerStatistics) {
     timer.stopTimer();
-    if (isWin) {
-      this.createWinPopup(name);
+    if (isWin && winner) {
+      this.createWinPopup(winner.getName());
+      this.createReplay(winner.getPlayer().getNameWithAvatar());
     } else {
       this.createDrawPopup();
+      this.createReplay(null);
     }
-    this.createReplay();
   }
 
-  private createReplay() {
+  private createReplay(winner: PlayerDBObject | null) {
     if (this.firstPlayer && this.secondPlayer && this.activePlayer) {
       const firstPlayerWithMove = this.firstPlayer?.getPlayerWithMoves();
       const secondPlayerWithMove = this.secondPlayer?.getPlayerWithMoves();
-      const winner = this.activePlayer?.getPlayer().getNameWithAvatar();
+      const moveAmount = firstPlayerWithMove.moves.length + secondPlayerWithMove.moves.length;
 
-      storage.addReplay(firstPlayerWithMove, secondPlayerWithMove, winner, '1:30'); // TODO: Сделать таймер и переделать
+      storage.addReplay(
+        firstPlayerWithMove,
+        secondPlayerWithMove,
+        winner,
+        moveAmount,
+        timeFunctions.getStringTime(timer.getTimeNow())
+        );
     }
   }
 
@@ -526,7 +533,7 @@ export class Game extends BaseComponents {
     if (this.firstPlayer && this.secondPlayer) {
       return { firstPlayer: this.firstPlayer, secondPlayer: this.secondPlayer };
     }
-    throw new Error('players does not exist!');
+    throw new Error('Players does not exist!');
   }
 
   surrender() {
@@ -534,9 +541,9 @@ export class Game extends BaseComponents {
     const blackPlayer = this.firstPlayer?.getColor() === color.black ? this.firstPlayer : this.secondPlayer;
 
     if (this.isWhiteMove) {
-      this.createEndGame(true, blackPlayer?.getName());
+      this.createEndGame(true, blackPlayer);
     } else {
-      this.createEndGame(true, whitePlayer?.getName());
+      this.createEndGame(true, whitePlayer);
     }
     this.isEndGame = true;
   }

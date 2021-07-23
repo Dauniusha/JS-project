@@ -36,6 +36,11 @@ export const setting = {
         timerEach: 'timer__inner',
         timerColon: 'timer__colon',
       },
+      replaysMoveBtns: 'header-btns',
+      replaysMoveBtn: 'header-btns__each',
+      replaysBoostBtn: 'replays__boost-btn',
+      replaysBoostBtns: 'replays__boost-btns',
+      replaysExitBtn: 'replays__exit-btn',
     },
     lobby: {
       lobby: 'lobby',
@@ -87,8 +92,7 @@ export const setting = {
       crown: 'replays__crown',
       cross: 'replays__cross',
       playerContainer: 'replays__player-container',
-      headerBtns: 'header-btns',
-      headerBtn: 'header-btns__each',
+      activeMove: 'replays__active-move',
     },
     disable: 'disable',
     enable: 'enable',
@@ -183,9 +187,12 @@ export const setting = {
 
     crown: './flags/crown.svg',
     cross: './flags/x.svg',
+    draw: './flags/draw.svg',
 
     leftArrow: './header/chevron-left.svg',
     rightArrow: './header/chevron-right.svg',
+    pause: './header/pause.svg',
+    exit: './header/exit.svg',
   },
 
   createFunctions: {
@@ -227,4 +234,6 @@ export const setting = {
   },
 
   serverURL: 'wss://ancient-oasis-48599.herokuapp.com',
+
+  boostBtnsAmount: 4,
 };

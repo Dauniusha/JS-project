@@ -22,7 +22,7 @@ class Timer extends BaseComponents {
     this.showTime();
   }
 
-  private showTime(minute = 0, second = 0) {
+  showTime(minute = 0, second = 0) {
     if (minute < 10) {
       this.minute.element.innerHTML = `0${minute}`;
     } else {
@@ -54,8 +54,20 @@ class Timer extends BaseComponents {
     return this.timeNow;
   }
 
+  setTimeNow(timeNow: number) {
+    this.timeNow = timeNow;
+  }
+
+  incrementTimeNow() {
+    this.timeNow++;
+  }
+
   getTimer(): NodeJS.Timeout | undefined {
     return this.timer;
+  }
+
+  setTimer(timer: NodeJS.Timeout) {
+    this.timer = timer;
   }
 
   private resetTimer() {

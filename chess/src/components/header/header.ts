@@ -1,15 +1,12 @@
 import { createElement } from '../../shared/create-element';
 import { BaseComponents } from '../models/base-component';
+import { ReplayBtns } from '../models/replays/replays-btns';
 import { setting } from '../settings/setting';
 import { timer } from '../timer/timer';
 import './header.css';
 
 export class Header extends BaseComponents {
   private readonly container: HTMLElement;
-
-  private nextMoveBtn?: HTMLElement;
-
-  private previousMoveBtn?: HTMLElement;
 
   private surrenderBtn?: HTMLElement;
 
@@ -36,20 +33,65 @@ export class Header extends BaseComponents {
     this.container.appendChild(logoElement);
   }
 
-  createReplayBtns(): { previousBtn: HTMLElement, nextBtn: HTMLElement } {
-    const replayBtns = createElement([setting.classNames.replays.headerBtns]);
+  createReplayBtns(): ReplayBtns {
+    const moveBtns = this.createReplayMoveBtns();
+    const boostMoveBtns = this.createReplayBoostModeBtns();
+    this.createExitBtn();
 
-    this.previousMoveBtn = createElement([setting.classNames.replays.headerBtn]);
-    this.previousMoveBtn.style.backgroundImage = `url(${setting.imgNames.leftArrow})`;
-    replayBtns.appendChild(this.previousMoveBtn);
+    return {
+      moveBtns: moveBtns,
+      boostBtns: boostMoveBtns,
+    };
+  }
 
-    this.nextMoveBtn = createElement([setting.classNames.replays.headerBtn]);
-    this.nextMoveBtn.style.backgroundImage = `url(${setting.imgNames.rightArrow})`;
-    replayBtns.appendChild(this.nextMoveBtn);
+  private createReplayMoveBtns(): { prevBtn: HTMLElement, stopBtn: HTMLElement, nextBtn: HTMLElement } {
+    const container = createElement([ setting.classNames.headers.replaysMoveBtns ]);
 
-    this.container.appendChild(replayBtns);
+    const previousMoveBtn = createElement([ setting.classNames.headers.replaysMoveBtn, setting.classNames.disable ]);
+    previousMoveBtn.style.backgroundImage = `url(${setting.imgNames.leftArrow})`;
+    container.appendChild(previousMoveBtn);
 
-    return { previousBtn: this.previousMoveBtn, nextBtn: this.nextMoveBtn };
+    const stopMoveBtn = createElement([ setting.classNames.headers.replaysMoveBtn ]);
+    stopMoveBtn.style.backgroundImage = `url(${setting.imgNames.pause})`;
+    container.appendChild(stopMoveBtn);
+
+    const nextMoveBtn = createElement([ setting.classNames.headers.replaysMoveBtn ]);
+    nextMoveBtn.style.backgroundImage = `url(${setting.imgNames.rightArrow})`;
+    container.appendChild(nextMoveBtn);
+
+    this.container.appendChild(container);
+
+    return { prevBtn: previousMoveBtn, stopBtn: stopMoveBtn, nextBtn: nextMoveBtn };
+  }
+
+  private createReplayBoostModeBtns(): HTMLElement[] {
+    const container = createElement([ setting.classNames.headers.replaysBoostBtns ])
+
+    const boostModeBtns: HTMLElement[] = [];
+
+    for (let i = 0; i < setting.boostBtnsAmount; i++) {
+      const btn = createElement([ setting.classNames.headers.replaysBoostBtn ]);
+      btn.id = String(i + 1);
+      btn.innerHTML = `x${i + 1}`;
+
+      container.appendChild(btn);
+      boostModeBtns.push(btn);
+    }
+
+    this.container.appendChild(container);
+
+    return boostModeBtns;
+  }
+
+  private createExitBtn() {
+    const exitBtn = document.createElement('a');
+    exitBtn.classList.add(setting.classNames.headers.replaysExitBtn);
+    exitBtn.href = '#/Replays';
+    exitBtn.style.backgroundImage = `url(${setting.imgNames.exit})`
+
+    this.container.appendChild(exitBtn);
+
+    return exitBtn;
   }
 
   createSurrenderAndDrawBtns(): { surrenderBtn: HTMLElement, drawBtn: HTMLElement } {
@@ -71,15 +113,8 @@ export class Header extends BaseComponents {
   }
 
   removeAllBtns() {
-    timer.element.remove();
-
-    this.nextMoveBtn?.parentElement?.remove();
-    this.nextMoveBtn = undefined;
-    this.previousMoveBtn = undefined;
-
-    this.surrenderBtn?.parentElement?.remove();
-    this.surrenderBtn = undefined;
-    this.drawBtn = undefined;
+    this.container.innerHTML = '';
+    this.addLogo();
   }
 
   getContainer(): HTMLElement {

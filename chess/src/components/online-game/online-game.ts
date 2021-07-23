@@ -30,7 +30,7 @@ export class OnlineGame extends Game {
         case 'refuse draw':
           break;
         case 'surrender':
-          this.createEndGame(true, this.firstPlayer?.getName());
+          this.createEndGame(true, this.firstPlayer);
           this.isEndGame = true;
           break;
         case 'Bishop':
@@ -47,7 +47,7 @@ export class OnlineGame extends Game {
 
     this.socket.addEventListener('close', () => {
       if (!this.isEndGame) {
-        this.createEndGame(true, this.secondPlayer?.getName());
+        this.createEndGame(true, this.secondPlayer);
         this.isEndGame = true;
       }
     });
@@ -89,7 +89,7 @@ export class OnlineGame extends Game {
   private makeEnemyOnlineMove(message: string) {
     if (message === 'disconnected') {
       if (!this.isEndGame) {
-        this.createEndGame(true, this.firstPlayer?.getName());
+        this.createEndGame(true, this.firstPlayer);
         this.isEndGame = true;
       }
       return;
@@ -243,7 +243,7 @@ export class OnlineGame extends Game {
 
   surrenderBtnEvent() {
     this.socket.send('surrender');
-    this.createEndGame(true, this.secondPlayer?.getName());
+    this.createEndGame(true, this.secondPlayer);
     this.isEndGame = true;
   }
 

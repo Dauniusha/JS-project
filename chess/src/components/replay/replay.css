@@ -83,7 +83,7 @@
 }
 
 .replays__each .replays__crown {
-  width: 4vh;
+  width: 3vh;
   height: 3vh;
   background-size: contain;
   background-repeat: no-repeat;
@@ -91,6 +91,9 @@
   position: absolute;
   left: 11vh;
   top: -0.5vh;
+  border-radius: 3vh;
+  background-color: #fff;
+  border: 2px solid #ff936f;
 }
 
 .replays__each .replays__cross {

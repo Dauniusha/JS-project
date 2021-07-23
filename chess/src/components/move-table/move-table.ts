@@ -26,8 +26,10 @@ export class MoveTable extends BaseComponents {
     });
   }
 
-  takeMove(i: number): Move {
-    return this.fullPieceName[i];
+  takeMove(i: number): Move | undefined {
+    if (i >= 0 && i < this.fullPieceName.length) {
+      return this.fullPieceName[i];
+    }
   }
 
   getAllMoves(): ClearMove[] {

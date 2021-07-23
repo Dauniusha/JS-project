@@ -66,12 +66,21 @@ export class Replay extends BaseComponents {
 
   private static createCrownElement(data: ReplaysDBObject, firstPlayerElement: HTMLElement, secondPlayerElement: HTMLElement) {
     const crownElement = createElement([setting.classNames.replays.crown]);
-    crownElement.style.backgroundImage = `url(${setting.imgNames.crown})`;
+    if (!data.winner) {
+      crownElement.style.backgroundImage = `url(${setting.imgNames.draw})`;
+      secondPlayerElement.appendChild(crownElement);
 
-    const winnerElement = JSON.stringify(data.firstPlayer.player) === JSON.stringify(data.winner)
-      ? firstPlayerElement : secondPlayerElement;
+      const secondCrownElement = createElement([setting.classNames.replays.crown]);
+      secondCrownElement.style.backgroundImage = `url(${setting.imgNames.draw})`;
+      firstPlayerElement.appendChild(secondCrownElement);
+    } else {
+      crownElement.style.backgroundImage = `url(${setting.imgNames.crown})`;
 
-    winnerElement.appendChild(crownElement);
+      const winnerElement = JSON.stringify(data.firstPlayer.player) === JSON.stringify(data.winner)
+        ? firstPlayerElement : secondPlayerElement;
+
+      winnerElement.appendChild(crownElement);
+    }
   }
 
   private static addCrossImg(): HTMLElement {
