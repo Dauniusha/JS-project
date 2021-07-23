@@ -47,6 +47,7 @@ export class WatchReplay extends Game {
     this.nextBtn = btns.moveBtns.nextBtn;
 
     this.boostModeBtns = btns.boostBtns;
+    this.boostModeBtns[0].classList.add(setting.classNames.enable);
 
     this.initReplayBtnsListners();
 
@@ -65,7 +66,15 @@ export class WatchReplay extends Game {
     });
 
     this.stopBtn.addEventListener('click', () => {
-      this.stopTimer();
+      if (this.stopBtn.classList.contains(setting.classNames.headers.replaysPlay)) {
+        this.stopBtn.classList.remove(setting.classNames.headers.replaysPlay);
+        this.stopBtn.style.backgroundImage = `url(${setting.imgNames.pause})`;
+        this.startReplayTimer();
+      } else {
+        this.stopBtn.classList.add(setting.classNames.headers.replaysPlay);
+        this.stopBtn.style.backgroundImage = `url(${setting.imgNames.play})`;
+        this.stopTimer();
+      }
     });
 
     this.nextBtn.addEventListener('click', () => {
@@ -75,6 +84,10 @@ export class WatchReplay extends Game {
     this.boostModeBtns.forEach((btn) => {
       const boost = btn.id;
       btn.addEventListener('click', () => {
+        this.boostModeBtns.forEach((btn) => {
+          btn.classList.remove(setting.classNames.enable);
+        });
+        btn.classList.add(setting.classNames.enable);
         this.boostMode = Number(boost);
         this.startNewBoostModeTimer();
       });

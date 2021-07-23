@@ -41,6 +41,7 @@ export const setting = {
       replaysBoostBtn: 'replays__boost-btn',
       replaysBoostBtns: 'replays__boost-btns',
       replaysExitBtn: 'replays__exit-btn',
+      replaysPlay: 'replays__play',
     },
     lobby: {
       lobby: 'lobby',
@@ -193,6 +194,7 @@ export const setting = {
     rightArrow: './header/chevron-right.svg',
     pause: './header/pause.svg',
     exit: './header/exit.svg',
+    play: './header/play.svg',
   },
 
   createFunctions: {

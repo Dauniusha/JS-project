@@ -53,6 +53,7 @@ export class Header extends BaseComponents {
 
     const stopMoveBtn = createElement([ setting.classNames.headers.replaysMoveBtn ]);
     stopMoveBtn.style.backgroundImage = `url(${setting.imgNames.pause})`;
+    stopMoveBtn.id = 'stop-btn';
     container.appendChild(stopMoveBtn);
 
     const nextMoveBtn = createElement([ setting.classNames.headers.replaysMoveBtn ]);

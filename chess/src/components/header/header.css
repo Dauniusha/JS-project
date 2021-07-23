@@ -117,7 +117,14 @@ body {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  margin-left: 5vh;
+  margin-left: 10vh;
+}
+
+.header .replays__boost-btns .enable {
+  background: #9deafd;
+  -webkit-box-shadow: 1px 1px 8px #9deafd;
+          box-shadow: 1px 1px 8px #9deafd;
+  pointer-events: none;
 }
 
 .header .replays__boost-btn {
@@ -147,8 +154,8 @@ body {
 }
 
 .header .replays__boost-btn:hover {
-  -webkit-box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.8);
-          box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.8);
+  -webkit-box-shadow: 1px 1px 8px #9deafd;
+          box-shadow: 1px 1px 8px #9deafd;
 }
 
 .header-btns {
@@ -188,7 +195,7 @@ body {
 }
 
 .header .replays__exit-btn {
-  margin-left: 5vh;
+  margin-left: 10vh;
   width: 4vh;
   height: 4vh;
   background-color: #ff936f;
@@ -208,5 +215,10 @@ body {
           transform: scale(1.02);
   -webkit-box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
           box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+.header #stop-btn {
+  width: 5vh;
+  height: 5vh;
 }
 /*# sourceMappingURL=header.css.map */

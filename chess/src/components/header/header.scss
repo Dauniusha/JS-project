@@ -105,7 +105,13 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-left: 5vh;
+    margin-left: 10vh;
+
+    .enable {
+      background: #9deafd;
+      box-shadow: 1px 1px 8px #9deafd;
+      pointer-events: none;
+    }
   }
 
   .replays__boost-btn {
@@ -132,7 +138,7 @@ body {
     cursor: pointer;
 
     &:hover {
-      box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.8);
+      box-shadow: 1px 1px 8px #9deafd
     }
   }
 
@@ -163,7 +169,7 @@ body {
   }
 
   .replays__exit-btn {
-    margin-left: 5vh;
+    margin-left: 10vh;
     width: 4vh;
     height: 4vh;
     background-color: #ff936f;
@@ -179,5 +185,10 @@ body {
       transform: scale(1.02);
       box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
     }
+  }
+
+  #stop-btn {
+    width: 5vh;
+    height: 5vh;
   }
 }
