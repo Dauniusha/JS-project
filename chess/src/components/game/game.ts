@@ -98,7 +98,7 @@ export class Game extends BaseComponents {
     return this.chessBoard;
   }
 
-  chessBoardListnersInit() {
+  /* chessBoardListnersInit() {
     this.chessBoard.element.addEventListener('click', (elem) => {
       const pieceElem = (<Element>elem.target)?.closest('.' + setting.classNames.piece);
       const activeColor = this.isWhiteMove ? color.white : color.black;
@@ -123,117 +123,113 @@ export class Game extends BaseComponents {
         this.possibleCellsBacklightRemove();
       }
     });
-  }
+  } */
 
   dragAndDropListners() {
     this.chessBoard.element.addEventListener('mousedown', (elem) => {
       this.isDragAndDrop = false;
-      console.log('mousedown');
 
       const pieceElem = <HTMLImageElement> (<Element>elem.target)?.closest('.' + setting.classNames.piece);
       if (pieceElem) {
         pieceElem.ondragstart = () => false;
       }
 
-      const activeColor = this.isWhiteMove ? color.white : color.black;
       const cell = (<Element>elem.target)?.closest('.' + setting.classNames.cell);
 
-      if (
-        cell &&
-        ((<Element>elem.target)?.closest('.' + setting.classNames.possibleClearCell)
-        || (<Element>elem.target)?.closest('.' + setting.classNames.possibleEngagedCell))
-        ) {
-          this.completeMove(cell.id);
-          document.onmousemove = null;
-          return;
-      }
-      console.log(this.pieceActive);
-      if (pieceElem && pieceElem.getAttribute(setting.classNames.dataPiece)?.indexOf(activeColor) !== -1) {
-        if (cell && !(this.pieceActive?.cell === cell.id)) {
-          this.selectPiece(cell.id);
-        } else if (cell && (this.pieceActive?.cell === cell.id)) {
-          this.isSecondClick = true;
-        }
-
-        this.dragObj = {
-          object: pieceElem,
-          shiftX: elem.clientX - pieceElem.getBoundingClientRect().left,
-          shiftY: elem.clientY - pieceElem.getBoundingClientRect().top,
-          currentDroppable: null,
-        };
-        Game.addDragStyles(pieceElem);
-        this.moveAtCoordinates(elem.pageX, elem.pageY);
-
-        pieceElem.onmouseup = (event) => {
-          console.log('mouseup');
-          if (this.isDragAndDrop) { // Mouse move
-            console.log('drag');
-            const elemBelow = Game.takeElementBelow(pieceElem, event);
-            if (cell) {
-              Game.removeDragStyles(pieceElem, cell, elemBelow);
-            }
-            if (
-              elemBelow?.closest('.' + setting.classNames.possibleClearCell)
-              || elemBelow?.closest('.' + setting.classNames.possibleEngagedCell)
-              ) {
-                console.log(elemBelow);
-                this.completeMove(elemBelow.id);
-                document.onmousemove = null;
-                pieceElem.onmouseup = null;
-                return;
-            }
-          } else { // Click
-            if (cell) {
-              Game.removeDragStyles(pieceElem, cell);
-              if (this.pieceActive?.cell === cell.id && this.isSecondClick) {
-                this.possibleCellsBacklightRemove();
-                this.isSecondClick = false;
-                this.pieceActive = undefined;
-              }
-            }
-          }
-
-          document.onmousemove = null;
-          pieceElem.onmouseup = null;
-        };
-
-        document.onmousemove = (event) => {
-          this.onMouseMove(event);
-        };
-      } else {
-        this.possibleCellsBacklightRemove();
-        this.pieceActive = undefined;
-      }
+      this.onMouseDown(pieceElem, cell, elem);
     });
   }
 
-  private static addDragStyles(pieceElem: HTMLImageElement) {
-    pieceElem.classList.add('draging')
-    document.body.append(pieceElem);
+  private onMouseDown(pieceElem: HTMLImageElement, cell: Element | null, elem: MouseEvent) {
+    const activeColor = this.isWhiteMove ? color.white : color.black;
+
+    if (
+      cell &&
+      ((<Element>elem.target)?.closest('.' + setting.classNames.possibleClearCell)
+      || (<Element>elem.target)?.closest('.' + setting.classNames.possibleEngagedCell))
+      ) {
+        this.completeMove(cell.id);
+        document.onmousemove = null;
+        this.isSecondClick = false;
+        return;
+    }
+    if (pieceElem && pieceElem.getAttribute(setting.classNames.dataPiece)?.indexOf(activeColor) !== -1) {
+      if (cell && !(this.pieceActive?.cell === cell.id)) {
+        this.selectPiece(cell.id);
+      } else if (cell && (this.pieceActive?.cell === cell.id)) {
+        this.isSecondClick = true;
+      }
+
+      this.takeDragObj(pieceElem, elem);
+
+      pieceElem.onmouseup = (event) => {
+        this.clickOrDragDelegating(pieceElem, event, cell);
+      };
+
+      document.onmousemove = (event) => {
+        this.onMouseMove(event);
+      };
+    } else {
+      this.possibleCellsBacklightRemove();
+      this.pieceActive = undefined;
+      this.isSecondClick = false;
+    }
   }
 
-  private static removeDragStyles(pieceElem: HTMLImageElement, cell: Element, elemBelow: Element | null = null) {
-    cell.appendChild(pieceElem);
-    pieceElem.classList.remove('draging');
-    cell.classList.add(setting.classNames.selectPieceBacklight);
-    if (cell !== elemBelow) {
-      elemBelow?.classList.remove(setting.classNames.selectPieceBacklight);
+  private takeDragObj(pieceElem: HTMLImageElement, elem: MouseEvent) {
+    this.dragObj = {
+      object: pieceElem,
+      shiftX: elem.clientX - pieceElem.getBoundingClientRect().left,
+      shiftY: elem.clientY - pieceElem.getBoundingClientRect().top,
+      currentDroppable: null,
+    };
+    Game.addDragStyles(pieceElem);
+    this.moveAtCoordinates(elem.pageX, elem.pageY);
+  }
+
+  private clickOrDragDelegating(pieceElem: HTMLImageElement, event: MouseEvent, cell: Element | null) {
+    if (this.isDragAndDrop) { // Mouse move
+      const elemBelow = Game.takeElementBelow(pieceElem, event);
+      if (cell) {
+        this.removeDragStyles(pieceElem, cell);
+      }
+      if (
+        elemBelow?.closest('.' + setting.classNames.possibleClearCell)
+        || elemBelow?.closest('.' + setting.classNames.possibleEngagedCell)
+        ) {
+          this.completeMove(elemBelow.id);
+          this.isSecondClick = false;
+          document.onmousemove = null;
+          pieceElem.onmouseup = null;
+          return;
+      }
+    } else { // Click
+      if (cell) {
+        this.removeDragStyles(pieceElem, cell);
+        if (this.pieceActive?.cell === cell.id && this.isSecondClick) {
+          this.possibleCellsBacklightRemove();
+          this.isSecondClick = false;
+          this.pieceActive = undefined;
+        }
+      }
     }
+
+    document.onmousemove = null;
+    pieceElem.onmouseup = null;
   }
 
   private onMouseMove(event: MouseEvent) {
     this.isDragAndDrop = true;
-    console.log('mousemove');
-
-    this.moveAtCoordinates(event.pageX, event.pageY);
 
     if (this.dragObj) {
+
       const elemBelow = Game.takeElementBelow(this.dragObj.object, event);
 
-      console.log(elemBelow);
       if (!elemBelow) {
         return;
       }
+
+      this.moveAtCoordinates(event.pageX, event.pageY);
 
       const droppableBelow = <HTMLElement> elemBelow.closest('.' + setting.classNames.cell);
 
@@ -249,7 +245,19 @@ export class Game extends BaseComponents {
     }
   }
 
-  private static takeElementBelow(obj: HTMLElement, event: MouseEvent): Element | null {
+  private static addDragStyles(pieceElem: HTMLImageElement) {
+    pieceElem.classList.add('draging')
+    document.body.append(pieceElem);
+  }
+
+  private removeDragStyles(pieceElem: HTMLImageElement, cell: Element) {
+    cell.appendChild(pieceElem);
+    pieceElem.classList.remove('draging');
+    this.removeSelectCellsBacklights();
+    cell.classList.add(setting.classNames.selectPieceBacklight);
+  }
+
+  private static takeElementBelow(obj: HTMLImageElement, event: MouseEvent): Element | null {
     obj.hidden = true;
     const elemBelow = document.elementFromPoint(event.clientX, event.clientY);
     obj.hidden = false;
@@ -398,6 +406,12 @@ export class Game extends BaseComponents {
 
   protected removeDragBacklights(cell: HTMLElement) {
     cell.classList.remove(setting.classNames.selectPieceBacklight);
+  }
+
+  protected removeSelectCellsBacklights() {
+    this.chessBoard.getAllCells().forEach((cell) => {
+      cell.classList.remove(setting.classNames.selectPieceBacklight);
+    });
   }
 
   protected checkMateValidation(movedPieceColor: string) {
