@@ -132,7 +132,7 @@ export class OnlineGame extends Game {
     });
   }
 
-  private makeMoveAndSendData() {
+  /* private makeClickMoveAndSendData() {
     this.chessBoard.element.addEventListener('click', (elem) => {
       const pieceElem = (<Element>elem.target)?.closest('.' + setting.classNames.piece);
       const activeColor = this.isWhiteMove ? color.white : color.black;
@@ -158,6 +158,88 @@ export class OnlineGame extends Game {
         this.possibleCellsBacklightRemove();
       }
     });
+  } */
+
+  private makeMoveAndSendData() { // TODO: Не понимаю, как сделать без копирования кода
+    this.chessBoard.element.addEventListener('mousedown', (elem) => {
+      this.isDragAndDrop = false;
+
+      const pieceElem = <HTMLImageElement> (<Element>elem.target)?.closest('.' + setting.classNames.piece);
+      if (pieceElem) {
+        pieceElem.ondragstart = () => false;
+      }
+
+      const cell = (<Element>elem.target)?.closest('.' + setting.classNames.cell);
+
+      this.onMouseDownSendData(pieceElem, cell, elem);
+    });
+  }
+
+  private onMouseDownSendData(pieceElem: HTMLImageElement, cell: Element | null, elem: MouseEvent) {
+    const activeColor = this.isWhiteMove ? color.white : color.black;
+
+    if (
+      cell &&
+      ((<Element>elem.target)?.closest('.' + setting.classNames.possibleClearCell)
+      || (<Element>elem.target)?.closest('.' + setting.classNames.possibleEngagedCell))
+      ) {
+        this.makeOnlineCompleteMove(cell.id);
+        document.onmousemove = null;
+        this.isSecondClick = false;
+        return;
+    }
+    if (pieceElem && pieceElem.getAttribute(setting.classNames.dataPiece)?.indexOf(activeColor) !== -1 && activeColor === this.color) {
+      if (cell && !(this.pieceActive?.cell === cell.id)) {
+        this.selectPiece(cell.id);
+      } else if (cell && (this.pieceActive?.cell === cell.id)) {
+        this.isSecondClick = true;
+      }
+
+      this.takeDragObj(pieceElem, elem);
+
+      pieceElem.onmouseup = (event) => {
+        this.clickOrDragDelegatingSendData(pieceElem, event, cell);
+      };
+
+      document.onmousemove = (event) => {
+        this.onMouseMove(event);
+      };
+    } else {
+      this.possibleCellsBacklightRemove();
+      this.pieceActive = undefined;
+      this.isSecondClick = false;
+    }
+  }
+
+  private clickOrDragDelegatingSendData(pieceElem: HTMLImageElement, event: MouseEvent, cell: Element | null) {
+    if (this.isDragAndDrop) { // Mouse move
+      const elemBelow = Game.takeElementBelow(pieceElem, event);
+      if (cell) {
+        this.removeDragStyles(pieceElem, cell);
+      }
+      if (
+        elemBelow?.closest('.' + setting.classNames.possibleClearCell)
+        || elemBelow?.closest('.' + setting.classNames.possibleEngagedCell)
+        ) {
+          this.makeOnlineCompleteMove(elemBelow.id);
+          this.isSecondClick = false;
+          document.onmousemove = null;
+          pieceElem.onmouseup = null;
+          return;
+      }
+    } else { // Click
+      if (cell) {
+        this.removeDragStyles(pieceElem, cell);
+        if (this.pieceActive?.cell === cell.id && this.isSecondClick) {
+          this.possibleCellsBacklightRemove();
+          this.isSecondClick = false;
+          this.pieceActive = undefined;
+        }
+      }
+    }
+
+    document.onmousemove = null;
+    pieceElem.onmouseup = null;
   }
 
   surrenderBtnEvent() {

@@ -1,6 +1,7 @@
 import { cellNameToCellPosition } from '../../shared/cell-name-to-cell-position';
 import { colorFunctions } from '../../shared/color';
 import { createElement } from '../../shared/create-element';
+import { MessageReader } from '../../shared/server-message-reader';
 import { timeFunctions } from '../../shared/translate-time';
 import { ChessBoard } from '../chess-board/chess-board';
 import { Bishop } from '../chess-pieces/each-pieces/bishop';
@@ -39,11 +40,11 @@ export class Game extends BaseComponents {
 
   isEndGame: boolean = false;
 
-  private isDragAndDrop: boolean = false;
+  protected isDragAndDrop: boolean = false;
 
-  private isSecondClick: boolean = false;
+  protected isSecondClick: boolean = false;
 
-  private dragObj?: { object: HTMLImageElement, shiftX: number, shiftY: number, currentDroppable: HTMLElement | null };
+  protected dragObj?: { object: HTMLImageElement, shiftX: number, shiftY: number, currentDroppable: HTMLElement | null };
 
   constructor(replay?: ReplaysDBObject, color?: string) {
     super('section', ['game']);
@@ -176,7 +177,7 @@ export class Game extends BaseComponents {
     }
   }
 
-  private takeDragObj(pieceElem: HTMLImageElement, elem: MouseEvent) {
+  protected takeDragObj(pieceElem: HTMLImageElement, elem: MouseEvent) {
     this.dragObj = {
       object: pieceElem,
       shiftX: elem.clientX - pieceElem.getBoundingClientRect().left,
@@ -218,7 +219,7 @@ export class Game extends BaseComponents {
     pieceElem.onmouseup = null;
   }
 
-  private onMouseMove(event: MouseEvent) {
+  protected onMouseMove(event: MouseEvent) {
     this.isDragAndDrop = true;
 
     if (this.dragObj) {
@@ -245,26 +246,26 @@ export class Game extends BaseComponents {
     }
   }
 
-  private static addDragStyles(pieceElem: HTMLImageElement) {
+  protected static addDragStyles(pieceElem: HTMLImageElement) {
     pieceElem.classList.add('draging')
     document.body.append(pieceElem);
   }
 
-  private removeDragStyles(pieceElem: HTMLImageElement, cell: Element) {
+  protected removeDragStyles(pieceElem: HTMLImageElement, cell: Element) {
     cell.appendChild(pieceElem);
     pieceElem.classList.remove('draging');
     this.removeSelectCellsBacklights();
     cell.classList.add(setting.classNames.selectPieceBacklight);
   }
 
-  private static takeElementBelow(obj: HTMLImageElement, event: MouseEvent): Element | null {
+  protected static takeElementBelow(obj: HTMLImageElement, event: MouseEvent): Element | null {
     obj.hidden = true;
     const elemBelow = document.elementFromPoint(event.clientX, event.clientY);
     obj.hidden = false;
     return elemBelow ? elemBelow.closest('.' + setting.classNames.cell) : null;
   }
 
-  private moveAtCoordinates(pageX: number, pageY: number) {
+  protected moveAtCoordinates(pageX: number, pageY: number) {
     if (this.dragObj) {
       this.dragObj.object.style.left = pageX - this.dragObj.shiftX + 'px';
       this.dragObj.object.style.top = pageY - this.dragObj.shiftY + 'px';
@@ -306,6 +307,7 @@ export class Game extends BaseComponents {
 
   private completeMove(cellId: string) {
     if (this.pieceActive) {    
+
       this.pieceMove(cellId);
 
       if (this.pieceActive instanceof Pawn &&
