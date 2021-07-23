@@ -40,7 +40,7 @@ export class Lobby extends BaseComponents {
     firstContainer.appendChild(this.playerFirst.element);
     firstContainer.appendChild(this.replaysBtn);
 
-    [ this.startGameBtn, this.startTextElement, this.gameSwitcherBtn ] = Lobby.startBtnAndSwicherInit();
+    [this.startGameBtn, this.startTextElement, this.gameSwitcherBtn] = Lobby.startBtnAndSwicherInit();
     this.container.appendChild(this.startGameBtn);
     this.initStartListner();
     this.initToogleListner();
@@ -98,8 +98,8 @@ export class Lobby extends BaseComponents {
 
     startBtn.appendChild(startText);
     startBtn.appendChild(gameModeBtn);
-    
-    return [ startBtn, startText, gameModeBtn ];
+
+    return [startBtn, startText, gameModeBtn];
   }
 
   private initToogleListner() {
@@ -111,9 +111,8 @@ export class Lobby extends BaseComponents {
         needDatasetName = 'offline';
       }
 
-      this.startGameBtn.dataset.mode = 'start-' + needDatasetName;
+      this.startGameBtn.dataset.mode = `start-${needDatasetName}`;
       this.gameSwitcherBtn.dataset.mode = needDatasetName;
-
     });
   }
 
@@ -144,7 +143,7 @@ export class Lobby extends BaseComponents {
 
   private newMessage(message: string) {
     console.log(message);
-    switch(message) {
+    switch (message) {
       case 'loading':
         this.showLoadingOrConnectingScreen('loading');
         break;
@@ -159,7 +158,7 @@ export class Lobby extends BaseComponents {
       default:
         const keyValue = message.split(' ');
 
-        switch(keyValue[0]) {
+        switch (keyValue[0]) {
           case 'name':
             this.playerSecond.setName(keyValue.splice(1).join(' '));
             break;

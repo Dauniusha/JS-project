@@ -1,8 +1,8 @@
-import { ClearMove } from "../clear-move";
-import { PlayerDBObject } from "./data-base-player-object";
+import { ClearMove } from '../clear-move';
+import { PlayerDBObject } from './data-base-player-object';
 
 export interface PlayerWithMove {
   player: PlayerDBObject;
-  moves: ClearMove[]; 
+  moves: ClearMove[];
   color: string;
 }

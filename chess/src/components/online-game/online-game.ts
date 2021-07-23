@@ -1,8 +1,8 @@
-import { Game } from "../game/game";
-import { MessageReader } from "../../shared/server-message-reader";
-import { color } from "../models/game/color-interface";
-import { setting } from "../settings/setting";
-import { Pawn } from "../chess-pieces/each-pieces/pawn";
+import { Game } from '../game/game';
+import { MessageReader } from '../../shared/server-message-reader';
+import { color } from '../models/game/color-interface';
+import { setting } from '../settings/setting';
+import { Pawn } from '../chess-pieces/each-pieces/pawn';
 
 export class OnlineGame extends Game {
   private readonly color: string;
@@ -19,7 +19,7 @@ export class OnlineGame extends Game {
 
   private initListner() {
     this.socket.addEventListener('message', (event: MessageEvent<string>) => {
-      switch(event.data) {
+      switch (event.data) {
         case 'draw':
           this.confirmDrawPopup();
           break;
@@ -95,7 +95,7 @@ export class OnlineGame extends Game {
       return;
     }
 
-    const [ startCell, endCell ] = MessageReader.readMessage(message);
+    const [startCell, endCell] = MessageReader.readMessage(message);
     this.pieceActive = this.chessBoard.selectPiece(startCell);
 
     this.pieceMove(endCell);
@@ -121,14 +121,14 @@ export class OnlineGame extends Game {
     const popup = this.createChoosePiecePopup(piece.color);
     popup.showPopup();
     popup.element.addEventListener('click', (event) => {
-        if (event.target instanceof HTMLImageElement) {
-          const name = event.target.alt;
-          const fullName = piece.color + name;
-          this.socket.send(name);
-          this.replaceTransormPiece(piece, fullName);
-          Game.removePopup(popup);
-          this.removeCancelMoveAndCheckValidation(piece.color);
-        }
+      if (event.target instanceof HTMLImageElement) {
+        const name = event.target.alt;
+        const fullName = piece.color + name;
+        this.socket.send(name);
+        this.replaceTransormPiece(piece, fullName);
+        Game.removePopup(popup);
+        this.removeCancelMoveAndCheckValidation(piece.color);
+      }
     });
   }
 
@@ -164,12 +164,12 @@ export class OnlineGame extends Game {
     this.chessBoard.element.addEventListener('mousedown', (elem) => {
       this.isDragAndDrop = false;
 
-      const pieceElem = <HTMLImageElement> (<Element>elem.target)?.closest('.' + setting.classNames.piece);
+      const pieceElem = <HTMLImageElement> (<Element>elem.target)?.closest(`.${setting.classNames.piece}`);
       if (pieceElem) {
         pieceElem.ondragstart = () => false;
       }
 
-      const cell = (<Element>elem.target)?.closest('.' + setting.classNames.cell);
+      const cell = (<Element>elem.target)?.closest(`.${setting.classNames.cell}`);
 
       this.onMouseDownSendData(pieceElem, cell, elem);
     });
@@ -179,14 +179,14 @@ export class OnlineGame extends Game {
     const activeColor = this.isWhiteMove ? color.white : color.black;
 
     if (
-      cell &&
-      ((<Element>elem.target)?.closest('.' + setting.classNames.possibleClearCell)
-      || (<Element>elem.target)?.closest('.' + setting.classNames.possibleEngagedCell))
-      ) {
-        this.makeOnlineCompleteMove(cell.id);
-        document.onmousemove = null;
-        this.isSecondClick = false;
-        return;
+      cell
+      && ((<Element>elem.target)?.closest(`.${setting.classNames.possibleClearCell}`)
+      || (<Element>elem.target)?.closest(`.${setting.classNames.possibleEngagedCell}`))
+    ) {
+      this.makeOnlineCompleteMove(cell.id);
+      document.onmousemove = null;
+      this.isSecondClick = false;
+      return;
     }
     if (pieceElem && pieceElem.getAttribute(setting.classNames.dataPiece)?.indexOf(activeColor) !== -1 && activeColor === this.color) {
       if (cell && !(this.pieceActive?.cell === cell.id)) {
@@ -218,23 +218,22 @@ export class OnlineGame extends Game {
         this.removeDragStyles(pieceElem, cell);
       }
       if (
-        elemBelow?.closest('.' + setting.classNames.possibleClearCell)
-        || elemBelow?.closest('.' + setting.classNames.possibleEngagedCell)
-        ) {
-          this.makeOnlineCompleteMove(elemBelow.id);
-          this.isSecondClick = false;
-          document.onmousemove = null;
-          pieceElem.onmouseup = null;
-          return;
+        elemBelow?.closest(`.${setting.classNames.possibleClearCell}`)
+        || elemBelow?.closest(`.${setting.classNames.possibleEngagedCell}`)
+      ) {
+        this.makeOnlineCompleteMove(elemBelow.id);
+        this.isSecondClick = false;
+        document.onmousemove = null;
+        pieceElem.onmouseup = null;
+        return;
       }
-    } else { // Click
-      if (cell) {
-        this.removeDragStyles(pieceElem, cell);
-        if (this.pieceActive?.cell === cell.id && this.isSecondClick) {
-          this.possibleCellsBacklightRemove();
-          this.isSecondClick = false;
-          this.pieceActive = undefined;
-        }
+    } else if (cell) { // Click
+      console.log(setting.gameSetup);
+      this.removeDragStyles(pieceElem, cell);
+      if (this.pieceActive?.cell === cell.id && this.isSecondClick) {
+        this.possibleCellsBacklightRemove();
+        this.isSecondClick = false;
+        this.pieceActive = undefined;
       }
     }
 

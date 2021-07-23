@@ -1,5 +1,5 @@
-import { PlayerWithMove } from "./data-base-player-move";
-import { PlayerDBObject } from "./data-base-player-object";
+import { PlayerWithMove } from './data-base-player-move';
+import { PlayerDBObject } from './data-base-player-object';
 
 export interface ReplaysDBObject {
   firstPlayer: PlayerWithMove;

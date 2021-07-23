@@ -1,12 +1,12 @@
-import { Bishop } from "../chess-pieces/each-pieces/bishop";
-import { King } from "../chess-pieces/each-pieces/king";
-import { Knight } from "../chess-pieces/each-pieces/knight";
-import { Pawn } from "../chess-pieces/each-pieces/pawn";
-import { Queen } from "../chess-pieces/each-pieces/queen";
-import { Rook } from "../chess-pieces/each-pieces/rook";
-import { color } from "../models/game/color-interface";
+import { Bishop } from '../chess-pieces/each-pieces/bishop';
+import { King } from '../chess-pieces/each-pieces/king';
+import { Knight } from '../chess-pieces/each-pieces/knight';
+import { Pawn } from '../chess-pieces/each-pieces/pawn';
+import { Queen } from '../chess-pieces/each-pieces/queen';
+import { Rook } from '../chess-pieces/each-pieces/rook';
+import { color } from '../models/game/color-interface';
 
-export let setting = {
+export const setting = {
   classNames: {
     board: 'chess-board',
     cell: 'cell',
@@ -50,7 +50,7 @@ export let setting = {
         start: 'menu-start',
         startText: 'menu-start__text',
         gameMode: 'game-mode',
-      }
+      },
     },
     player: {
       player: 'player',
@@ -173,14 +173,14 @@ export let setting = {
     blackKnight: './chess/black-knight.svg',
     blackRook: './chess/black-rook.svg',
     blackPawn: './chess/black-pawn.svg',
-    
+
     whiteQueen: './chess/white-queen.svg',
     whiteKing: './chess/white-king.svg',
     whiteBishop: './chess/white-bishop.svg',
     whiteKnight: './chess/white-knight.svg',
     whiteRook: './chess/white-rook.svg',
     whitePawn: './chess/white-pawn.svg',
-    
+
     crown: './flags/crown.svg',
     cross: './flags/x.svg',
 
@@ -195,7 +195,7 @@ export let setting = {
     blackKnight: (position: string) => new Knight(position, color.black),
     blackRook: (position: string) => new Rook(position, color.black),
     blackPawn: (position: string) => new Pawn(position, color.black),
-    
+
     whiteQueen: (position: string) => new Queen(position, color.white),
     whiteKing: (position: string) => new King(position, color.white),
     whiteBishop: (position: string) => new Bishop(position, color.white),
@@ -222,9 +222,9 @@ export let setting = {
   },
 
   playersInitStates: {
-    players: [ 'Player 1', 'Player 2' ],
+    players: ['Player 1', 'Player 2'],
     playerImgURL: '../../../avatar/Unknown.png',
   },
 
   serverURL: 'wss://ancient-oasis-48599.herokuapp.com',
-}
+};

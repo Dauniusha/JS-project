@@ -1,7 +1,7 @@
-import { BaseComponents } from "../models/base-component";
-import { ClearMove } from "../models/clear-move";
-import { Move } from "../move/move";
-import { setting } from "../settings/setting";
+import { BaseComponents } from '../models/base-component';
+import { ClearMove } from '../models/clear-move';
+import { Move } from '../move/move';
+import { setting } from '../settings/setting';
 import './move-table.css';
 
 export class MoveTable extends BaseComponents {
@@ -12,7 +12,7 @@ export class MoveTable extends BaseComponents {
   }
 
   addMove(pieceName: string, color: string, startcell: string, endCell: string, time: string) {
-    const fullPieceName = color  + pieceName;
+    const fullPieceName = color + pieceName;
     const move = new Move(fullPieceName, startcell, endCell, time);
     this.fullPieceName.push(move);
     this.element.appendChild(move.element);
@@ -40,5 +40,5 @@ export class MoveTable extends BaseComponents {
 
   getAllMovesElement(): Move[] {
     return this.fullPieceName;
-  } 
- }
+  }
+}

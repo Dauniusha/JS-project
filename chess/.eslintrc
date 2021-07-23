@@ -17,7 +17,12 @@
   ],
   "ignorePatterns": ["*.config.js", "node_modules/", "dist/"],
   "rules": {
-    "linebreak-style": "warn", // Не знаю как пофиксить
+    "linebreak-style": "warn",
+    "prefer-destructuring": "warn",
+    "no-case-declarations": "warn", // Разобраться, почему
+    "import/no-cycle": "warn", // Не понимаю, как фиксить
+    "@typescript-eslint/no-shadow": "warn",
+    "no-shadow": "warn",
     "consistent-return": "off",
     "no-async-promise-executor": "off",
     "no-bitwise": "off",

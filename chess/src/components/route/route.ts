@@ -1,5 +1,5 @@
-import { Route } from "../models/route/route-interface";
-import { setting } from "../settings/setting";
+import { Route } from '../models/route/route-interface';
+import { setting } from '../settings/setting';
 
 export class Router {
   private routes: Route[] = [];
@@ -14,7 +14,7 @@ export class Router {
 
   changeRoute() {
     const location = window.location.hash;
-    if (!location) {    
+    if (!location) {
       this.enumiration(setting.startPage);
     } else {
       this.enumiration(location);
@@ -29,5 +29,4 @@ export class Router {
       }
     }
   }
-
 }

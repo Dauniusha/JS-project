@@ -1,15 +1,15 @@
-import { storage } from "./data-base/data-base-element";
-import { Footer } from "./footer/footer";
-import { Game } from "./game/game";
-import { Header } from "./header/header";
-import { Lobby } from "./lobby/lobby";
-import { ReplaysDBObject } from "./models/data-base/data-base-replays-object";
-import { OnlineGame } from "./online-game/online-game";
-import { Replays } from "./replays/replays";
-import { Router } from "./route/route";
-import { setting } from "./settings/setting";
-import { timer } from "./timer/timer";
-import { WatchReplay } from "./watch-replays/replays-watch";
+import { storage } from './data-base/data-base-element';
+import { Footer } from './footer/footer';
+import { Game } from './game/game';
+import { Header } from './header/header';
+import { Lobby } from './lobby/lobby';
+import { ReplaysDBObject } from './models/data-base/data-base-replays-object';
+import { OnlineGame } from './online-game/online-game';
+import { Replays } from './replays/replays';
+import { Router } from './route/route';
+import { setting } from './settings/setting';
+import { timer } from './timer/timer';
+import { WatchReplay } from './watch-replays/replays-watch';
 
 export class App {
   private header: Header;
@@ -62,7 +62,7 @@ export class App {
     this.router.add({
       pageName: 'setting',
       hash: '#/Setting',
-      needFoo: () => this.startSettingPage(),
+      needFoo: () => App.startSettingPage(),
     });
 
     this.router.add({
@@ -90,8 +90,8 @@ export class App {
     this.rootElement.insertBefore(this.lobby.element, this.footer.element);
   }
 
-  private startSettingPage() {
-    
+  private static startSettingPage() {
+
   }
 
   private startGamePage() {
@@ -152,15 +152,15 @@ export class App {
   }
 
   private static async getReplay(): Promise<ReplaysDBObject> {
-    return new Promise( async (resolve) => {
+    return new Promise(async (resolve) => {
       const location = window.location.hash;
       const locationToken = location.split('/');
-      const replayPosition = locationToken[ locationToken.length - 1 ];
-  
+      const replayPosition = locationToken[locationToken.length - 1];
+
       const allReplays = await storage.getReplays();
       const replay = allReplays[Number(replayPosition)];
       resolve(replay);
-    }); 
+    });
   }
 
   private initReplayBtnsListners(previousBtn: HTMLElement, nextBtn: HTMLElement) {

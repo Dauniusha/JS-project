@@ -7,7 +7,7 @@
     "build": "webpack",
     "start": "webpack serve --open chrome.exe",
     "dev": "webpack serve --env development",
-    "lint": "eslint ./",
+    "lint": "eslint ./ --fix",
     "prettier": "prettier --config .prettierrc --write ./src/**/*.ts"
   },
   "repository": {

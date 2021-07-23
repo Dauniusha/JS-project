@@ -17,7 +17,7 @@ export class Header extends BaseComponents {
 
   constructor() {
     super('header', [setting.classNames.headers.header]);
-    
+
     this.container = document.createElement('div');
     this.container.classList.add(setting.classNames.headers.container);
 
@@ -37,13 +37,13 @@ export class Header extends BaseComponents {
   }
 
   createReplayBtns(): { previousBtn: HTMLElement, nextBtn: HTMLElement } {
-    const replayBtns = createElement([ setting.classNames.replays.headerBtns ]);
+    const replayBtns = createElement([setting.classNames.replays.headerBtns]);
 
-    this.previousMoveBtn = createElement([ setting.classNames.replays.headerBtn ]);
+    this.previousMoveBtn = createElement([setting.classNames.replays.headerBtn]);
     this.previousMoveBtn.style.backgroundImage = `url(${setting.imgNames.leftArrow})`;
     replayBtns.appendChild(this.previousMoveBtn);
 
-    this.nextMoveBtn = createElement([ setting.classNames.replays.headerBtn ]);
+    this.nextMoveBtn = createElement([setting.classNames.replays.headerBtn]);
     this.nextMoveBtn.style.backgroundImage = `url(${setting.imgNames.rightArrow})`;
     replayBtns.appendChild(this.nextMoveBtn);
 
@@ -53,14 +53,14 @@ export class Header extends BaseComponents {
   }
 
   createSurrenderAndDrawBtns(): { surrenderBtn: HTMLElement, drawBtn: HTMLElement } {
-    const btnsContainer = createElement([ setting.classNames.headers.gameBtnsContainer ]);
+    const btnsContainer = createElement([setting.classNames.headers.gameBtnsContainer]);
 
-    this.surrenderBtn = createElement([ setting.classNames.headers.gameBtn ]);
+    this.surrenderBtn = createElement([setting.classNames.headers.gameBtn]);
     this.surrenderBtn.innerHTML = 'surrender';
     this.surrenderBtn.id = 'surrender';
     btnsContainer.appendChild(this.surrenderBtn);
 
-    this.drawBtn = createElement([ setting.classNames.headers.gameBtn ]);
+    this.drawBtn = createElement([setting.classNames.headers.gameBtn]);
     this.drawBtn.innerHTML = 'offer a draw';
     this.drawBtn.id = 'draw';
     btnsContainer.appendChild(this.drawBtn);
@@ -88,7 +88,7 @@ export class Header extends BaseComponents {
 
   /* getReplayBtns(): { previousBtn: HTMLElement, nextBtn: HTMLElement } {
     if (this.previousMoveBtn && this.nextMoveBtn) {
-      return { previousBtn: this.previousMoveBtn, nextBtn: this.nextMoveBtn }; 
+      return { previousBtn: this.previousMoveBtn, nextBtn: this.nextMoveBtn };
     } else {
       throw new Error('Btns does not exist!');
     }

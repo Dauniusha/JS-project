@@ -1,9 +1,9 @@
-import { BaseComponents } from "../models/base-component";
-import { PlayerWithMove } from "../models/data-base/data-base-player-move";
-import { ReplaysDBObject } from "../models/data-base/data-base-replays-object";
-import { MoveTable } from "../move-table/move-table";
-import { Player } from "../player/player";
-import { setting } from "../settings/setting";
+import { BaseComponents } from '../models/base-component';
+import { PlayerWithMove } from '../models/data-base/data-base-player-move';
+import { ReplaysDBObject } from '../models/data-base/data-base-replays-object';
+import { MoveTable } from '../move-table/move-table';
+import { Player } from '../player/player';
+import { setting } from '../settings/setting';
 import './player-statistics.css';
 
 export class PlayerStatistics extends BaseComponents {
@@ -24,7 +24,7 @@ export class PlayerStatistics extends BaseComponents {
       this.moveTable = new MoveTable();
     } else if (replays) {
       this.color = replays.player.color;
-      
+
       this.player = new Player(undefined,
         { avatarURL: replays.player.player.avatarURL, name: replays.player.player.name });
 

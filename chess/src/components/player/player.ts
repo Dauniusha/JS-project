@@ -1,7 +1,7 @@
-import { storage } from "../data-base/data-base-element";
-import { BaseComponents } from "../models/base-component";
-import { PlayerDBObject } from "../models/data-base/data-base-player-object";
-import { setting } from "../settings/setting";
+import { storage } from '../data-base/data-base-element';
+import { BaseComponents } from '../models/base-component';
+import { PlayerDBObject } from '../models/data-base/data-base-player-object';
+import { setting } from '../settings/setting';
 
 export class Player extends BaseComponents {
   private avatar?: HTMLInputElement | HTMLElement;
@@ -12,11 +12,15 @@ export class Player extends BaseComponents {
 
   private name?: string;
 
-  constructor( casual?: { writable: boolean, counter: number }, replay?: { avatarURL: string, name: string }) {
+  constructor(casual?: { writable: boolean, counter: number }, replay?: { avatarURL: string, name: string }) {
     super('div', [setting.classNames.player.player]);
 
     if (casual) {
-      casual.writable ? this.playerInit(casual.counter) : this.getPlayer(casual.counter);
+      if (casual.writable) {
+        this.playerInit(casual.counter);
+      } else {
+        this.getPlayer(casual.counter);
+      }
     } else if (replay) {
       this.createClearPlayer(replay.avatarURL, replay.name);
     }
@@ -24,10 +28,10 @@ export class Player extends BaseComponents {
 
   private async playerInit(counter: number) {
     const players = await storage.getPlayers();
-    [ this.avatarURL, this.name ] = players[counter] ? 
-    [ players[counter].avatarURL, players[counter].name ] : 
-    [ setting.playersInitStates.playerImgURL, setting.playersInitStates.players[counter] ];
-    
+    [this.avatarURL, this.name] = players[counter]
+      ? [players[counter].avatarURL, players[counter].name]
+      : [setting.playersInitStates.playerImgURL, setting.playersInitStates.players[counter]];
+
     const avatar = document.createElement('input');
     avatar.type = 'file';
     avatar.classList.add(setting.classNames.player.avatar);
@@ -47,9 +51,9 @@ export class Player extends BaseComponents {
 
   private async getPlayer(counter: number) {
     const players = await storage.getPlayers();
-    [ this.avatarURL, this.name ] = players[counter] ? 
-    [ players[counter].avatarURL, players[counter].name ] : 
-    [ setting.playersInitStates.playerImgURL, setting.playersInitStates.players[counter] ];
+    [this.avatarURL, this.name] = players[counter]
+      ? [players[counter].avatarURL, players[counter].name]
+      : [setting.playersInitStates.playerImgURL, setting.playersInitStates.players[counter]];
 
     this.createClearPlayer(this.avatarURL, this.name);
   }
@@ -97,9 +101,8 @@ export class Player extends BaseComponents {
   getName(): string {
     if (this.name) {
       return this.name;
-    } else {
-      throw new Error('Name does not exist!');
     }
+    throw new Error('Name does not exist!');
   }
 
   getNameElement(): HTMLInputElement | HTMLElement {
@@ -112,9 +115,8 @@ export class Player extends BaseComponents {
   getNameWithAvatar(): PlayerDBObject {
     if (this.avatarURL && this.name) {
       return { avatarURL: this.avatarURL, name: this.name };
-    } else {
-      throw new Error('Name or avatar does not exist!');
     }
+    throw new Error('Name or avatar does not exist!');
   }
 
   getAvatar(): HTMLInputElement | HTMLElement {

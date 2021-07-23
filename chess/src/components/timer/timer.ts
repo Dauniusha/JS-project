@@ -1,4 +1,4 @@
-import { BaseComponents } from "../models/base-component";
+import { BaseComponents } from '../models/base-component';
 import './timer.css';
 
 class Timer extends BaseComponents {
@@ -65,7 +65,7 @@ class Timer extends BaseComponents {
   }
 
   clearTimer() {
-    this.stopTimer()
+    this.stopTimer();
     this.resetTimer();
   }
 }

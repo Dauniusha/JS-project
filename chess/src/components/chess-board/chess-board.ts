@@ -26,10 +26,12 @@ export class ChessBoard extends BaseComponents {
   constructor(gameSetup: Setup[]) {
     super('div', [setting.classNames.board, setting.classNames.game.noRotate]);
 
+    setting.gameSetup = JSON.parse(JSON.stringify(gameSetup));
+
     this.cells = this.cellsInit();
 
-    this.element.appendChild(this.boardNumerationInit('number'));
-    this.element.appendChild(this.boardNumerationInit('letter'));
+    this.element.appendChild(ChessBoard.boardNumerationInit('number'));
+    this.element.appendChild(ChessBoard.boardNumerationInit('letter'));
 
     this.newPlacePieces(gameSetup);
 
@@ -37,7 +39,7 @@ export class ChessBoard extends BaseComponents {
   }
 
   private cellsInit(): HTMLElement[] {
-    let tempCells: HTMLElement[] = [];
+    const tempCells: HTMLElement[] = [];
     let needWhite = true;
     for (let i = 8; i >= 1; i--) {
       for (let j = 1; j <= 8; j++) {
@@ -57,7 +59,7 @@ export class ChessBoard extends BaseComponents {
     return tempCells;
   }
 
-  private boardNumerationInit(name: string): HTMLElement {
+  private static boardNumerationInit(name: string): HTMLElement {
     const mainComponent = document.createElement('div');
     mainComponent.classList.add(setting.classNames.numerationAll);
     if (name === setting.classNames.numberId) {
@@ -69,7 +71,7 @@ export class ChessBoard extends BaseComponents {
         mainComponent.appendChild(miniNumber);
       }
     } else {
-      mainComponent.id = setting.classNames.letterId
+      mainComponent.id = setting.classNames.letterId;
       for (let i = 1; i <= 8; i++) {
         const miniChar = document.createElement('div');
         miniChar.innerHTML = String.fromCharCode(96 + i);
@@ -121,7 +123,7 @@ export class ChessBoard extends BaseComponents {
 
   private passantInDirection(piece: Pawn, directionIncrement: number) {
     const pawnPosition = cellNameToCoordinates(piece.cell);
-    const newCoordinates = { X: pawnPosition.X + directionIncrement, Y: pawnPosition.Y + piece.getPawnIncrement()};
+    const newCoordinates = { X: pawnPosition.X + directionIncrement, Y: pawnPosition.Y + piece.getPawnIncrement() };
     const cell = cellCoordinatesToName(newCoordinates);
 
     const enemyPawnCoordinates = { X: pawnPosition.X + directionIncrement, Y: pawnPosition.Y };
@@ -141,7 +143,6 @@ export class ChessBoard extends BaseComponents {
     }
     return false;
   }
-  
 
   private castlingDetermination() {
     this.castlingForEachPiece(color.white);
@@ -174,13 +175,11 @@ export class ChessBoard extends BaseComponents {
     if (piece.isFirstMove) {
       const kingPosition = cellNameToCoordinates(piece.cell);
       const attakingColor = colorFunctions.getReverseColor(piece.color);
-      
-      return this.clearCellAndRookValidation(kingPosition, directionIncrement)
-        || this.castlingCellInCheckValidation(attakingColor, kingPosition, directionIncrement) 
-        ? false : true;
-    } else {
-      return false;
+
+      return !(this.clearCellAndRookValidation(kingPosition, directionIncrement)
+        || this.castlingCellInCheckValidation(attakingColor, kingPosition, directionIncrement));
     }
+    return false;
   }
 
   private clearCellAndRookValidation(kingPosition: Coordinates, directionIncrement: number): boolean {
@@ -188,7 +187,7 @@ export class ChessBoard extends BaseComponents {
 
     for (let i = kingPosition.X + directionIncrement; i < 8 && i > -1; i += directionIncrement) {
       if (i === 7 || i === 0) {
-        for(let j = 0; j < this.pieces.length; j++) {
+        for (let j = 0; j < this.pieces.length; j++) {
           if (this.pieces[j].cell === cellCoordinatesToName({ X: i, Y: kingPosition.Y })
               && this.pieces[j] instanceof Rook) {
             rook = <Rook> this.pieces[j];
@@ -196,7 +195,7 @@ export class ChessBoard extends BaseComponents {
           }
         }
 
-        return !rook?.isFirstMove ? true : false;
+        return !rook?.isFirstMove;
       }
 
       const cell = cellCoordinatesToName({ X: i, Y: kingPosition.Y });
@@ -216,12 +215,12 @@ export class ChessBoard extends BaseComponents {
 
     for (
       let i = kingPosition.X;
-      i > kingPosition.X - barrierUnit && i < kingPosition.X + barrierUnit; 
+      i > kingPosition.X - barrierUnit && i < kingPosition.X + barrierUnit;
       i += directionIncrement) {
-        const cell = cellCoordinatesToName({ X: i, Y: kingPosition.Y });
-        if (possibleAttakingPositions.indexOf(cell) !== -1) {
-          return true;
-        }
+      const cell = cellCoordinatesToName({ X: i, Y: kingPosition.Y });
+      if (possibleAttakingPositions.indexOf(cell) !== -1) {
+        return true;
+      }
     }
 
     return false;
@@ -249,7 +248,7 @@ export class ChessBoard extends BaseComponents {
     this.capturingEnPassantTry(cell, piece);
     this.longPawnMoveReset();
     ChessBoard.longPawnMoveValidation(cell, piece);
-    
+
     this.capturingTry(cell);
 
     piece.element.remove();
@@ -281,7 +280,7 @@ export class ChessBoard extends BaseComponents {
     const pieceCellPosition = cellNameToCoordinates(piece.cell);
 
     if (piece instanceof Pawn) {
-      piece.canBeCapturedEnPassant = Math.abs(cellPosition.Y - pieceCellPosition.Y) === 2 ? true : false;
+      piece.canBeCapturedEnPassant = Math.abs(cellPosition.Y - pieceCellPosition.Y) === 2;
     }
   }
 
@@ -304,7 +303,7 @@ export class ChessBoard extends BaseComponents {
                 break;
               }
             }
-            
+
             piece.element.remove();
             this.pieces.splice(i, 1);
             break;
@@ -343,37 +342,37 @@ export class ChessBoard extends BaseComponents {
     const cellPosition = cellNameToCoordinates(cell);
     const piecePosition = cellNameToCoordinates(piece.cell);
     if (
-        piece instanceof King && piece.isFirstMove &&
-        (cellPosition.X === piecePosition.X + 2 || cellPosition.X === piecePosition.X - 2)
-      ) {
-        const directionIncrement = (cellPosition.X - piecePosition.X) / 2;
-        const rookX = directionIncrement > 0 ? 7 : 0;
-        const rookPosition = cellCoordinatesToName({ X: rookX, Y: piecePosition.Y });
-        let rook: Rook | undefined;
+      piece instanceof King && piece.isFirstMove
+        && (cellPosition.X === piecePosition.X + 2 || cellPosition.X === piecePosition.X - 2)
+    ) {
+      const directionIncrement = (cellPosition.X - piecePosition.X) / 2;
+      const rookX = directionIncrement > 0 ? 7 : 0;
+      const rookPosition = cellCoordinatesToName({ X: rookX, Y: piecePosition.Y });
+      let rook: Rook | undefined;
 
-        for (let i = 0; i < this.pieces.length; i++) {
-          if (this.pieces[i].cell === rookPosition && this.pieces[i] instanceof Rook) {
-            rook = <Rook> this.pieces[i];
-            break;
-          }
+      for (let i = 0; i < this.pieces.length; i++) {
+        if (this.pieces[i].cell === rookPosition && this.pieces[i] instanceof Rook) {
+          rook = <Rook> this.pieces[i];
+          break;
         }
-        
-        if (!rook) {
-          throw Error('Rook does not exist!');
-        }
+      }
 
-        const newRookCell = cellCoordinatesToName({ X: piecePosition.X + directionIncrement, Y: piecePosition.Y });
+      if (!rook) {
+        throw Error('Rook does not exist!');
+      }
 
-        rook.element.remove();
-        this.cells[cellNameToCellPosition(newRookCell)].appendChild(rook.element);
+      const newRookCell = cellCoordinatesToName({ X: piecePosition.X + directionIncrement, Y: piecePosition.Y });
 
-        ChessBoard.updateGameSetup(newRookCell, rook);
+      rook.element.remove();
+      this.cells[cellNameToCellPosition(newRookCell)].appendChild(rook.element);
 
-        rook.cell = newRookCell;
+      ChessBoard.updateGameSetup(newRookCell, rook);
+
+      rook.cell = newRookCell;
     }
   }
 
-  /////////////////////////
+  /// //////////////////////
 
   private removeMovesForСheck(movedPieceColor: string) {
     const copyGameSetup: Setup[] = JSON.parse(JSON.stringify(setting.gameSetup));
@@ -396,11 +395,11 @@ export class ChessBoard extends BaseComponents {
     defendingPieces.forEach((piece) => {
       const truePiecePosition = piece.cell;
 
-      for (let i = 0 ; i < piece.possibleMoves.length; i++) {
-        let capturedPiece = this.testCapturing(copyGameSetup, piece, attakingPieces, piece.possibleMoves[i]);
+      for (let i = 0; i < piece.possibleMoves.length; i++) {
+        const capturedPiece = ChessBoard.testCapturing(copyGameSetup, piece, attakingPieces, piece.possibleMoves[i]);
         ChessBoard.moveTesting(copyGameSetup, piece, piece.possibleMoves[i]);
 
-        if (this.testCheckValidation(copyGameSetup, attakingPieces)) {
+        if (ChessBoard.testCheckValidation(copyGameSetup, attakingPieces)) {
           piece.possibleMoves.splice(i, 1);
           i--;
         }
@@ -412,29 +411,29 @@ export class ChessBoard extends BaseComponents {
       }
       ChessBoard.moveTesting(copyGameSetup, piece, truePiecePosition);
     });
-    
+
     this.updateAllPossibleMoves();
   }
 
-  private testCheckValidation(
+  private static testCheckValidation(
     copyGameSetup: Setup[],
-    attakingPieces: (Queen | King | Knight | Bishop | Pawn | Rook)[] // TODO: Приходится тащить 6 типов
-    ): boolean {
-      if (!attakingPieces.length) { // capture attaking king
-        return false;
-      }
-      const kingColor = attakingPieces[0].color === color.white ? color.black : color.white;
-      const defendingKingPosition = ChessBoard.getKingPosition(copyGameSetup, kingColor);
+    attakingPieces: (Queen | King | Knight | Bishop | Pawn | Rook)[], // TODO: Приходится тащить 6 типов
+  ): boolean {
+    if (!attakingPieces.length) { // capture attaking king
+      return false;
+    }
+    const kingColor = attakingPieces[0].color === color.white ? color.black : color.white;
+    const defendingKingPosition = ChessBoard.getKingPosition(copyGameSetup, kingColor);
 
-      const possibleAttakingPositions: string[] = [];
+    const possibleAttakingPositions: string[] = [];
 
-      attakingPieces.forEach((piece) => {
-        const copy = Object.assign(Object.create( Object.getPrototypeOf(piece)), piece); // Cloning object with needed prototype
-        copy.possibleMoveDetermination(copyGameSetup);
-        possibleAttakingPositions.push(...copy.possibleMoves);
-      });
+    attakingPieces.forEach((piece) => {
+      const copy = Object.assign(Object.create(Object.getPrototypeOf(piece)), piece); // Cloning object with needed prototype
+      copy.possibleMoveDetermination(copyGameSetup);
+      possibleAttakingPositions.push(...copy.possibleMoves);
+    });
 
-      return possibleAttakingPositions.indexOf(defendingKingPosition) !== -1 ? true : false;
+    return possibleAttakingPositions.indexOf(defendingKingPosition) !== -1;
   }
 
   private static moveTesting(copyGameSetup: Setup[], piece: Queen | King | Knight | Bishop | Pawn | Rook, testCell: string) {
@@ -448,39 +447,39 @@ export class ChessBoard extends BaseComponents {
     piece.cell = testCell;
   }
 
-  private testCapturing(
+  private static testCapturing(
     copyGameSetup: Setup[],
     piece: Queen | King | Knight | Bishop | Pawn | Rook,
     attakingPieces: (Queen | King | Knight | Bishop | Pawn | Rook)[],
-    testCell: string
-    ): TestCapturedPiece | undefined {
-      let capturedPieceSetup: Setup | undefined;
+    testCell: string,
+  ): TestCapturedPiece | undefined {
+    let capturedPieceSetup: Setup | undefined;
 
-      for (let i = 0; i < copyGameSetup.length; i++) { // Take captured piece
-        if (copyGameSetup[i].cell === testCell && copyGameSetup[i].piece.indexOf(piece.color) === -1) {
-          capturedPieceSetup = copyGameSetup[i];
-          copyGameSetup.splice(i, 1);
-          break;
-        }
+    for (let i = 0; i < copyGameSetup.length; i++) { // Take captured piece
+      if (copyGameSetup[i].cell === testCell && copyGameSetup[i].piece.indexOf(piece.color) === -1) {
+        capturedPieceSetup = copyGameSetup[i];
+        copyGameSetup.splice(i, 1);
+        break;
       }
+    }
 
-      let capturedPiece: Queen | King | Knight | Bishop | Pawn | Rook | undefined;
+    let capturedPiece: Queen | King | Knight | Bishop | Pawn | Rook | undefined;
 
-      for (let i = 0; i < attakingPieces.length; i++) {
-        if (attakingPieces[i].cell === testCell) {
-          capturedPiece = attakingPieces[i];
-          attakingPieces.splice(i, 1);
-          break;
-        }
-      };
-
-      this.testCapturingEnPassant(capturedPieceSetup, capturedPiece, testCell, copyGameSetup, piece, attakingPieces);
-      if (capturedPiece && capturedPieceSetup) {
-        return { capturedPieceSetup: capturedPieceSetup, capturedPiece: capturedPiece };
+    for (let i = 0; i < attakingPieces.length; i++) {
+      if (attakingPieces[i].cell === testCell) {
+        capturedPiece = attakingPieces[i];
+        attakingPieces.splice(i, 1);
+        break;
       }
+    }
+
+    ChessBoard.testCapturingEnPassant(capturedPieceSetup, capturedPiece, testCell, copyGameSetup, piece, attakingPieces);
+    if (capturedPiece && capturedPieceSetup) {
+      return { capturedPieceSetup, capturedPiece };
+    }
   }
 
-  private testCapturingEnPassant(
+  private static testCapturingEnPassant(
     capturedPieceSetup: Setup | undefined,
     capturedPiece: Queen | King | Knight | Bishop | Pawn | Rook | undefined,
     testCell: string,
@@ -490,7 +489,7 @@ export class ChessBoard extends BaseComponents {
   ) {
     if (piece instanceof Pawn) {
       const cellCoordinates = cellNameToCoordinates(testCell);
-      const needCell = cellCoordinatesToName({ X: cellCoordinates.X, Y: cellCoordinates.Y - piece.getPawnIncrement()});
+      const needCell = cellCoordinatesToName({ X: cellCoordinates.X, Y: cellCoordinates.Y - piece.getPawnIncrement() });
 
       for (let i = 0; i < attakingPieces.length; i++) {
         const piece = attakingPieces[i];
@@ -503,7 +502,7 @@ export class ChessBoard extends BaseComponents {
               break;
             }
           }
-          
+
           capturedPiece = piece;
           attakingPieces.splice(i, 1);
           break;
@@ -512,19 +511,19 @@ export class ChessBoard extends BaseComponents {
     }
   }
 
-  ////////////////////////////
+  /// /////////////////////////
 
   checkValidation(movedPieceColor: string): boolean {
     const kingColor = colorFunctions.getReverseColor(movedPieceColor);
     const kingPosition = ChessBoard.getKingPosition(setting.gameSetup, kingColor);
 
-    return this.possibleWhitesOrBlacksMoves(movedPieceColor).indexOf(kingPosition) !== -1 ? true : false;
+    return this.possibleWhitesOrBlacksMoves(movedPieceColor).indexOf(kingPosition) !== -1;
   }
 
   movePossibilityValidation(movedPieceColor: string): boolean {
     const defendingColor = colorFunctions.getReverseColor(movedPieceColor);
 
-    return this.possibleWhitesOrBlacksMoves(defendingColor).length ? true : false;
+    return !!this.possibleWhitesOrBlacksMoves(defendingColor).length;
   }
 
   private possibleWhitesOrBlacksMoves(movedPieceColor: string): string[] {
@@ -553,7 +552,7 @@ export class ChessBoard extends BaseComponents {
 
   private static getKingPosition(gameSetup: Setup[], kingColor: string): string {
     for (let i = 0; i < gameSetup.length; i++) {
-      if (gameSetup[i].piece === kingColor + 'King') {
+      if (gameSetup[i].piece === `${kingColor}King`) {
         return gameSetup[i].cell;
       }
     }

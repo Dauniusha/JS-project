@@ -1,6 +1,6 @@
-import { createElement } from "../../shared/create-element";
-import { BaseComponents } from "../models/base-component";
-import { setting } from "../settings/setting";
+import { createElement } from '../../shared/create-element';
+import { BaseComponents } from '../models/base-component';
+import { setting } from '../settings/setting';
 import './popup.css';
 
 export class Popup extends BaseComponents {
@@ -60,6 +60,6 @@ export class Popup extends BaseComponents {
     refuseBtn.innerHTML = 'Refuse';
     this.popUp.element.appendChild(refuseBtn);
 
-    return [ confirmBtn, refuseBtn ];
+    return [confirmBtn, refuseBtn];
   }
 }

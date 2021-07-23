@@ -1,7 +1,7 @@
-import { PlayerWithMove } from "../models/data-base/data-base-player-move";
-import { PlayerDBObject } from "../models/data-base/data-base-player-object";
-import { ReplaysDBObject } from "../models/data-base/data-base-replays-object";
-import { setting } from "../settings/setting";
+import { PlayerWithMove } from '../models/data-base/data-base-player-move';
+import { PlayerDBObject } from '../models/data-base/data-base-player-object';
+import { ReplaysDBObject } from '../models/data-base/data-base-replays-object';
+import { setting } from '../settings/setting';
 
 export class DataBase {
   private dataBase: IDBDatabase | undefined;
@@ -30,7 +30,7 @@ export class DataBase {
   }
 
   addPlayer(player: PlayerDBObject, counter: number, color?: string) {
-    const transaction = this.dataBase?.transaction([ setting.dataBase.storeUserName ], 'readwrite');
+    const transaction = this.dataBase?.transaction([setting.dataBase.storeUserName], 'readwrite');
     if (!transaction) {
       throw Error('Data base not exist!');
     }
@@ -40,7 +40,7 @@ export class DataBase {
       player,
       counter,
       color,
-    }
+    };
     store.put(playerDB);
 
     transaction.oncomplete = () => {
@@ -54,7 +54,7 @@ export class DataBase {
 
   getPlayers(): Promise<PlayerDBObject[]> {
     return new Promise((resolve) => {
-      const transaction = this.dataBase?.transaction([ setting.dataBase.storeUserName ], 'readonly');
+      const transaction = this.dataBase?.transaction([setting.dataBase.storeUserName], 'readonly');
       if (!transaction) {
         throw Error('Data base not exist!');
       }
@@ -70,7 +70,7 @@ export class DataBase {
         } else {
           resolve(players);
         }
-      }
+      };
 
       request.onerror = () => {
         throw Error('Error with cursor request!');
@@ -79,7 +79,7 @@ export class DataBase {
   }
 
   addReplay(firstPlayer: PlayerWithMove, secondPlayer: PlayerWithMove, winner: PlayerDBObject, time: string) {
-    const transaction = this.dataBase?.transaction([ setting.dataBase.storeGamesName ], 'readwrite');
+    const transaction = this.dataBase?.transaction([setting.dataBase.storeGamesName], 'readwrite');
     if (!transaction) {
       throw Error('Data base not exist!');
     }
@@ -90,7 +90,7 @@ export class DataBase {
       secondPlayer,
       winner,
       time,
-    }
+    };
     store.put(replay);
 
     transaction.oncomplete = () => {
@@ -104,7 +104,7 @@ export class DataBase {
 
   getReplays(): Promise<ReplaysDBObject[]> {
     return new Promise((resolve) => {
-      const transaction = this.dataBase?.transaction([ setting.dataBase.storeGamesName ], 'readonly');
+      const transaction = this.dataBase?.transaction([setting.dataBase.storeGamesName], 'readonly');
       if (!transaction) {
         throw Error('Data base not exist!');
       }
@@ -120,7 +120,7 @@ export class DataBase {
         } else {
           resolve(replays);
         }
-      }
+      };
 
       request.onerror = () => {
         throw Error('Error with cursor request!');

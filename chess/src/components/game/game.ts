@@ -28,7 +28,7 @@ export class Game extends BaseComponents {
 
   protected pieceActive?: Queen | King | Knight | Bishop | Pawn | Rook;
 
-  protected isWhiteMove: boolean = true;
+  protected isWhiteMove = true;
 
   private checkPieces?: (Queen | King | Knight | Bishop | Pawn | Rook)[];
 
@@ -38,11 +38,11 @@ export class Game extends BaseComponents {
 
   protected activePlayer?: PlayerStatistics;
 
-  isEndGame: boolean = false;
+  isEndGame = false;
 
-  protected isDragAndDrop: boolean = false;
+  protected isDragAndDrop = false;
 
-  protected isSecondClick: boolean = false;
+  protected isSecondClick = false;
 
   protected dragObj?: { object: HTMLImageElement, shiftX: number, shiftY: number, currentDroppable: HTMLElement | null };
 
@@ -50,7 +50,7 @@ export class Game extends BaseComponents {
     super('section', ['game']);
 
     if (replay) {
-      [ this.firstPlayer, this.secondPlayer ] = this.replayPlayerInit(replay.firstPlayer, replay.secondPlayer);
+      [this.firstPlayer, this.secondPlayer] = this.replayPlayerInit(replay.firstPlayer, replay.secondPlayer);
       setTimeout(() => { // TODO: Не понимаю, почему он перед async функциями выполняется
         this.addMoveHolder();
       }, 200);
@@ -58,15 +58,13 @@ export class Game extends BaseComponents {
       this.chessBoard = new ChessBoard(setting.initialGameSetup);
       this.element.insertBefore(this.chessBoard.element, this.secondPlayer.element);
     } else {
-      [ this.firstPlayer, this.secondPlayer ] = this.playerInit(color);
+      [this.firstPlayer, this.secondPlayer] = this.playerInit(color);
       setTimeout(() => { // TODO: Не понимаю, почему он перед async функциями выполняется
         this.addMoveHolder();
       }, 200);
 
       this.chessBoard = new ChessBoard(setting.initialGameSetup);
       this.element.insertBefore(this.chessBoard.element, this.secondPlayer.element);
-
-
     }
   }
 
@@ -74,15 +72,15 @@ export class Game extends BaseComponents {
     if (!color) {
       color = colorFunctions.getRandomColor();
     }
-    
-    const firstPlayer = new PlayerStatistics({ color: color, counter: 0 });
+
+    const firstPlayer = new PlayerStatistics({ color, counter: 0 });
     this.element.appendChild(firstPlayer.element);
 
     const otherColor = colorFunctions.getReverseColor(color);
     const secondPlayer = new PlayerStatistics({ color: otherColor, counter: 1 });
     this.element.appendChild(secondPlayer.element);
 
-    return [ firstPlayer, secondPlayer ];
+    return [firstPlayer, secondPlayer];
   }
 
   private replayPlayerInit(firstPlayer: PlayerWithMove, secondPlayer: PlayerWithMove): PlayerStatistics[] {
@@ -92,7 +90,7 @@ export class Game extends BaseComponents {
     const secondPlayerStatistics = new PlayerStatistics(undefined, { player: secondPlayer, counter: 1 });
     this.element.appendChild(secondPlayerStatistics.element);
 
-    return [ firstPlayerStatistics, secondPlayerStatistics ];
+    return [firstPlayerStatistics, secondPlayerStatistics];
   }
 
   getChessBoard(): ChessBoard {
@@ -130,12 +128,12 @@ export class Game extends BaseComponents {
     this.chessBoard.element.addEventListener('mousedown', (elem) => {
       this.isDragAndDrop = false;
 
-      const pieceElem = <HTMLImageElement> (<Element>elem.target)?.closest('.' + setting.classNames.piece);
+      const pieceElem = <HTMLImageElement> (<Element>elem.target)?.closest(`.${setting.classNames.piece}`);
       if (pieceElem) {
         pieceElem.ondragstart = () => false;
       }
 
-      const cell = (<Element>elem.target)?.closest('.' + setting.classNames.cell);
+      const cell = (<Element>elem.target)?.closest(`.${setting.classNames.cell}`);
 
       this.onMouseDown(pieceElem, cell, elem);
     });
@@ -145,14 +143,14 @@ export class Game extends BaseComponents {
     const activeColor = this.isWhiteMove ? color.white : color.black;
 
     if (
-      cell &&
-      ((<Element>elem.target)?.closest('.' + setting.classNames.possibleClearCell)
-      || (<Element>elem.target)?.closest('.' + setting.classNames.possibleEngagedCell))
-      ) {
-        this.completeMove(cell.id);
-        document.onmousemove = null;
-        this.isSecondClick = false;
-        return;
+      cell
+      && ((<Element>elem.target)?.closest(`.${setting.classNames.possibleClearCell}`)
+      || (<Element>elem.target)?.closest(`.${setting.classNames.possibleEngagedCell}`))
+    ) {
+      this.completeMove(cell.id);
+      document.onmousemove = null;
+      this.isSecondClick = false;
+      return;
     }
     if (pieceElem && pieceElem.getAttribute(setting.classNames.dataPiece)?.indexOf(activeColor) !== -1) {
       if (cell && !(this.pieceActive?.cell === cell.id)) {
@@ -195,23 +193,21 @@ export class Game extends BaseComponents {
         this.removeDragStyles(pieceElem, cell);
       }
       if (
-        elemBelow?.closest('.' + setting.classNames.possibleClearCell)
-        || elemBelow?.closest('.' + setting.classNames.possibleEngagedCell)
-        ) {
-          this.completeMove(elemBelow.id);
-          this.isSecondClick = false;
-          document.onmousemove = null;
-          pieceElem.onmouseup = null;
-          return;
+        elemBelow?.closest(`.${setting.classNames.possibleClearCell}`)
+        || elemBelow?.closest(`.${setting.classNames.possibleEngagedCell}`)
+      ) {
+        this.completeMove(elemBelow.id);
+        this.isSecondClick = false;
+        document.onmousemove = null;
+        pieceElem.onmouseup = null;
+        return;
       }
-    } else { // Click
-      if (cell) {
-        this.removeDragStyles(pieceElem, cell);
-        if (this.pieceActive?.cell === cell.id && this.isSecondClick) {
-          this.possibleCellsBacklightRemove();
-          this.isSecondClick = false;
-          this.pieceActive = undefined;
-        }
+    } else if (cell) { // Click
+      this.removeDragStyles(pieceElem, cell);
+      if (this.pieceActive?.cell === cell.id && this.isSecondClick) {
+        this.possibleCellsBacklightRemove();
+        this.isSecondClick = false;
+        this.pieceActive = undefined;
       }
     }
 
@@ -223,7 +219,6 @@ export class Game extends BaseComponents {
     this.isDragAndDrop = true;
 
     if (this.dragObj) {
-
       const elemBelow = Game.takeElementBelow(this.dragObj.object, event);
 
       if (!elemBelow) {
@@ -232,22 +227,22 @@ export class Game extends BaseComponents {
 
       this.moveAtCoordinates(event.pageX, event.pageY);
 
-      const droppableBelow = <HTMLElement> elemBelow.closest('.' + setting.classNames.cell);
+      const droppableBelow = <HTMLElement> elemBelow.closest(`.${setting.classNames.cell}`);
 
-      if (this.dragObj.currentDroppable != droppableBelow) {
+      if (this.dragObj.currentDroppable !== droppableBelow) {
         if (this.dragObj.currentDroppable) {
-          this.removeDragBacklights(this.dragObj.currentDroppable);
+          Game.removeDragBacklights(this.dragObj.currentDroppable);
         }
         this.dragObj.currentDroppable = droppableBelow;
         if (this.dragObj.currentDroppable) {
-          this.addDragBacklights(this.dragObj.currentDroppable);
+          Game.addDragBacklights(this.dragObj.currentDroppable);
         }
       }
     }
   }
 
   protected static addDragStyles(pieceElem: HTMLImageElement) {
-    pieceElem.classList.add('draging')
+    pieceElem.classList.add('draging');
     document.body.append(pieceElem);
   }
 
@@ -262,13 +257,13 @@ export class Game extends BaseComponents {
     obj.hidden = true;
     const elemBelow = document.elementFromPoint(event.clientX, event.clientY);
     obj.hidden = false;
-    return elemBelow ? elemBelow.closest('.' + setting.classNames.cell) : null;
+    return elemBelow ? elemBelow.closest(`.${setting.classNames.cell}`) : null;
   }
 
   protected moveAtCoordinates(pageX: number, pageY: number) {
     if (this.dragObj) {
-      this.dragObj.object.style.left = pageX - this.dragObj.shiftX + 'px';
-      this.dragObj.object.style.top = pageY - this.dragObj.shiftY + 'px';
+      this.dragObj.object.style.left = `${pageX - this.dragObj.shiftX}px`;
+      this.dragObj.object.style.top = `${pageY - this.dragObj.shiftY}px`;
     }
   }
 
@@ -282,7 +277,6 @@ export class Game extends BaseComponents {
     const cells = this.chessBoard.getAllCells();
     this.pieceActive?.element.parentElement?.classList.add(setting.classNames.selectPieceBacklight);
     this.pieceActive?.possibleMoves.forEach((move) => {
-
       cells.forEach((cell) => {
         if (move === cell.id) {
           if (cell.childElementCount) {
@@ -306,13 +300,12 @@ export class Game extends BaseComponents {
   }
 
   private completeMove(cellId: string) {
-    if (this.pieceActive) {    
-
+    if (this.pieceActive) {
       this.pieceMove(cellId);
 
-      if (this.pieceActive instanceof Pawn &&
-        (this.pieceActive.cell.indexOf('8') !== -1 || this.pieceActive.cell.indexOf('1') !== -1)
-        ) {
+      if (this.pieceActive instanceof Pawn
+        && (this.pieceActive.cell.indexOf('8') !== -1 || this.pieceActive.cell.indexOf('1') !== -1)
+      ) {
         this.initPawnTransformation(this.pieceActive);
       } else {
         this.removeCancelMoveAndCheckValidation(this.pieceActive.color);
@@ -337,12 +330,12 @@ export class Game extends BaseComponents {
     const popup = this.createChoosePiecePopup(piece.color);
     popup.showPopup();
     popup.element.addEventListener('click', (event) => {
-        if (event.target instanceof HTMLImageElement) {
-          const fullName = piece.color + event.target.alt;
-          this.replaceTransormPiece(piece, fullName);
-          Game.removePopup(popup);
-          this.removeCancelMoveAndCheckValidation(piece.color);
-        }
+      if (event.target instanceof HTMLImageElement) {
+        const fullName = piece.color + event.target.alt;
+        this.replaceTransormPiece(piece, fullName);
+        Game.removePopup(popup);
+        this.removeCancelMoveAndCheckValidation(piece.color);
+      }
     });
   }
 
@@ -378,7 +371,8 @@ export class Game extends BaseComponents {
         this.activePlayer.getColor(),
         this.pieceActive.cell,
         newCell,
-        timeFunctions.getStringTime(timer.getTimeNow()));
+        timeFunctions.getStringTime(timer.getTimeNow()),
+      );
     } else {
       throw new Error('pieceActive does not exist!');
     }
@@ -389,7 +383,7 @@ export class Game extends BaseComponents {
     cells.forEach((cell) => {
       if (this.pieceActive?.cell === cell.id || newCell === cell.id) {
         cell.classList.add(setting.classNames.moveBacklight);
-      } 
+      }
     });
   }
 
@@ -398,15 +392,15 @@ export class Game extends BaseComponents {
     cells.forEach((cell) => {
       if (cell.classList.contains(setting.classNames.moveBacklight)) {
         cell.classList.remove(setting.classNames.moveBacklight);
-      } 
+      }
     });
   }
 
-  protected addDragBacklights(cell: HTMLElement) {
+  protected static addDragBacklights(cell: HTMLElement) {
     cell.classList.add(setting.classNames.selectPieceBacklight);
   }
 
-  protected removeDragBacklights(cell: HTMLElement) {
+  protected static removeDragBacklights(cell: HTMLElement) {
     cell.classList.remove(setting.classNames.selectPieceBacklight);
   }
 
@@ -434,15 +428,21 @@ export class Game extends BaseComponents {
       this.createEndGame(false);
       this.isEndGame = true;
     }
+
+    if (this.chessBoard.pieces.length === 2) {
+      this.createEndGame(false);
+      this.isEndGame = true;
+    }
   }
 
-  protected createEndGame(isWin: boolean, name: string = '') {
+  protected createEndGame(isWin: boolean, name = '') {
+    timer.stopTimer();
     if (isWin) {
       this.createWinPopup(name);
     } else {
       this.createDrawPopup();
     }
-    this.createReplay()
+    this.createReplay();
   }
 
   private createReplay() {
@@ -450,7 +450,7 @@ export class Game extends BaseComponents {
       const firstPlayerWithMove = this.firstPlayer?.getPlayerWithMoves();
       const secondPlayerWithMove = this.secondPlayer?.getPlayerWithMoves();
       const winner = this.activePlayer?.getPlayer().getNameWithAvatar();
-  
+
       storage.addReplay(firstPlayerWithMove, secondPlayerWithMove, winner, '1:30'); // TODO: Сделать таймер и переделать
     }
   }
@@ -515,7 +515,7 @@ export class Game extends BaseComponents {
 
     if (this.isWhiteMove) {
       whitePlayer?.getPlayer().getAvatar().classList.add(setting.classNames.game.playerActive);
-      blackPlayer?.getPlayer().getAvatar().classList.remove(setting.classNames.game.playerActive)
+      blackPlayer?.getPlayer().getAvatar().classList.remove(setting.classNames.game.playerActive);
     } else {
       whitePlayer?.getPlayer().getAvatar().classList.remove(setting.classNames.game.playerActive);
       blackPlayer?.getPlayer().getAvatar().classList.add(setting.classNames.game.playerActive);
@@ -525,9 +525,8 @@ export class Game extends BaseComponents {
   getPlayerStatistics(): { firstPlayer: PlayerStatistics, secondPlayer: PlayerStatistics } {
     if (this.firstPlayer && this.secondPlayer) {
       return { firstPlayer: this.firstPlayer, secondPlayer: this.secondPlayer };
-    } else {
-      throw new Error('players does not exist!');
     }
+    throw new Error('players does not exist!');
   }
 
   surrender() {
@@ -559,7 +558,7 @@ export class Game extends BaseComponents {
 
   protected createChoosePiecePopup(color: string): Popup {
     const popup = new Popup();
-    popup.text.innerHTML = `Choose new piece`;
+    popup.text.innerHTML = 'Choose new piece';
 
     const pieceContainer = createElement(['choose-piece']);
     pieceContainer.innerHTML = `
@@ -570,7 +569,7 @@ export class Game extends BaseComponents {
     `;
     popup.element.appendChild(pieceContainer);
     this.element.parentElement?.appendChild(popup.element);
-    
+
     return popup;
   }
 

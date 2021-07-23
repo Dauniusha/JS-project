@@ -1,7 +1,7 @@
-import { Game } from "../game/game";
-import { ReplaysDBObject } from "../models/data-base/data-base-replays-object";
-import { color } from "../models/game/color-interface";
-import { PlayerStatistics } from "../player-statistics/player-statistics";
+import { Game } from '../game/game';
+import { ReplaysDBObject } from '../models/data-base/data-base-replays-object';
+import { color } from '../models/game/color-interface';
+import { PlayerStatistics } from '../player-statistics/player-statistics';
 
 export class WatchReplay extends Game {
   private whitePlayer: PlayerStatistics;
@@ -16,13 +16,13 @@ export class WatchReplay extends Game {
     super(replay);
 
     const players = this.getPlayerStatistics();
-    [ this.whitePlayer, this.blackPlayer ] = players.firstPlayer.getColor() === color.white ?
-    [ players.firstPlayer, players.secondPlayer ] : [ players.secondPlayer, players.firstPlayer ];
-
+    [this.whitePlayer, this.blackPlayer] = players.firstPlayer.getColor() === color.white
+      ? [players.firstPlayer, players.secondPlayer] : [players.secondPlayer, players.firstPlayer];
   }
-  
+
   makeMove(isNext: boolean) {
-    let startCell: string, endCell: string;
+    let startCell: string; let
+      endCell: string;
 
     if (isNext) {
       if (this.isWhiteMove) {
@@ -34,16 +34,14 @@ export class WatchReplay extends Game {
         endCell = this.blackPlayer.moveTable.getAllMoves()[this.blackIncrement].endCell;
         this.blackIncrement++;
       }
+    } else if (!this.isWhiteMove) {
+      this.whiteIncrement--;
+      endCell = this.whitePlayer.moveTable.getAllMoves()[this.whiteIncrement].startCell;
+      startCell = this.whitePlayer.moveTable.getAllMoves()[this.whiteIncrement].endCell;
     } else {
-      if (!this.isWhiteMove) {
-        this.whiteIncrement--;
-        endCell = this.whitePlayer.moveTable.getAllMoves()[this.whiteIncrement].startCell;
-        startCell = this.whitePlayer.moveTable.getAllMoves()[this.whiteIncrement].endCell;
-      } else {
-        this.blackIncrement--;
-        endCell = this.blackPlayer.moveTable.getAllMoves()[this.blackIncrement].startCell;
-        startCell = this.blackPlayer.moveTable.getAllMoves()[this.blackIncrement].endCell;
-      }
+      this.blackIncrement--;
+      endCell = this.blackPlayer.moveTable.getAllMoves()[this.blackIncrement].startCell;
+      startCell = this.blackPlayer.moveTable.getAllMoves()[this.blackIncrement].endCell;
     }
 
     this.pieceActive = this.chessBoard.selectPiece(startCell);

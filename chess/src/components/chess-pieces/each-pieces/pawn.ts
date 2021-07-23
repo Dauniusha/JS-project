@@ -1,17 +1,17 @@
-import { cellCoordinatesToName } from "../../../shared/cell-coordinates-to-cell-name";
-import { cellNameToCoordinates } from "../../../shared/cell-name-to-coordinates";
-import { color } from "../../models/game/color-interface";
-import { Coordinates } from "../../models/game/coordinates-interface";
-import { Setup } from "../../models/setup-interface";
-import { setting } from "../../settings/setting";
-import { BasePiece } from "../base-piece";
+import { cellCoordinatesToName } from '../../../shared/cell-coordinates-to-cell-name';
+import { cellNameToCoordinates } from '../../../shared/cell-name-to-coordinates';
+import { color } from '../../models/game/color-interface';
+import { Coordinates } from '../../models/game/coordinates-interface';
+import { Setup } from '../../models/setup-interface';
+import { setting } from '../../settings/setting';
+import { BasePiece } from '../base-piece';
 
 export class Pawn extends BasePiece {
   private readonly pawnIncrement: number;
 
   private startRow: string;
-  
-  canBeCapturedEnPassant: boolean = false;
+
+  canBeCapturedEnPassant = false;
 
   constructor(position: string, pieceColor: string) {
     super(position, pieceColor, 'Pawn');
@@ -20,9 +20,9 @@ export class Pawn extends BasePiece {
     (<HTMLImageElement> this.element).src = setting.imgNames[<keyof typeof setting.imgNames> pieceType];
 
     if (setting.isWhiteFromBelow) {
-      [ this.pawnIncrement, this.startRow ] = this.color === color.white ? [ 1, '2' ] : [ -1, '7' ];
+      [this.pawnIncrement, this.startRow] = this.color === color.white ? [1, '2'] : [-1, '7'];
     } else {
-      [ this.pawnIncrement, this.startRow ] = this.color === color.white ? [ -1, '7' ] : [ 1, '2' ];
+      [this.pawnIncrement, this.startRow] = this.color === color.white ? [-1, '7'] : [1, '2'];
     }
   }
 
@@ -45,9 +45,8 @@ export class Pawn extends BasePiece {
     if (newPosition < 8 && newPosition > -1 && !BasePiece.piecesCheck({ X: pieceCoordinates.X, Y: newPosition }, gameSetup)) {
       this.possibleMoves.push(cellCoordinatesToName({ X: pieceCoordinates.X, Y: newPosition }));
       return true;
-    } else {
-      return false;
     }
+    return false;
   }
 
   possibleCaptureCheck(pieceCoordinates: Coordinates, incrementX: number, gameSetup: Setup[]) {
@@ -58,8 +57,8 @@ export class Pawn extends BasePiece {
       && newCoordinateY < 8 && newCoordinateY > -1
       && BasePiece.piecesCheck({ X: newCoordinateX, Y: newCoordinateY }, gameSetup)
       && BasePiece.piecesCheck({ X: newCoordinateX, Y: newCoordinateY }, gameSetup) !== this.color
-      ) {
-        this.possibleMoves.push(cellCoordinatesToName({ X: newCoordinateX, Y: newCoordinateY }));
+    ) {
+      this.possibleMoves.push(cellCoordinatesToName({ X: newCoordinateX, Y: newCoordinateY }));
     }
   }
 

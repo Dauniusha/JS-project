@@ -1,4 +1,4 @@
-import { Coordinates } from "../components/models/game/coordinates-interface";
+import { Coordinates } from '../components/models/game/coordinates-interface';
 
 export function cellCoordinatesToName(coordinates: Coordinates): string {
   const nameChar = String.fromCharCode(coordinates.X + 97);

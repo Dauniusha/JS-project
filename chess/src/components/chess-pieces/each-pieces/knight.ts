@@ -1,9 +1,9 @@
-import { cellCoordinatesToName } from "../../../shared/cell-coordinates-to-cell-name";
-import { cellNameToCoordinates } from "../../../shared/cell-name-to-coordinates";
-import { Coordinates } from "../../models/game/coordinates-interface";
-import { Setup } from "../../models/setup-interface";
-import { setting } from "../../settings/setting";
-import { BasePiece } from "../base-piece";
+import { cellCoordinatesToName } from '../../../shared/cell-coordinates-to-cell-name';
+import { cellNameToCoordinates } from '../../../shared/cell-name-to-coordinates';
+import { Coordinates } from '../../models/game/coordinates-interface';
+import { Setup } from '../../models/setup-interface';
+import { setting } from '../../settings/setting';
+import { BasePiece } from '../base-piece';
 
 export class Knight extends BasePiece {
   constructor(position: string, color: string) {
@@ -22,7 +22,7 @@ export class Knight extends BasePiece {
 
     this.possibleMoveCheck(cellCoordinates, 1, -2, gameSetup);
     this.possibleMoveCheck(cellCoordinates, -1, -2, gameSetup);
-    
+
     this.possibleMoveCheck(cellCoordinates, 2, 1, gameSetup);
     this.possibleMoveCheck(cellCoordinates, 2, -1, gameSetup);
 
