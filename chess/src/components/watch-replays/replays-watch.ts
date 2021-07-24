@@ -98,7 +98,6 @@ export class WatchReplay extends Game {
     let moveRecord: ClearMove;
 
     if (isNext) {
-      this.confirmMoveSwitching(true);
       if (this.isWhiteMove) {
         this.removeMoveRecordBacklights(this.whitePlayer.moveTable.takeMove(this.whiteIncrement - 1));
         this.addMoveRecordBacklights(this.whitePlayer.moveTable.takeMove(this.whiteIncrement));
@@ -109,6 +108,9 @@ export class WatchReplay extends Game {
         this.addMoveRecordBacklights(this.blackPlayer.moveTable.takeMove(this.blackIncrement));
         moveRecord = this.blackPlayer.moveTable.getAllMoves()[this.blackIncrement];
         this.blackIncrement++;
+      }
+      if (this.confirmMoveSwitching(true, moveRecord)) {
+        return;
       }
     } else {
       if (!this.isWhiteMove) {
@@ -122,10 +124,15 @@ export class WatchReplay extends Game {
         this.addMoveRecordBacklights(this.blackPlayer.moveTable.takeMove(this.blackIncrement));
         moveRecord = this.blackPlayer.moveTable.getAllMoves()[this.blackIncrement];
       }
-      this.confirmMoveSwitching(false);
+      if (this.confirmMoveSwitching(false, moveRecord)) {
+        return;
+      };
     }
 
     this.updateTimer(moveRecord.time);
+  }
+
+  private makeReplayPieceMove(moveRecord: ClearMove) {
     this.pieceActive = this.chessBoard.selectPiece(moveRecord.startCell);
     this.replayPieceMove(moveRecord.endCell);
   }
@@ -145,7 +152,6 @@ export class WatchReplay extends Game {
 
       this.moveBacklightAdd(cellId);
       this.chessBoard.pieceMove(cellId, this.pieceActive);
-
 
       this.chessBoard.removeCloseMove();
       this.replayCheckMateValidation(this.pieceActive.color);
@@ -173,6 +179,13 @@ export class WatchReplay extends Game {
     } else if (!defendersCanMove) {
       this.createDrawPopup();
     }
+
+    console.log('done');
+
+    if (this.chessBoard.pieces.length === 2) {
+      this.gameEnd();
+      this.isEndGame = true;
+    }
   }
 
   private updateTimer(time: string) {
@@ -182,16 +195,17 @@ export class WatchReplay extends Game {
     this.startReplayTimer(timeNow);
   }
 
-  private confirmMoveSwitching(isNext: boolean) {
+  private confirmMoveSwitching(isNext: boolean, moveRecord: ClearMove): boolean {
     if (isNext) {
       this.moveCounter++;
       if (this.moveCounter === this.moveAmount) {
         this.disableBlockBtn(true);
         if (this.isFirstGameEnd) {
           this.gameEnd();
-        } else {
-          timer.stopTimer();
         }
+        timer.stopTimer();
+        this.makeReplayPieceMove(moveRecord);
+        return true;
       }
       this.enableBlockBtn(false);
     } else {
@@ -201,6 +215,8 @@ export class WatchReplay extends Game {
       }
       this.enableBlockBtn(true);
     }
+    this.makeReplayPieceMove(moveRecord);
+    return false;
   }
 
   private disableBlockBtn(isNextBtn: boolean) {
@@ -227,7 +243,6 @@ export class WatchReplay extends Game {
     } else {
       this.createWinPopup(this.winner.name);
     }
-    this.stopTimer();
   }
 
   private initTimer() {
@@ -254,8 +269,8 @@ export class WatchReplay extends Game {
     const stringTime = timeFunctions.getStringTime(time);
   
     if (
-      this.whitePlayer.moveTable.getAllMoves()[this.whiteIncrement].time === stringTime
-      || this.blackPlayer.moveTable.getAllMoves()[this.blackIncrement].time === stringTime
+      this.whitePlayer.moveTable.getAllMoves()[this.whiteIncrement]?.time === stringTime
+      || this.blackPlayer.moveTable.getAllMoves()[this.blackIncrement]?.time === stringTime
       ) {
       this.makeMove(true);
     }
