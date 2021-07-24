@@ -98,7 +98,9 @@ export class WatchReplay extends Game {
     let moveRecord: ClearMove;
 
     if (isNext) {
-      this.confirmMoveSwitching(true);
+      if (this.confirmMoveSwitching(true)) {
+        return;
+      }
       if (this.isWhiteMove) {
         this.removeMoveRecordBacklights(this.whitePlayer.moveTable.takeMove(this.whiteIncrement - 1));
         this.addMoveRecordBacklights(this.whitePlayer.moveTable.takeMove(this.whiteIncrement));
@@ -122,7 +124,9 @@ export class WatchReplay extends Game {
         this.addMoveRecordBacklights(this.blackPlayer.moveTable.takeMove(this.blackIncrement));
         moveRecord = this.blackPlayer.moveTable.getAllMoves()[this.blackIncrement];
       }
-      this.confirmMoveSwitching(false);
+      if (this.confirmMoveSwitching(false)) {
+        return;
+      }
     }
 
     this.updateTimer(moveRecord.time);
@@ -145,7 +149,6 @@ export class WatchReplay extends Game {
 
       this.moveBacklightAdd(cellId);
       this.chessBoard.pieceMove(cellId, this.pieceActive);
-
 
       this.chessBoard.removeCloseMove();
       this.replayCheckMateValidation(this.pieceActive.color);
@@ -189,9 +192,9 @@ export class WatchReplay extends Game {
         this.disableBlockBtn(true);
         if (this.isFirstGameEnd) {
           this.gameEnd();
-        } else {
-          timer.stopTimer();
         }
+        timer.stopTimer();
+        return true;
       }
       this.enableBlockBtn(false);
     } else {
@@ -201,6 +204,7 @@ export class WatchReplay extends Game {
       }
       this.enableBlockBtn(true);
     }
+    return false;
   }
 
   private disableBlockBtn(isNextBtn: boolean) {
@@ -227,7 +231,6 @@ export class WatchReplay extends Game {
     } else {
       this.createWinPopup(this.winner.name);
     }
-    this.stopTimer();
   }
 
   private initTimer() {
@@ -254,8 +257,8 @@ export class WatchReplay extends Game {
     const stringTime = timeFunctions.getStringTime(time);
   
     if (
-      this.whitePlayer.moveTable.getAllMoves()[this.whiteIncrement].time === stringTime
-      || this.blackPlayer.moveTable.getAllMoves()[this.blackIncrement].time === stringTime
+      this.whitePlayer.moveTable.getAllMoves()[this.whiteIncrement]?.time === stringTime
+      || this.blackPlayer.moveTable.getAllMoves()[this.blackIncrement]?.time === stringTime
       ) {
       this.makeMove(true);
     }
