@@ -372,6 +372,7 @@ export class Game extends BaseComponents {
         this.pieceActive.cell,
         newCell,
         timeFunctions.getStringTime(timer.getTimeNow()),
+        setting.gameSetup,
       );
     } else {
       throw new Error('pieceActive does not exist!');

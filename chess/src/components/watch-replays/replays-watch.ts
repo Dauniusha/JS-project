@@ -1,11 +1,11 @@
 import { colorFunctions } from '../../shared/color';
 import { timeFunctions } from '../../shared/translate-time';
 import { Game } from '../game/game';
-import { ClearMove } from '../models/clear-move';
 import { PlayerDBObject } from '../models/data-base/data-base-player-object';
 import { ReplaysDBObject } from '../models/data-base/data-base-replays-object';
 import { color } from '../models/game/color-interface';
 import { ReplayBtns } from '../models/replays/replays-btns';
+import { MoveTable } from '../move-table/move-table';
 import { Move } from '../move/move';
 import { PlayerStatistics } from '../player-statistics/player-statistics';
 import { setting } from '../settings/setting';
@@ -104,18 +104,18 @@ export class WatchReplay extends Game {
   }
 
   makeMove(isNext: boolean) {
-    let moveRecord: ClearMove;
+    let moveRecord: Move;
 
     if (isNext) {
       if (this.isWhiteMove) {
-        this.removeMoveRecordBacklights(this.whitePlayer.moveTable.takeMove(this.whiteIncrement - 1));
-        this.addMoveRecordBacklights(this.whitePlayer.moveTable.takeMove(this.whiteIncrement));
-        moveRecord = this.whitePlayer.moveTable.getAllMoves()[this.whiteIncrement];
+        this.removeMoveRecordBacklights(this.whitePlayer.moveTable, this.whiteIncrement - 1);
+        this.addMoveRecordBacklights(this.whitePlayer.moveTable, this.whiteIncrement);
+        moveRecord = this.whitePlayer.moveTable.takeMove(this.whiteIncrement);
         this.whiteIncrement++;
       } else {
-        this.removeMoveRecordBacklights(this.blackPlayer.moveTable.takeMove(this.blackIncrement - 1));
-        this.addMoveRecordBacklights(this.blackPlayer.moveTable.takeMove(this.blackIncrement));
-        moveRecord = this.blackPlayer.moveTable.getAllMoves()[this.blackIncrement];
+        this.removeMoveRecordBacklights(this.blackPlayer.moveTable, this.blackIncrement - 1);
+        this.addMoveRecordBacklights(this.blackPlayer.moveTable, this.blackIncrement);
+        moveRecord = this.blackPlayer.moveTable.takeMove(this.blackIncrement);
         this.blackIncrement++;
       }
       if (this.confirmMoveSwitching(true, moveRecord)) {
@@ -124,41 +124,47 @@ export class WatchReplay extends Game {
     } else {
       if (!this.isWhiteMove) {
         this.whiteIncrement--;
-        this.removeMoveRecordBacklights(this.whitePlayer.moveTable.takeMove(this.whiteIncrement + 1));
-        this.addMoveRecordBacklights(this.whitePlayer.moveTable.takeMove(this.whiteIncrement));
-        moveRecord = this.whitePlayer.moveTable.getAllMoves()[this.whiteIncrement];
+        this.removeMoveRecordBacklights(this.whitePlayer.moveTable, this.whiteIncrement + 1);
+        this.addMoveRecordBacklights(this.whitePlayer.moveTable, this.whiteIncrement);
+        moveRecord = this.whitePlayer.moveTable.takeMove(this.whiteIncrement);
       } else {
         this.blackIncrement--;
-        this.removeMoveRecordBacklights(this.blackPlayer.moveTable.takeMove(this.blackIncrement + 1));
-        this.addMoveRecordBacklights(this.blackPlayer.moveTable.takeMove(this.blackIncrement));
-        moveRecord = this.blackPlayer.moveTable.getAllMoves()[this.blackIncrement];
+        this.removeMoveRecordBacklights(this.blackPlayer.moveTable, this.blackIncrement + 1);
+        this.addMoveRecordBacklights(this.blackPlayer.moveTable, this.blackIncrement);
+        moveRecord = this.blackPlayer.moveTable.takeMove(this.blackIncrement);
       }
       if (this.confirmMoveSwitching(false, moveRecord)) {
         return;
       };
     }
-
-    this.updateTimer(moveRecord.time);
   }
 
-  private makeReplayPieceMove(moveRecord: ClearMove, isReverseMove: boolean) {
-    let endCell = moveRecord.endCell;
-    let startCell = moveRecord.startCell;
+  private makeReplayPieceMove(moveRecord: Move, isReverseMove: boolean) {
+    const clearMove = moveRecord.getClearMove();
+
+    let endCell = clearMove.endCell;
+    let startCell = clearMove.startCell;
 
     if (isReverseMove) {
       [ endCell, startCell ] = [ startCell, endCell ];
+    } else {
+      moveRecord.setSetup(JSON.parse(JSON.stringify(setting.gameSetup)));
     }
 
     this.pieceActive = this.chessBoard.selectPiece(startCell);
     this.replayPieceMove(endCell, isReverseMove);
   }
 
-  private addMoveRecordBacklights(moveRecord?: Move) {
-    moveRecord?.element.classList.add(setting.classNames.replays.activeMove);
+  private addMoveRecordBacklights(moveTable: MoveTable, increment: number) {
+    if (increment > -1 && increment < moveTable.getAllMoves().length) {
+      moveTable.takeMove(increment).element.classList.add(setting.classNames.replays.activeMove);
+    }
   }
 
-  private removeMoveRecordBacklights(moveRecord?: Move) {
-    moveRecord?.element.classList.remove(setting.classNames.replays.activeMove);
+  private removeMoveRecordBacklights(moveTable: MoveTable, increment: number) {
+    if (increment > -1 && increment < moveTable.getAllMoves().length) {
+      moveTable.takeMove(increment).element.classList.remove(setting.classNames.replays.activeMove);
+    }
   }
 
   private replayPieceMove(cellId: string, isReverseMove: boolean) { // TODO: Не знаю, как сделать без копирования
@@ -215,16 +221,20 @@ export class WatchReplay extends Game {
     this.startReplayTimer(timeNow);
   }
 
-  private confirmMoveSwitching(isNext: boolean, moveRecord: ClearMove): boolean {
+  private confirmMoveSwitching(isNext: boolean, moveRecord: Move): boolean {
     if (isNext) {
       this.moveCounter++;
+
+      this.makeReplayPieceMove(moveRecord, !isNext);
+      this.updateTimer(moveRecord.getClearMove().time);
+
       if (this.moveCounter === this.moveAmount) {
         this.disableBlockBtn(true);
         if (this.isFirstGameEnd) {
           this.gameEnd();
+          this.isFirstGameEnd = false;
         }
         timer.stopTimer();
-        this.makeReplayPieceMove(moveRecord, !isNext);
         return true;
       }
       this.enableBlockBtn(false);
@@ -234,9 +244,63 @@ export class WatchReplay extends Game {
         this.disableBlockBtn(false);
       }
       this.enableBlockBtn(true);
+      this.previousMove(moveRecord);
     }
-    this.makeReplayPieceMove(moveRecord, !isNext);
     return false;
+  }
+
+  private previousMove(moveRecord: Move) {
+    const previousMoveRecord = this.getPreviousMoveRecord(moveRecord);
+
+    const [ player, count ] = moveRecord.getClearMove().fullName.indexOf(color.white) === -1 ?
+    [ this.blackPlayer, this.blackIncrement - 1 ] : [ this.whitePlayer, this.whiteIncrement - 1 ];
+
+    if (!previousMoveRecord) {
+      this.makePreviousMove();
+      this.removeMoveRecordBacklights(player.moveTable, count + 1);
+      this.updateTimer('00:00');
+      this.isWhiteMove = !this.isWhiteMove;
+      this.addMoveHolder();
+    } else {
+      setting.gameSetup = JSON.parse(JSON.stringify(previousMoveRecord.getSetup()));
+      this.makePreviousMove(previousMoveRecord);
+
+      this.removeMoveRecordBacklights(player.moveTable, count + 1);
+      this.addMoveRecordBacklights(player.moveTable, count);
+
+      this.makeReplayPieceMove(previousMoveRecord, false);
+      this.updateTimer(previousMoveRecord.getClearMove().time);
+    }
+  }
+
+  private makePreviousMove(moveRecord?: Move) {
+    this.checkBacklightRemove();
+    this.moveBacklightRemove();
+
+    let movedPieceColor: string;
+    if (moveRecord) {
+      movedPieceColor = moveRecord.getClearMove().fullName.indexOf(color.white) === -1 ? color.black : color.white;
+      setting.gameSetup = JSON.parse(JSON.stringify(moveRecord.getSetup()));
+    } else {
+      movedPieceColor = color.black;
+      setting.gameSetup = JSON.parse(JSON.stringify(setting.initialGameSetup));
+    }
+
+    this.chessBoard.renderNewChessBoard(setting.gameSetup);
+
+    this.chessBoard.removeCloseMove();
+    this.replayCheckMateValidation(movedPieceColor, true);
+  }
+
+  private getPreviousMoveRecord(moveRecord: Move): Move | null {
+    const [ player, count ] = moveRecord.getClearMove().fullName.indexOf(color.white) === -1 ?
+    [ this.whitePlayer, this.whiteIncrement - 1 ] : [ this.blackPlayer, this.blackIncrement - 1 ];
+
+    if (count > -1 && count < player.moveTable.getAllMoves().length) {
+      return player.moveTable.takeMove(count);
+    } else {
+      return null;
+    }
   }
 
   private disableBlockBtn(isNextBtn: boolean) {
@@ -270,7 +334,7 @@ export class WatchReplay extends Game {
   }
 
   private startReplayTimer(time?: number) {
-    if (time) {
+    if (time !== undefined) {
       timer.setTimeNow(time);
       timer.showTime(Math.floor(time / 60), time % 60);
     }

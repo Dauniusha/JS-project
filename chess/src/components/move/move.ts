@@ -1,11 +1,18 @@
 import { createElement } from '../../shared/create-element';
 import { BaseComponents } from '../models/base-component';
 import { ClearMove } from '../models/clear-move';
+import { Setup } from '../models/setup-interface';
 import { setting } from '../settings/setting';
 import './move.css';
 
 export class Move extends BaseComponents {
-  constructor(private fullName: string, private startCell: string, private endCell: string, private time: string) {
+  constructor(
+      private fullName: string,
+      private startCell: string,
+      private endCell: string,
+      private time: string,
+      private setup?: Setup[]
+    ) {
     super('div', [setting.classNames.game.playerMoveTableEach]);
 
     const pieceImg = createElement([setting.classNames.game.playerMoveTableImg]);
@@ -15,7 +22,7 @@ export class Move extends BaseComponents {
     pieceCells.innerHTML = `${this.startCell} - ${this.endCell}`;
 
     const timeElement = createElement([setting.classNames.game.playerMoveTableTime]);
-    timeElement.innerHTML = this.time; // TODO: Возможно врем янадо будет передавать не готовой строкой
+    timeElement.innerHTML = this.time;
 
     this.element.appendChild(pieceImg);
     this.element.appendChild(pieceCells);
@@ -29,5 +36,17 @@ export class Move extends BaseComponents {
       endCell: this.endCell,
       time: this.time,
     };
+  }
+
+  getSetup(): Setup[] {
+    if (this.setup) {
+      return this.setup;
+    } else {
+      throw new Error('Setup does not exist!');
+    }
+  }
+
+  setSetup(setup: Setup[]) {
+    this.setup = setup;
   }
 }

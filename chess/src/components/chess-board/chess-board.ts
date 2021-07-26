@@ -246,7 +246,7 @@ export class ChessBoard extends BaseComponents {
     }
 
     this.capturingEnPassantTry(cell, piece);
-    
+
     this.longPawnMoveReset();
     ChessBoard.longPawnMoveValidation(cell, piece);
 
@@ -558,5 +558,15 @@ export class ChessBoard extends BaseComponents {
       }
     }
     throw Error('King does not exist');
+  }
+
+  renderNewChessBoard(setups: Setup[]) {
+    this.pieces.forEach((piece) => {
+      piece.element.remove();
+    });
+
+    this.pieces.length = 0;
+
+    this.newPlacePieces(setups);
   }
 }
