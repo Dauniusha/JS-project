@@ -1,3 +1,4 @@
+import { colorFunctions } from '../../shared/color';
 import { timeFunctions } from '../../shared/translate-time';
 import { Game } from '../game/game';
 import { ClearMove } from '../models/clear-move';
@@ -62,13 +63,13 @@ export class WatchReplay extends Game {
 
   private initReplayBtnsListners() {
     this.prevBtn.addEventListener('click', () => {
+      this.removePauseState();
       this.makeMove(false);
     });
 
     this.stopBtn.addEventListener('click', () => {
       if (this.stopBtn.classList.contains(setting.classNames.headers.replaysPlay)) {
-        this.stopBtn.classList.remove(setting.classNames.headers.replaysPlay);
-        this.stopBtn.style.backgroundImage = `url(${setting.imgNames.pause})`;
+        this.removePauseState();
         this.startReplayTimer();
       } else {
         this.stopBtn.classList.add(setting.classNames.headers.replaysPlay);
@@ -78,6 +79,7 @@ export class WatchReplay extends Game {
     });
 
     this.nextBtn.addEventListener('click', () => {
+      this.removePauseState();
       this.makeMove(true);
     });
 
@@ -89,9 +91,16 @@ export class WatchReplay extends Game {
         });
         btn.classList.add(setting.classNames.enable);
         this.boostMode = Number(boost);
-        this.startNewBoostModeTimer();
+        if (!this.stopBtn.classList.contains(setting.classNames.headers.replaysPlay)) {
+          this.startNewBoostModeTimer();
+        }
       });
     });
+  }
+
+  private removePauseState() {
+    this.stopBtn.classList.remove(setting.classNames.headers.replaysPlay);
+    this.stopBtn.style.backgroundImage = `url(${setting.imgNames.pause})`;
   }
 
   makeMove(isNext: boolean) {
@@ -132,9 +141,16 @@ export class WatchReplay extends Game {
     this.updateTimer(moveRecord.time);
   }
 
-  private makeReplayPieceMove(moveRecord: ClearMove) {
-    this.pieceActive = this.chessBoard.selectPiece(moveRecord.startCell);
-    this.replayPieceMove(moveRecord.endCell);
+  private makeReplayPieceMove(moveRecord: ClearMove, isReverseMove: boolean) {
+    let endCell = moveRecord.endCell;
+    let startCell = moveRecord.startCell;
+
+    if (isReverseMove) {
+      [ endCell, startCell ] = [ startCell, endCell ];
+    }
+
+    this.pieceActive = this.chessBoard.selectPiece(startCell);
+    this.replayPieceMove(endCell, isReverseMove);
   }
 
   private addMoveRecordBacklights(moveRecord?: Move) {
@@ -145,16 +161,18 @@ export class WatchReplay extends Game {
     moveRecord?.element.classList.remove(setting.classNames.replays.activeMove);
   }
 
-  private replayPieceMove(cellId: string) { // TODO: Не знаю, как сделать без копирования
+  private replayPieceMove(cellId: string, isReverseMove: boolean) { // TODO: Не знаю, как сделать без копирования
     if (this.pieceActive) {
       this.checkBacklightRemove();
       this.moveBacklightRemove();
 
-      this.moveBacklightAdd(cellId);
+      if (!isReverseMove) {
+        this.moveBacklightAdd(cellId); 
+      }
       this.chessBoard.pieceMove(cellId, this.pieceActive);
 
       this.chessBoard.removeCloseMove();
-      this.replayCheckMateValidation(this.pieceActive.color);
+      this.replayCheckMateValidation(this.pieceActive.color, isReverseMove);
 
       this.pieceActive = undefined;
       this.isWhiteMove = !this.isWhiteMove;
@@ -162,9 +180,11 @@ export class WatchReplay extends Game {
     }
   }
 
-  private replayCheckMateValidation(movedPieceColor: string) {
-    const isCheck = this.chessBoard.checkValidation(movedPieceColor);
-    const defendersCanMove = this.chessBoard.movePossibilityValidation(movedPieceColor);
+  private replayCheckMateValidation(movedPieceColor: string, isReverseMove: boolean) {
+    const needColor = isReverseMove ? colorFunctions.getReverseColor(movedPieceColor) : movedPieceColor;
+
+    const isCheck = this.chessBoard.checkValidation(needColor);
+    const defendersCanMove = this.chessBoard.movePossibilityValidation(needColor);
 
     if (isCheck && !defendersCanMove) {
       this.checkBacklightAdd();
@@ -174,13 +194,13 @@ export class WatchReplay extends Game {
         throw new Error('Active player does not exist!');
       }
     } else if (isCheck) {
-      this.checkBacklightAdd();
+      this.checkBacklightAdd(needColor);
       console.log('check');
     } else if (!defendersCanMove) {
       this.createDrawPopup();
     }
 
-    console.log('done');
+    // console.log('done');
 
     if (this.chessBoard.pieces.length === 2) {
       this.gameEnd();
@@ -204,7 +224,7 @@ export class WatchReplay extends Game {
           this.gameEnd();
         }
         timer.stopTimer();
-        this.makeReplayPieceMove(moveRecord);
+        this.makeReplayPieceMove(moveRecord, !isNext);
         return true;
       }
       this.enableBlockBtn(false);
@@ -215,7 +235,7 @@ export class WatchReplay extends Game {
       }
       this.enableBlockBtn(true);
     }
-    this.makeReplayPieceMove(moveRecord);
+    this.makeReplayPieceMove(moveRecord, !isNext);
     return false;
   }
 

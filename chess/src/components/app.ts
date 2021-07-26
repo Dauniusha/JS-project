@@ -172,7 +172,10 @@ export class App {
   private clearWindow() {
     if (this.game instanceof OnlineGame) {
       this.game.offSocket();
+    } else {
+      this.game?.surrender();
     }
+    this.game = undefined;
     this.activePage?.element.remove();
   }
 }

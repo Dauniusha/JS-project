@@ -435,7 +435,7 @@ export class Game extends BaseComponents {
     }
   }
 
-  protected createEndGame(isWin: boolean, winner?: PlayerStatistics) {
+  createEndGame(isWin: boolean, winner?: PlayerStatistics) {
     timer.stopTimer();
     if (isWin && winner) {
       this.createWinPopup(winner.getName());
@@ -488,9 +488,9 @@ export class Game extends BaseComponents {
     return popup;
   }
 
-  protected checkBacklightAdd() {
-    if (this.pieceActive) {
-      this.checkPieces = this.chessBoard.getCheckPieces(this.pieceActive.color);
+  protected checkBacklightAdd(color: string | undefined = this.pieceActive?.color) {
+    if (color) {
+      this.checkPieces = this.chessBoard.getCheckPieces(color);
       this.checkPieces.forEach((piece) => {
         piece.element.parentElement?.classList.add(setting.classNames.checkBacklight);
       });

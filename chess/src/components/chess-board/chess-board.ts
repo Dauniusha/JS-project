@@ -246,6 +246,7 @@ export class ChessBoard extends BaseComponents {
     }
 
     this.capturingEnPassantTry(cell, piece);
+    
     this.longPawnMoveReset();
     ChessBoard.longPawnMoveValidation(cell, piece);
 
