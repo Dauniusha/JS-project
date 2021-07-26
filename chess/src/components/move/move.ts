@@ -11,6 +11,7 @@ export class Move extends BaseComponents {
       private startCell: string,
       private endCell: string,
       private time: string,
+      private newPiece?: string,
       private setup?: Setup[]
     ) {
     super('div', [setting.classNames.game.playerMoveTableEach]);
@@ -35,6 +36,7 @@ export class Move extends BaseComponents {
       startCell: this.startCell,
       endCell: this.endCell,
       time: this.time,
+      newPiece: this.newPiece,
     };
   }
 

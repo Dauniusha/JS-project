@@ -3,4 +3,5 @@ export interface ClearMove {
   startCell: string;
   endCell: string;
   time: string;
+  newPiece?: string;
 }

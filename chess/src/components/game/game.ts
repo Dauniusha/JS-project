@@ -301,13 +301,16 @@ export class Game extends BaseComponents {
 
   private completeMove(cellId: string) {
     if (this.pieceActive) {
+      const startCell = this.pieceActive.cell;
+
       this.pieceMove(cellId);
 
       if (this.pieceActive instanceof Pawn
         && (this.pieceActive.cell.indexOf('8') !== -1 || this.pieceActive.cell.indexOf('1') !== -1)
       ) {
-        this.initPawnTransformation(this.pieceActive);
+        this.initPawnTransformation(this.pieceActive, startCell);
       } else {
+        this.takeActivePlayer(startCell);
         this.removeCancelMoveAndCheckValidation(this.pieceActive.color);
       }
       // this.checkRotateChessBoard();
@@ -321,18 +324,18 @@ export class Game extends BaseComponents {
       this.possibleCellsBacklightRemove();
 
       this.moveBacklightAdd(cellId);
-      this.takeActivePlayer(cellId);
       this.chessBoard.pieceMove(cellId, this.pieceActive);
     }
   }
 
-  private initPawnTransformation(piece: Pawn) {
+  private initPawnTransformation(piece: Pawn, startCell: string) {
     const popup = this.createChoosePiecePopup(piece.color);
     popup.showPopup();
     popup.element.addEventListener('click', (event) => {
       if (event.target instanceof HTMLImageElement) {
         const fullName = piece.color + event.target.alt;
         this.replaceTransormPiece(piece, fullName);
+        this.takeActivePlayer(startCell, fullName);
         Game.removePopup(popup);
         this.removeCancelMoveAndCheckValidation(piece.color);
       }
@@ -363,15 +366,16 @@ export class Game extends BaseComponents {
     this.addMoveHolder();
   }
 
-  private takeActivePlayer(newCell: string) {
+  private takeActivePlayer(startCell: string, newPiece?: string) {
     if (this.pieceActive) {
       this.activePlayer = this.pieceActive.color === this.firstPlayer?.getColor() ? this.firstPlayer : this.secondPlayer;
       this.activePlayer?.moveTable.addMove(
         this.pieceActive.name,
         this.activePlayer.getColor(),
+        startCell,
         this.pieceActive.cell,
-        newCell,
         timeFunctions.getStringTime(timer.getTimeNow()),
+        newPiece,
         setting.gameSetup,
       );
     } else {

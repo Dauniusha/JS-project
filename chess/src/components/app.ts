@@ -172,7 +172,7 @@ export class App {
   private clearWindow() {
     if (this.game instanceof OnlineGame) {
       this.game.offSocket();
-    } else {
+    } else if (!this.game?.isEndGame) {
       this.game?.surrender();
     }
     this.game = undefined;

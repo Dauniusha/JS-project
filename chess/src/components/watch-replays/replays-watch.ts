@@ -1,5 +1,6 @@
 import { colorFunctions } from '../../shared/color';
 import { timeFunctions } from '../../shared/translate-time';
+import { Pawn } from '../chess-pieces/each-pieces/pawn';
 import { Game } from '../game/game';
 import { PlayerDBObject } from '../models/data-base/data-base-player-object';
 import { ReplaysDBObject } from '../models/data-base/data-base-replays-object';
@@ -147,12 +148,22 @@ export class WatchReplay extends Game {
 
     if (isReverseMove) {
       [ endCell, startCell ] = [ startCell, endCell ];
+
+      this.pieceActive = this.chessBoard.selectPiece(startCell);
+      this.replayPieceMove(endCell, isReverseMove);
     } else {
       moveRecord.setSetup(JSON.parse(JSON.stringify(setting.gameSetup)));
+
+      this.pieceActive = this.chessBoard.selectPiece(startCell);
+      this.replayPieceMove(endCell, isReverseMove);
+
+      const newPiece = moveRecord.getClearMove().newPiece;
+      if (newPiece && this.pieceActive instanceof Pawn) {
+        this.replaceTransormPiece(this.pieceActive, newPiece);
+      }
     }
 
-    this.pieceActive = this.chessBoard.selectPiece(startCell);
-    this.replayPieceMove(endCell, isReverseMove);
+    this.removeReplayCancelMoveAndCheckValidation(this.pieceActive.color, isReverseMove);
   }
 
   private addMoveRecordBacklights(moveTable: MoveTable, increment: number) {
@@ -176,17 +187,20 @@ export class WatchReplay extends Game {
         this.moveBacklightAdd(cellId); 
       }
       this.chessBoard.pieceMove(cellId, this.pieceActive);
-
-      this.chessBoard.removeCloseMove();
-      this.replayCheckMateValidation(this.pieceActive.color, isReverseMove);
-
-      this.pieceActive = undefined;
-      this.isWhiteMove = !this.isWhiteMove;
-      this.addMoveHolder();
     }
   }
 
+  private removeReplayCancelMoveAndCheckValidation(color: string, isReverseMove: boolean) {
+    this.chessBoard.removeCloseMove();
+    this.replayCheckMateValidation(color, isReverseMove);
+
+    this.pieceActive = undefined;
+    this.isWhiteMove = !this.isWhiteMove;
+    this.addMoveHolder();
+  }
+
   private replayCheckMateValidation(movedPieceColor: string, isReverseMove: boolean) {
+    console.log(setting.gameSetup);
     const needColor = isReverseMove ? colorFunctions.getReverseColor(movedPieceColor) : movedPieceColor;
 
     const isCheck = this.chessBoard.checkValidation(needColor);
@@ -205,8 +219,6 @@ export class WatchReplay extends Game {
     } else if (!defendersCanMove) {
       this.createDrawPopup();
     }
-
-    // console.log('done');
 
     if (this.chessBoard.pieces.length === 2) {
       this.gameEnd();
