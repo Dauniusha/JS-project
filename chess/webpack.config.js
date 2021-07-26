@@ -60,7 +60,7 @@ module.exports = ({development})=>( { //деструктуризация
     // new ESLintPlugin({ extensions: ['ts', 'js'] }),
     new HtmlWebpackPlugin({
       title: 'chess',
-      // template: './src/index.html',
+      template: './index.html',
     }),
     new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }), 
     new MiniCssExtractPlugin({ filename: '[name].[contenthash].css' }),

@@ -200,7 +200,6 @@ export class WatchReplay extends Game {
   }
 
   private replayCheckMateValidation(movedPieceColor: string, isReverseMove: boolean) {
-    console.log(setting.gameSetup);
     const needColor = isReverseMove ? colorFunctions.getReverseColor(movedPieceColor) : movedPieceColor;
 
     const isCheck = this.chessBoard.checkValidation(needColor);

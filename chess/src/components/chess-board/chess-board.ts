@@ -21,7 +21,7 @@ export class ChessBoard extends BaseComponents {
 
   pieces: (Queen | King | Knight | Bishop | Pawn | Rook)[] = []; // TODO: Не понимаю, как сделать через полиморфизм, все компоненты наследуются от одного родителя и все имеют одинаковый перегруженный метод
 
-  private allMoves: { cell: string, moves: string[] }[] = [];
+  allMoves: { cell: string, moves: string[] }[] = [];
 
   constructor(gameSetup: Setup[]) {
     super('div', [setting.classNames.board, setting.classNames.game.noRotate]);
@@ -420,7 +420,7 @@ export class ChessBoard extends BaseComponents {
     copyGameSetup: Setup[],
     attakingPieces: (Queen | King | Knight | Bishop | Pawn | Rook)[], // TODO: Приходится тащить 6 типов
   ): boolean {
-    if (!attakingPieces.length) { // capture attaking king
+    if (!attakingPieces.length || ChessBoard.captureAttakingKingCheck(copyGameSetup, attakingPieces[0].color)) { // capture attaking king
       return false;
     }
     const kingColor = attakingPieces[0].color === color.white ? color.black : color.white;
@@ -435,6 +435,15 @@ export class ChessBoard extends BaseComponents {
     });
 
     return possibleAttakingPositions.indexOf(defendingKingPosition) !== -1;
+  }
+
+  private static captureAttakingKingCheck(copyGameSetup: Setup[], attakingColor: string): boolean {
+    for(const piece of copyGameSetup) {
+      if (piece.piece === attakingColor + 'King') {
+        return false;
+      }
+    }
+    return true;
   }
 
   private static moveTesting(copyGameSetup: Setup[], piece: Queen | King | Knight | Bishop | Pawn | Rook, testCell: string) {
