@@ -1,0 +1,89 @@
+/* How play */
+.container-field {
+  width: 95%;
+  max-width: 1440px;
+  height: 1200px;
+  margin: 40px auto 150px;
+  background: #e5e5e5;
+  border-radius: 4px;
+}
+
+.container-main {
+  width: 95%;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 60px 0 100px;
+}
+
+.own-about {
+  display: block;
+}
+
+.title {
+  font-weight: 500;
+  font-size: 45px;
+  letter-spacing: 0.3px;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.description {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 30px 0;
+}
+
+.rules {
+  display: flex;
+  padding: 20px;
+  width: 40%;
+  max-width: 500px;
+  background: #fff;
+  border-radius: 6px;
+  height:max-content;
+}
+
+#first {
+  height: 250px;
+}
+
+#second {
+  height: 150px;
+}
+
+#third {
+  height: 300px;
+}
+
+.number {
+  min-width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  background: #2196F3;
+  font-size: 60px;
+  line-height: 60px;
+  text-align: center;
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2),
+              0px 3px 4px rgba(0, 0, 0, 0.12),
+              0px 2px 4px rgba(0, 0, 0, 0.14);
+  margin-right: 20px;
+}
+
+.description__text {
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 20px;
+  letter-spacing: 0.4px;
+}
+
+#register-img {
+  width: 400px;
+}
+
+#setting-img {
+  width: 150px;
+  border-radius: 4px;
+}
+
+#game-img {
+  width: 450px;
+}
