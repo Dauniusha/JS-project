@@ -1,0 +1,20 @@
+.header {
+  display: flex;
+  align-items: center;
+  margin: 0 auto 1vh;
+  padding-top: 1vh;
+  height: auto;
+}
+
+.header__btn {
+  margin-right: 2vw;
+  width: 15vh !important;
+  height: 4vh !important;
+}
+
+.show-class {
+  visibility: hidden;
+  position: absolute;
+  top: 0;
+  opacity: 0;
+}
